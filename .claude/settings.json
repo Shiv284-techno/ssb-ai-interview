@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx tsc *)",
+      "PowerShell($ports = 3000,3001,3002; foreach \\($p in $ports\\) { try { $r = Invoke-WebRequest \"http://localhost:$p/\" -UseBasicParsing -TimeoutSec 90; Write-Output \"PORT $p -> HTTP $\\($r.StatusCode\\), length $\\($r.Content.Length\\)\"; foreach \\($needle in 'SSB Personal Interview','Start interview','Mock session','Preview build'\\) { Write-Output \\(\"  contains '{0}': {1}\" -f $needle, $r.Content.Contains\\($needle\\)\\) }; break } catch { Write-Output \"PORT $p -> $\\($_.Exception.Message\\)\" } })"
+    ]
+  }
+}
