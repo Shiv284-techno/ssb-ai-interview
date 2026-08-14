@@ -11,6 +11,7 @@ import { WelcomeScreen } from "@/components/interview/welcome-screen";
 import { useCamera } from "@/hooks/use-camera";
 import { useElapsedSeconds } from "@/hooks/use-elapsed-seconds";
 import { useSpeechRecognition } from "@/hooks/use-speech-recognition";
+import { useSpeechSynthesis } from "@/hooks/use-speech-synthesis";
 import { INTERVIEW_QUESTIONS } from "@/lib/interview/questions";
 import type { AiStatus, InterviewPhase } from "@/lib/interview/types";
 
@@ -25,6 +26,8 @@ export function InterviewRoom() {
   const [phase, setPhase] = useState<InterviewPhase>("welcome");
   const [status, setStatus] = useState<AiStatus>("ready");
   const [questionIndex, setQuestionIndex] = useState(0);
+  /** The candidate's mic intent, which survives pauses for the officer. */
+  const [micOn, setMicOn] = useState(false);
   const [startedAt, setStartedAt] = useState<number | null>(null);
   const [finalDuration, setFinalDuration] = useState(0);
 
@@ -49,8 +52,35 @@ export function InterviewRoom() {
     reset: resetTranscript,
   } = useSpeechRecognition();
 
-  /** The mic is "on" exactly when speech recognition is running. */
-  const micOn = speechStatus === "listening";
+  const {
+    speak,
+    stop: stopSpeaking,
+    status: synthesisStatus,
+  } = useSpeechSynthesis();
+
+  const officerIsSpeaking = synthesisStatus === "speaking";
+  const currentQuestion = INTERVIEW_QUESTIONS[questionIndex];
+
+  // The only place recognition is started or stopped: listen when the candidate
+  // has the mic on and the officer is not talking over them.
+  useEffect(() => {
+    if (phase === "live" && micOn && !officerIsSpeaking) {
+      startListening();
+    } else {
+      stopListening();
+    }
+  }, [phase, micOn, officerIsSpeaking, startListening, stopListening]);
+
+  // Read the active question aloud. `currentQuestion` is a stable reference
+  // from the question list, so this fires once per question, not per render.
+  useEffect(() => {
+    if (phase !== "live") return;
+
+    // Silence the mic before the officer starts, so the board's own voice is
+    // never transcribed as the candidate's answer.
+    stopListening();
+    speak(currentQuestion.prompt);
+  }, [phase, currentQuestion, speak, stopListening]);
 
   // The officer finishes asking the question, then hands over to the candidate.
   useEffect(() => {
@@ -91,17 +121,13 @@ export function InterviewRoom() {
     setStartedAt(null);
     setStatus("ready");
     setPhase("ended");
+    setMicOn(false);
     stopCamera();
     stopListening();
-  }, [elapsedSeconds, stopCamera, stopListening]);
+    stopSpeaking();
+  }, [elapsedSeconds, stopCamera, stopListening, stopSpeaking]);
 
-  const toggleMic = useCallback(() => {
-    if (speechStatus === "listening") {
-      stopListening();
-    } else {
-      startListening();
-    }
-  }, [speechStatus, startListening, stopListening]);
+  const toggleMic = useCallback(() => setMicOn((on) => !on), []);
   const askNextQuestion = useCallback(() => setStatus("thinking"), []);
 
   return (
@@ -141,7 +167,7 @@ export function InterviewRoom() {
           <div className="flex min-h-0 flex-col lg:col-span-2">
             <InterviewerPanel
               status={status}
-              question={INTERVIEW_QUESTIONS[questionIndex]}
+              question={currentQuestion}
               questionNumber={questionIndex + 1}
               totalQuestions={INTERVIEW_QUESTIONS.length}
               elapsedSeconds={elapsedSeconds}
