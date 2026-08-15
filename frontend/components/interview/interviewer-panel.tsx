@@ -1,5 +1,5 @@
 import { AiStatusPill } from "@/components/interview/ai-status-pill";
-import { ArrowRightIcon, TimerIcon } from "@/components/icons";
+import { CheckIcon, TimerIcon } from "@/components/icons";
 import type { SpeechStatus } from "@/hooks/use-speech-recognition";
 import { cn } from "@/lib/cn";
 import { formatDuration } from "@/lib/interview/format";
@@ -13,15 +13,15 @@ interface InterviewerPanelProps {
   status: AiStatus;
   question: InterviewQuestion;
   questionNumber: number;
-  totalQuestions: number;
+  totalQuestions?: number;
   elapsedSeconds: number;
   micOn: boolean;
   speechStatus: SpeechStatus;
-  speechErrorMessage: string | null;
+  errorMessage: string | null;
   transcript: string;
   interimTranscript: string;
-  canAdvance: boolean;
-  onNextQuestion: () => void;
+  canSubmit: boolean;
+  onSubmitAnswer: () => void;
 }
 
 export function InterviewerPanel({
@@ -32,11 +32,11 @@ export function InterviewerPanel({
   elapsedSeconds,
   micOn,
   speechStatus,
-  speechErrorMessage,
+  errorMessage,
   transcript,
   interimTranscript,
-  canAdvance,
-  onNextQuestion,
+  canSubmit,
+  onSubmitAnswer,
 }: InterviewerPanelProps) {
   const meta = AI_STATUS_META[status];
 
@@ -75,8 +75,9 @@ export function InterviewerPanel({
       >
         <div className="flex items-center justify-between gap-3 text-[11px] uppercase tracking-[0.18em] text-slate-500">
           <span>
-            Question {String(questionNumber).padStart(2, "0")} /{" "}
-            {String(totalQuestions).padStart(2, "0")}
+            Question {String(questionNumber).padStart(2, "0")}
+            {totalQuestions !== undefined &&
+              ` / ${String(totalQuestions).padStart(2, "0")}`}
           </span>
           <span className="rounded-full bg-white/5 px-2.5 py-1 tracking-[0.1em] text-slate-300">
             {question.focus}
@@ -89,7 +90,7 @@ export function InterviewerPanel({
 
       <TranscriptBlock
         speechStatus={speechStatus}
-        speechErrorMessage={speechErrorMessage}
+        errorMessage={errorMessage}
         transcript={transcript}
         interimTranscript={interimTranscript}
       />
@@ -107,12 +108,12 @@ export function InterviewerPanel({
 
         <button
           type="button"
-          onClick={onNextQuestion}
-          disabled={!canAdvance}
+          onClick={onSubmitAnswer}
+          disabled={!canSubmit}
           className="flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm font-medium text-slate-200 transition-colors hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-400 disabled:cursor-not-allowed disabled:opacity-40"
         >
-          Next question
-          <ArrowRightIcon className="h-4 w-4" />
+          Done answering
+          <CheckIcon className="h-4 w-4" />
         </button>
       </div>
     </section>
@@ -121,19 +122,19 @@ export function InterviewerPanel({
 
 interface TranscriptBlockProps {
   speechStatus: SpeechStatus;
-  speechErrorMessage: string | null;
+  errorMessage: string | null;
   transcript: string;
   interimTranscript: string;
 }
 
 function TranscriptBlock({
   speechStatus,
-  speechErrorMessage,
+  errorMessage,
   transcript,
   interimTranscript,
 }: TranscriptBlockProps) {
   const hasSpeech = Boolean(transcript || interimTranscript);
-  const hasFailed = speechStatus === "error" || speechStatus === "unsupported";
+  const hasFailed = errorMessage !== null;
 
   return (
     <div className="rounded-xl border border-white/10 bg-white/[0.03] p-4">
@@ -149,8 +150,7 @@ function TranscriptBlock({
 
       {hasFailed ? (
         <p className="mt-3 text-sm leading-relaxed text-rose-300">
-          {speechErrorMessage ??
-            "Speech recognition is unavailable in this browser."}
+          {errorMessage}
         </p>
       ) : (
         <p className="mt-3 max-h-32 overflow-y-auto text-sm leading-relaxed text-slate-200">

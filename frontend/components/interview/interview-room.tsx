@@ -10,22 +10,23 @@ import { SessionHeader } from "@/components/interview/session-header";
 import { WelcomeScreen } from "@/components/interview/welcome-screen";
 import { useCamera } from "@/hooks/use-camera";
 import { useElapsedSeconds } from "@/hooks/use-elapsed-seconds";
+import { useInterviewer, type InterviewTurn } from "@/hooks/use-interviewer";
 import { useSpeechRecognition } from "@/hooks/use-speech-recognition";
 import { useSpeechSynthesis } from "@/hooks/use-speech-synthesis";
 import { INTERVIEW_QUESTIONS } from "@/lib/interview/questions";
-import type { AiStatus, InterviewPhase } from "@/lib/interview/types";
+import type {
+  AiStatus,
+  InterviewPhase,
+  InterviewQuestion,
+} from "@/lib/interview/types";
 
-/** How long the officer "asks" a question before it starts listening. */
-const ASK_DURATION_MS = 3800;
-/** How long the officer "considers" an answer before moving on. */
-const THINK_DURATION_MS = 1400;
-
-const LAST_QUESTION_INDEX = INTERVIEW_QUESTIONS.length - 1;
+/** The board always opens with this; every later question comes from the API. */
+const OPENING_QUESTION = INTERVIEW_QUESTIONS[0];
 
 export function InterviewRoom() {
   const [phase, setPhase] = useState<InterviewPhase>("welcome");
-  const [status, setStatus] = useState<AiStatus>("ready");
-  const [questionIndex, setQuestionIndex] = useState(0);
+  /** The full conversation, sent to the interviewer on every submission. */
+  const [turns, setTurns] = useState<InterviewTurn[]>([]);
   /** The candidate's mic intent, which survives pauses for the officer. */
   const [micOn, setMicOn] = useState(false);
   const [startedAt, setStartedAt] = useState<number | null>(null);
@@ -58,68 +59,70 @@ export function InterviewRoom() {
     status: synthesisStatus,
   } = useSpeechSynthesis();
 
+  const {
+    status: interviewerStatus,
+    error: interviewerError,
+    askInterviewer,
+  } = useInterviewer();
+
   const officerIsSpeaking = synthesisStatus === "speaking";
-  const currentQuestion = INTERVIEW_QUESTIONS[questionIndex];
+  const isThinking = interviewerStatus === "thinking";
+
+  const officerTurnCount = turns.reduce(
+    (count, turn) => count + (turn.role === "officer" ? 1 : 0),
+    0,
+  );
+
+  // The opening question keeps its authored focus; later ones are follow-ups.
+  const currentQuestion: InterviewQuestion =
+    officerTurnCount <= 1
+      ? OPENING_QUESTION
+      : {
+          id: `officer-${officerTurnCount}`,
+          prompt: turns[turns.length - 1]?.text ?? OPENING_QUESTION.prompt,
+          focus: "Follow-up",
+        };
+
+  // Derived from what the officer is actually doing — no timers.
+  const aiStatus: AiStatus =
+    phase !== "live"
+      ? "ready"
+      : officerIsSpeaking
+        ? "speaking"
+        : isThinking
+          ? "thinking"
+          : "listening";
+
+  const answerErrorMessage =
+    speechStatus === "error" || speechStatus === "unsupported"
+      ? (speechError?.message ?? null)
+      : (interviewerError?.message ?? null);
 
   // The only place recognition is started or stopped: listen when the candidate
-  // has the mic on and the officer is not talking over them.
+  // has the mic on and the officer is neither speaking nor considering a reply.
   useEffect(() => {
-    if (phase === "live" && micOn && !officerIsSpeaking) {
+    if (phase === "live" && micOn && !officerIsSpeaking && !isThinking) {
       startListening();
     } else {
       stopListening();
     }
-  }, [phase, micOn, officerIsSpeaking, startListening, stopListening]);
-
-  // Read the active question aloud. `currentQuestion` is a stable reference
-  // from the question list, so this fires once per question, not per render.
-  useEffect(() => {
-    if (phase !== "live") return;
-
-    // Silence the mic before the officer starts, so the board's own voice is
-    // never transcribed as the candidate's answer.
-    stopListening();
-    speak(currentQuestion.prompt);
-  }, [phase, currentQuestion, speak, stopListening]);
-
-  // The officer finishes asking the question, then hands over to the candidate.
-  useEffect(() => {
-    if (phase !== "live" || status !== "speaking") return;
-
-    const timeoutId = window.setTimeout(
-      () => setStatus("listening"),
-      ASK_DURATION_MS,
-    );
-    return () => window.clearTimeout(timeoutId);
-  }, [phase, status]);
-
-  // A pause for thought resolves into the next question being asked.
-  useEffect(() => {
-    if (phase !== "live" || status !== "thinking") return;
-
-    const timeoutId = window.setTimeout(() => {
-      setQuestionIndex((index) => Math.min(index + 1, LAST_QUESTION_INDEX));
-      setStatus("speaking");
-    }, THINK_DURATION_MS);
-    return () => window.clearTimeout(timeoutId);
-  }, [phase, status]);
+  }, [phase, micOn, officerIsSpeaking, isThinking, startListening, stopListening]);
 
   const startInterview = useCallback(() => {
-    setQuestionIndex(0);
+    setTurns([{ role: "officer", text: OPENING_QUESTION.prompt }]);
     setFinalDuration(0);
     setStartedAt(Date.now());
-    setStatus("speaking");
     setPhase("live");
     // Requested from the click itself, so the browser treats it as a user
     // gesture when it shows the permission prompt.
     startCamera();
     resetTranscript();
-  }, [startCamera, resetTranscript]);
+    speak(OPENING_QUESTION.prompt);
+  }, [startCamera, resetTranscript, speak]);
 
   const endInterview = useCallback(() => {
     setFinalDuration(elapsedSeconds);
     setStartedAt(null);
-    setStatus("ready");
     setPhase("ended");
     setMicOn(false);
     stopCamera();
@@ -128,7 +131,44 @@ export function InterviewRoom() {
   }, [elapsedSeconds, stopCamera, stopListening, stopSpeaking]);
 
   const toggleMic = useCallback(() => setMicOn((on) => !on), []);
-  const askNextQuestion = useCallback(() => setStatus("thinking"), []);
+
+  const canSubmitAnswer =
+    phase === "live" &&
+    !isThinking &&
+    !officerIsSpeaking &&
+    transcript.trim().length > 0;
+
+  const submitAnswer = useCallback(async () => {
+    const answer = transcript.trim();
+    if (phase !== "live" || isThinking || answer.length === 0) return;
+
+    // Silence the mic while the board considers the answer.
+    stopListening();
+
+    const answered: InterviewTurn[] = [
+      ...turns,
+      { role: "candidate", text: answer },
+    ];
+    setTurns(answered);
+    resetTranscript();
+
+    const reply = await askInterviewer(answered, elapsedSeconds);
+    // Null means the request failed; the error is surfaced in the panel.
+    if (!reply) return;
+
+    setTurns((current) => [...current, { role: "officer", text: reply.question }]);
+    speak(reply.question);
+  }, [
+    phase,
+    isThinking,
+    transcript,
+    turns,
+    elapsedSeconds,
+    stopListening,
+    resetTranscript,
+    askInterviewer,
+    speak,
+  ]);
 
   return (
     <div className="flex min-h-[100dvh] flex-1 flex-col bg-slate-950 font-sans text-slate-100">
@@ -147,8 +187,7 @@ export function InterviewRoom() {
       {phase === "ended" && (
         <SessionEnded
           durationSeconds={finalDuration}
-          questionsCovered={questionIndex + 1}
-          totalQuestions={INTERVIEW_QUESTIONS.length}
+          questionsCovered={officerTurnCount}
         />
       )}
 
@@ -166,20 +205,17 @@ export function InterviewRoom() {
           </div>
           <div className="flex min-h-0 flex-col lg:col-span-2">
             <InterviewerPanel
-              status={status}
+              status={aiStatus}
               question={currentQuestion}
-              questionNumber={questionIndex + 1}
-              totalQuestions={INTERVIEW_QUESTIONS.length}
+              questionNumber={officerTurnCount}
               elapsedSeconds={elapsedSeconds}
               micOn={micOn}
               speechStatus={speechStatus}
-              speechErrorMessage={speechError?.message ?? null}
+              errorMessage={answerErrorMessage}
               transcript={transcript}
               interimTranscript={interimTranscript}
-              canAdvance={
-                status !== "thinking" && questionIndex < LAST_QUESTION_INDEX
-              }
-              onNextQuestion={askNextQuestion}
+              canSubmit={canSubmitAnswer}
+              onSubmitAnswer={() => void submitAnswer()}
             />
           </div>
         </main>

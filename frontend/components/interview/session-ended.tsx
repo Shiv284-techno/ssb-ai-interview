@@ -3,7 +3,7 @@ import { formatDuration } from "@/lib/interview/format";
 interface SessionEndedProps {
   durationSeconds: number;
   questionsCovered: number;
-  totalQuestions: number;
+  totalQuestions?: number;
 }
 
 export function SessionEnded({
@@ -37,7 +37,9 @@ export function SessionEnded({
             </dt>
             <dd className="mt-2 font-mono text-2xl tabular-nums text-white">
               {questionsCovered}
-              <span className="text-slate-500">/{totalQuestions}</span>
+              {totalQuestions !== undefined && (
+                <span className="text-slate-500">/{totalQuestions}</span>
+              )}
             </dd>
           </div>
         </dl>
