@@ -1,3 +1,7 @@
+"use client";
+
+import { useState } from "react";
+
 import {
   CameraIcon,
   CameraOffIcon,
@@ -29,6 +33,34 @@ export function ControlBar({
   onEnd,
 }: ControlBarProps) {
   const isLive = phase === "live";
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
+  const [logoutError, setLogoutError] = useState<string | null>(null);
+
+  const handleLogout = async () => {
+    if (isLoggingOut) return;
+
+    setIsLoggingOut(true);
+    setLogoutError(null);
+
+    try {
+      // No body, no identity — the server clears the cookie it already has.
+      const response = await fetch("/api/auth/logout", { method: "POST" });
+
+      if (!response.ok) {
+        setIsLoggingOut(false);
+        setLogoutError("Could not log out. Please try again.");
+        return;
+      }
+
+      // A full document load, so the camera stream, microphone, and interview
+      // state are torn down rather than left running behind a client-side
+      // navigation. Stays disabled while the browser navigates away.
+      window.location.replace("/login");
+    } catch {
+      setIsLoggingOut(false);
+      setLogoutError("Unable to connect. Please try again.");
+    }
+  };
 
   return (
     <footer className="sticky bottom-0 z-20 border-t border-white/10 bg-slate-950/90 px-4 py-4 backdrop-blur-md sm:px-6">
@@ -72,7 +104,30 @@ export function ControlBar({
             {phase === "ended" ? "Start new session" : "Start interview"}
           </button>
         )}
+
+        <span
+          aria-hidden="true"
+          className="mx-1 hidden h-10 w-px bg-white/10 sm:block"
+        />
+
+        <button
+          type="button"
+          onClick={() => void handleLogout()}
+          disabled={isLoggingOut}
+          className="rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm font-medium text-slate-200 transition-colors hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-400 disabled:cursor-not-allowed disabled:opacity-50"
+        >
+          {isLoggingOut ? "Logging out..." : "Log out"}
+        </button>
       </div>
+
+      {logoutError && (
+        <p
+          role="alert"
+          className="mx-auto mt-3 max-w-5xl text-center text-xs text-rose-300"
+        >
+          {logoutError}
+        </p>
+      )}
     </footer>
   );
 }
