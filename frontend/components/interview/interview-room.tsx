@@ -23,7 +23,12 @@ import type {
 /** The board always opens with this; every later question comes from the API. */
 const OPENING_QUESTION = INTERVIEW_QUESTIONS[0];
 
-export function InterviewRoom() {
+interface InterviewRoomProps {
+  /** Display name only — resolved server-side from the verified session. */
+  candidateName: string;
+}
+
+export function InterviewRoom({ candidateName }: InterviewRoomProps) {
   const [phase, setPhase] = useState<InterviewPhase>("welcome");
   /** The full conversation, sent to the interviewer on every submission. */
   const [turns, setTurns] = useState<InterviewTurn[]>([]);
@@ -67,6 +72,8 @@ export function InterviewRoom() {
 
   const officerIsSpeaking = synthesisStatus === "speaking";
   const isThinking = interviewerStatus === "thinking";
+  /** Guards against a blank name in the sheet leaving the plate empty. */
+  const displayName = candidateName.trim() || "You";
 
   const officerTurnCount = turns.reduce(
     (count, turn) => count + (turn.role === "officer" ? 1 : 0),
@@ -175,6 +182,7 @@ export function InterviewRoom() {
       <SessionHeader
         phase={phase}
         elapsedSeconds={phase === "ended" ? finalDuration : elapsedSeconds}
+        candidateName={displayName}
       />
 
       {phase === "welcome" && (
@@ -201,6 +209,7 @@ export function InterviewRoom() {
               micOn={micOn}
               onToggleCamera={toggleCamera}
               onRetryCamera={startCamera}
+              candidateName={displayName}
             />
           </div>
           <div className="flex min-h-0 flex-col lg:col-span-2">
