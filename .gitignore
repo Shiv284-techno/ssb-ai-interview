@@ -70,3 +70,11 @@ __pycache__/
 .DS_Store
 Thumbs.db
 desktop.ini
+
+# ---------------------------------------------------------------------------
+# Reference documents
+# ---------------------------------------------------------------------------
+# Supplied reference material such as the SSB PIQ form. These are third-party
+# documents kept locally for development; they are not ours to redistribute, so
+# they must never be committed. The files stay on disk — only tracking is off.
+docs/*.pdf
