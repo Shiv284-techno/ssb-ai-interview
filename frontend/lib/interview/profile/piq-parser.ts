@@ -1021,6 +1021,8 @@ function matchFieldLabel(
           : [];
 
   for (const candidates of [scoped, COMPILED_GLOBAL]) {
+    const isGlobal = candidates === COMPILED_GLOBAL;
+
     for (const entry of candidates) {
       if (
         entry.spec.requiresQuestionNumber !== undefined &&
@@ -1030,7 +1032,20 @@ function matchFieldLabel(
       }
       if (!tokensStartWith(tokens, entry.words)) continue;
 
-      const value = cleanValue(rest.slice(tokens[entry.words.length - 1].end));
+      const after = rest.slice(tokens[entry.words.length - 1].end);
+
+      // A one-word global label — "Name", "Age", "City", "Height" — is a prefix
+      // of a great deal of ordinary prose, and matching it on sight would file
+      // "Name of my favourite book" as the candidate's name. So it counts only
+      // when the line either punctuates the label ("Name: ...") or carries that
+      // question's own number ("7. Name ..."), which is how the blank form
+      // presents it. Longer labels are specific enough to stand on their own,
+      // and labels scoped to a block are drawn from a small, unambiguous set.
+      if (isGlobal && entry.words.length === 1 && entry.spec.question !== questionNumber) {
+        if (!/^\s*[:;.,–—-]/.test(after) && after.trim().length > 0) continue;
+      }
+
+      const value = cleanValue(after);
       // A recognised label with a blank value still closes any continuation:
       // the previous field has ended even though this one is empty.
       draft.continuation = null;
