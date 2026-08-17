@@ -19,8 +19,8 @@ import "server-only";
  * bank that trusted it would serve an ungradable question the first time that
  * happened.
  */
-import { readFileSync } from "node:fs";
-import { join } from "node:path";
+import { existsSync, readFileSync } from "node:fs";
+import { join, resolve } from "node:path";
 
 import type { ChoiceOption, OirQuestionItem } from "@/lib/assessment/content";
 import type { MediaAsset } from "@/lib/assessment/media";
@@ -64,24 +64,32 @@ function invalid(message: string): never {
  * plain path is tried too so the loader keeps working if the content is ever
  * vendored into the app.
  */
-function resolveSetFile(setNumber: number): string {
-  const slug = `set-${String(setNumber).padStart(2, "0")}`;
+export function oirContentRoot(): string {
   const candidates = [
-    join(process.cwd(), "..", "content", "oir", slug, "questions.json"),
-    join(process.cwd(), "content", "oir", slug, "questions.json"),
+    join(process.cwd(), "..", "content", "oir"),
+    join(process.cwd(), "content", "oir"),
   ];
   for (const candidate of candidates) {
-    try {
-      readFileSync(candidate);
-      return candidate;
-    } catch {
-      // Try the next location.
-    }
+    if (existsSync(candidate)) return resolve(candidate);
   }
   return invalid(
-    `set ${setNumber} was not found. Run "node tools/oir-ingest/extract-set.mjs --set ${setNumber}" ` +
+    `the content root was not found. Run "node tools/oir-ingest/extract-set.mjs --set 1" ` +
       `to produce it. Looked in: ${candidates.join(", ")}`,
   );
+}
+
+export const oirSetSlug = (setNumber: number): string =>
+  `set-${String(setNumber).padStart(2, "0")}`;
+
+function resolveSetFile(setNumber: number): string {
+  const file = join(oirContentRoot(), oirSetSlug(setNumber), "questions.json");
+  if (!existsSync(file)) {
+    invalid(
+      `set ${setNumber} was not found. Run ` +
+        `"node tools/oir-ingest/extract-set.mjs --set ${setNumber}" to produce it.`,
+    );
+  }
+  return file;
 }
 
 // ---------------------------------------------------------------------------
@@ -219,7 +227,7 @@ function loadSet(setNumber: number): OirSet {
     invalid(`file for set ${setNumber} declares set ${String(raw.setNumber)}`);
   }
   const setProvenance = parseProvenance(raw.provenance, "provenance");
-  const slug = `set-${String(setNumber).padStart(2, "0")}`;
+  const slug = oirSetSlug(setNumber);
 
   const media = new Map<MediaAssetId, MediaAsset>();
   const questions: OirQuestionItem[] = [];
