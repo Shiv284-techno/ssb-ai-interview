@@ -1,0 +1,2122 @@
+{
+  "setNumber": 1,
+  "sourcePageRange": {
+    "first": 3,
+    "last": 16
+  },
+  "answersMarker": {
+    "page": 12,
+    "y": 423.62
+  },
+  "provenance": {
+    "kind": "original",
+    "author": "SSB AI Interviewer platform",
+    "createdAt": "1970-01-01T00:00:00.000Z"
+  },
+  "sourceQuestionCount": 50,
+  "questionCount": 46,
+  "omittedCount": 4,
+  "omitted": [
+    {
+      "position": 5,
+      "sourcePages": {
+        "question": 3,
+        "answer": 12
+      },
+      "reasons": [
+        "page 4 renders ink at y=571-730.9 that continues underneath the running header or footer; the diagram cannot be recovered whole, so this question may be incomplete."
+      ]
+    },
+    {
+      "position": 24,
+      "sourcePages": {
+        "question": 7,
+        "answer": 14
+      },
+      "reasons": [
+        "page 7 renders ink at y=42.5-46.9 that too small to be a whole diagram; the diagram cannot be recovered whole, so this question may be incomplete.",
+        "page 8 renders ink at y=629.7-730.9 that continues underneath the running header or footer; the diagram cannot be recovered whole, so this question may be incomplete.",
+        "the answer selects option 3, but the question prints no options"
+      ]
+    },
+    {
+      "position": 31,
+      "sourcePages": {
+        "question": 8,
+        "answer": 15
+      },
+      "reasons": [
+        "page 8 renders content at y=15.5-19.5 that is absent from the PDF text layer and cannot be recovered by this pipeline. It falls inside this question, so the question may be incomplete.",
+        "page 8 renders ink at y=15.5-19.5 that too small to be a whole diagram; the diagram cannot be recovered whole, so this question may be incomplete.",
+        "the answer selects option 4, which the question does not print"
+      ]
+    },
+    {
+      "position": 36,
+      "sourcePages": {
+        "question": 9,
+        "answer": 15
+      },
+      "reasons": [
+        "page 10 renders ink at y=651.7-730.9 that continues underneath the running header or footer; the diagram cannot be recovered whole, so this question may be incomplete."
+      ]
+    }
+  ],
+  "hazards": [
+    {
+      "page": 8,
+      "ink": 2412,
+      "topY": 19.5,
+      "bottomY": 15.5,
+      "question": 31
+    },
+    {
+      "page": 4,
+      "topY": 730.9,
+      "bottomY": 571,
+      "ink": 43652,
+      "why": "continues underneath the running header or footer",
+      "question": 5
+    },
+    {
+      "page": 7,
+      "topY": 46.9,
+      "bottomY": 42.5,
+      "ink": 634,
+      "why": "too small to be a whole diagram",
+      "question": 24
+    },
+    {
+      "page": 8,
+      "topY": 730.9,
+      "bottomY": 629.7,
+      "ink": 6446,
+      "why": "continues underneath the running header or footer",
+      "question": 24
+    },
+    {
+      "page": 8,
+      "topY": 19.5,
+      "bottomY": 15.5,
+      "ink": 2412,
+      "why": "too small to be a whole diagram",
+      "question": 31
+    },
+    {
+      "page": 10,
+      "topY": 730.9,
+      "bottomY": 651.7,
+      "ink": 34429,
+      "why": "continues underneath the running header or footer",
+      "question": 36
+    }
+  ],
+  "questions": [
+    {
+      "id": "oir.0001",
+      "type": "oir-question",
+      "setNumber": 1,
+      "position": 1,
+      "usedBy": [
+        "oir"
+      ],
+      "version": 1,
+      "status": "active",
+      "provenance": {
+        "kind": "original",
+        "author": "SSB AI Interviewer platform",
+        "createdAt": "1970-01-01T00:00:00.000Z"
+      },
+      "tags": [],
+      "difficulty": null,
+      "authoredAt": "1970-01-01T00:00:00.000Z",
+      "editorialNote": null,
+      "stem": "Which one of the following cubes can possibly belong to Group A?",
+      "options": [],
+      "optionSource": "figure",
+      "figures": [
+        "oir/set-01/figures/q01-fig1.png",
+        "oir/set-01/figures/q01-fig2.png"
+      ],
+      "answerKey": {
+        "kind": "single-option",
+        "optionId": "3"
+      },
+      "explanation": "The elements in Group A are consonants and elements in Group B are vowels of English Alphabet. Cube (1) consists of 1 vowel. So, it does not belong to Group A. Cube (2) consists of 2 vowels. So, it does not belong to Group A. Cube (3) consists of only consonants. So, it belongs to Group A only. Thus, cube (3) is the correct answer.",
+      "curations": [],
+      "sourcePages": {
+        "question": 3,
+        "answer": 12
+      }
+    },
+    {
+      "id": "oir.0002",
+      "type": "oir-question",
+      "setNumber": 1,
+      "position": 2,
+      "usedBy": [
+        "oir"
+      ],
+      "version": 1,
+      "status": "active",
+      "provenance": {
+        "kind": "original",
+        "author": "SSB AI Interviewer platform",
+        "createdAt": "1970-01-01T00:00:00.000Z"
+      },
+      "tags": [],
+      "difficulty": null,
+      "authoredAt": "1970-01-01T00:00:00.000Z",
+      "editorialNote": null,
+      "stem": "Write the number of the choice that applies best to the statement given below: A boy is sitting on the back-seat of the car. When the driver of the car starts it suddenly, the boy bends towards the backside.",
+      "options": [
+        {
+          "id": "1",
+          "text": "True"
+        },
+        {
+          "id": "2",
+          "text": "Probable"
+        },
+        {
+          "id": "3",
+          "text": "False"
+        },
+        {
+          "id": "4",
+          "text": "Absurd"
+        }
+      ],
+      "optionSource": "text",
+      "figures": [],
+      "answerKey": {
+        "kind": "single-option",
+        "optionId": "1"
+      },
+      "explanation": "When car suddenly starts to move, the person who is sitting on the back-seat always bends towards backward.",
+      "curations": [],
+      "sourcePages": {
+        "question": 3,
+        "answer": 12
+      }
+    },
+    {
+      "id": "oir.0003",
+      "type": "oir-question",
+      "setNumber": 1,
+      "position": 3,
+      "usedBy": [
+        "oir"
+      ],
+      "version": 1,
+      "status": "active",
+      "provenance": {
+        "kind": "original",
+        "author": "SSB AI Interviewer platform",
+        "createdAt": "1970-01-01T00:00:00.000Z"
+      },
+      "tags": [],
+      "difficulty": null,
+      "authoredAt": "1970-01-01T00:00:00.000Z",
+      "editorialNote": null,
+      "stem": "Find if the two cubes are alike. Write ‘Yes’ or ‘No’ on the answer sheet:",
+      "options": [],
+      "optionSource": "figure",
+      "figures": [
+        "oir/set-01/figures/q03-fig1.png"
+      ],
+      "answerKey": {
+        "kind": "boolean",
+        "value": true
+      },
+      "explanation": "Both are same where pentagon and heart symbols are opposite to each other.",
+      "curations": [],
+      "sourcePages": {
+        "question": 3,
+        "answer": 12
+      }
+    },
+    {
+      "id": "oir.0004",
+      "type": "oir-question",
+      "setNumber": 1,
+      "position": 4,
+      "usedBy": [
+        "oir"
+      ],
+      "version": 1,
+      "status": "active",
+      "provenance": {
+        "kind": "original",
+        "author": "SSB AI Interviewer platform",
+        "createdAt": "1970-01-01T00:00:00.000Z"
+      },
+      "tags": [],
+      "difficulty": null,
+      "authoredAt": "1970-01-01T00:00:00.000Z",
+      "editorialNote": null,
+      "stem": "Find if the two cubes are alike. Write ‘Yes’ or ‘No’ on the answer sheet:",
+      "options": [],
+      "optionSource": "figure",
+      "figures": [
+        "oir/set-01/figures/q04-fig1.png"
+      ],
+      "answerKey": {
+        "kind": "boolean",
+        "value": true
+      },
+      "explanation": "Both are same when dice 1 is rotating 90° clockwise.",
+      "curations": [],
+      "sourcePages": {
+        "question": 3,
+        "answer": 12
+      }
+    },
+    {
+      "id": "oir.0006",
+      "type": "oir-question",
+      "setNumber": 1,
+      "position": 6,
+      "usedBy": [
+        "oir"
+      ],
+      "version": 1,
+      "status": "active",
+      "provenance": {
+        "kind": "original",
+        "author": "SSB AI Interviewer platform",
+        "createdAt": "1970-01-01T00:00:00.000Z"
+      },
+      "tags": [],
+      "difficulty": null,
+      "authoredAt": "1970-01-01T00:00:00.000Z",
+      "editorialNote": null,
+      "stem": "Which two of the following figures belong to Class A?",
+      "options": [],
+      "optionSource": "figure",
+      "figures": [
+        "oir/set-01/figures/q06-fig1.png",
+        "oir/set-01/figures/q06-fig2.png"
+      ],
+      "answerKey": {
+        "kind": "multiple-options",
+        "optionIds": [
+          "2",
+          "3"
+        ]
+      },
+      "explanation": "Each figure in class A consists of two similar closed figures, one placed inside the other. Hence, figures (2) and (3) belong to Class A.",
+      "curations": [],
+      "sourcePages": {
+        "question": 4,
+        "answer": 12
+      }
+    },
+    {
+      "id": "oir.0007",
+      "type": "oir-question",
+      "setNumber": 1,
+      "position": 7,
+      "usedBy": [
+        "oir"
+      ],
+      "version": 1,
+      "status": "active",
+      "provenance": {
+        "kind": "original",
+        "author": "SSB AI Interviewer platform",
+        "createdAt": "1970-01-01T00:00:00.000Z"
+      },
+      "tags": [],
+      "difficulty": null,
+      "authoredAt": "1970-01-01T00:00:00.000Z",
+      "editorialNote": null,
+      "stem": "Write the number of the figure which will come next in the series:",
+      "options": [],
+      "optionSource": "figure",
+      "figures": [
+        "oir/set-01/figures/q07-fig1.png"
+      ],
+      "answerKey": {
+        "kind": "single-option",
+        "optionId": "3"
+      },
+      "explanation": "The longer arrow is moved 90° clockwise direction whereas the shorter arrow remains constant. Thus, figure (3) will come next in the given series.",
+      "curations": [],
+      "sourcePages": {
+        "question": 4,
+        "answer": 12
+      }
+    },
+    {
+      "id": "oir.0008",
+      "type": "oir-question",
+      "setNumber": 1,
+      "position": 8,
+      "usedBy": [
+        "oir"
+      ],
+      "version": 1,
+      "status": "active",
+      "provenance": {
+        "kind": "original",
+        "author": "SSB AI Interviewer platform",
+        "createdAt": "1970-01-01T00:00:00.000Z"
+      },
+      "tags": [],
+      "difficulty": null,
+      "authoredAt": "1970-01-01T00:00:00.000Z",
+      "editorialNote": null,
+      "stem": "Write the number of the figure which will come next in the series:",
+      "options": [],
+      "optionSource": "figure",
+      "figures": [
+        "oir/set-01/figures/q08-fig1.png"
+      ],
+      "answerKey": {
+        "kind": "single-option",
+        "optionId": "3"
+      },
+      "explanation": "In the given question figures, the analogy is that the second one is opposite to first one. Similarly, the fourth one will be the opposite of third one. Thus option 3 is the correct answer.",
+      "curations": [],
+      "sourcePages": {
+        "question": 5,
+        "answer": 13
+      }
+    },
+    {
+      "id": "oir.0009",
+      "type": "oir-question",
+      "setNumber": 1,
+      "position": 9,
+      "usedBy": [
+        "oir"
+      ],
+      "version": 1,
+      "status": "active",
+      "provenance": {
+        "kind": "original",
+        "author": "SSB AI Interviewer platform",
+        "createdAt": "1970-01-01T00:00:00.000Z"
+      },
+      "tags": [],
+      "difficulty": null,
+      "authoredAt": "1970-01-01T00:00:00.000Z",
+      "editorialNote": null,
+      "stem": "Write the last letter of the rearranged sentence. not that gold glitters is all",
+      "options": [],
+      "optionSource": "none",
+      "figures": [],
+      "answerKey": {
+        "kind": "short-text",
+        "value": "D"
+      },
+      "explanation": "The rearranged sentence is: All that glitters is not gold Then, the last letter of the rearranged sentence is ‘D’.",
+      "curations": [],
+      "sourcePages": {
+        "question": 5,
+        "answer": 13
+      }
+    },
+    {
+      "id": "oir.0010",
+      "type": "oir-question",
+      "setNumber": 1,
+      "position": 10,
+      "usedBy": [
+        "oir"
+      ],
+      "version": 1,
+      "status": "active",
+      "provenance": {
+        "kind": "original",
+        "author": "SSB AI Interviewer platform",
+        "createdAt": "1970-01-01T00:00:00.000Z"
+      },
+      "tags": [],
+      "difficulty": null,
+      "authoredAt": "1970-01-01T00:00:00.000Z",
+      "editorialNote": null,
+      "stem": "Write the SECOND letter of the rearranged word. LESINANCSEL is next to godliness.",
+      "options": [],
+      "optionSource": "none",
+      "figures": [],
+      "answerKey": {
+        "kind": "short-text",
+        "value": "L"
+      },
+      "explanation": "The rearranged word is CLEANLINESS and its SECOND letter is “L”.",
+      "curations": [],
+      "sourcePages": {
+        "question": 5,
+        "answer": 13
+      }
+    },
+    {
+      "id": "oir.0011",
+      "type": "oir-question",
+      "setNumber": 1,
+      "position": 11,
+      "usedBy": [
+        "oir"
+      ],
+      "version": 1,
+      "status": "active",
+      "provenance": {
+        "kind": "original",
+        "author": "SSB AI Interviewer platform",
+        "createdAt": "1970-01-01T00:00:00.000Z"
+      },
+      "tags": [],
+      "difficulty": null,
+      "authoredAt": "1970-01-01T00:00:00.000Z",
+      "editorialNote": null,
+      "stem": "Animal is to Meat as Mine is to __________.",
+      "options": [
+        {
+          "id": "1",
+          "text": "Cloth"
+        },
+        {
+          "id": "2",
+          "text": "Paper"
+        },
+        {
+          "id": "3",
+          "text": "Mineral"
+        },
+        {
+          "id": "4",
+          "text": "Fabric"
+        },
+        {
+          "id": "5",
+          "text": "Memory"
+        }
+      ],
+      "optionSource": "text",
+      "figures": [],
+      "answerKey": {
+        "kind": "single-option",
+        "optionId": "3"
+      },
+      "explanation": "Meat is a general product produced from animals while minerals are produced from mine.",
+      "curations": [],
+      "sourcePages": {
+        "question": 5,
+        "answer": 13
+      }
+    },
+    {
+      "id": "oir.0012",
+      "type": "oir-question",
+      "setNumber": 1,
+      "position": 12,
+      "usedBy": [
+        "oir"
+      ],
+      "version": 1,
+      "status": "active",
+      "provenance": {
+        "kind": "original",
+        "author": "SSB AI Interviewer platform",
+        "createdAt": "1970-01-01T00:00:00.000Z"
+      },
+      "tags": [],
+      "difficulty": null,
+      "authoredAt": "1970-01-01T00:00:00.000Z",
+      "editorialNote": null,
+      "stem": "",
+      "options": [],
+      "optionSource": "figure",
+      "figures": [
+        "oir/set-01/figures/q12-fig1.png"
+      ],
+      "answerKey": {
+        "kind": "single-option",
+        "optionId": "2"
+      },
+      "explanation": "All the opposite edges in the shape are connected. Thus, option 2 is the correct answer.",
+      "curations": [],
+      "sourcePages": {
+        "question": 5,
+        "answer": 13
+      }
+    },
+    {
+      "id": "oir.0013",
+      "type": "oir-question",
+      "setNumber": 1,
+      "position": 13,
+      "usedBy": [
+        "oir"
+      ],
+      "version": 1,
+      "status": "active",
+      "provenance": {
+        "kind": "original",
+        "author": "SSB AI Interviewer platform",
+        "createdAt": "1970-01-01T00:00:00.000Z"
+      },
+      "tags": [],
+      "difficulty": null,
+      "authoredAt": "1970-01-01T00:00:00.000Z",
+      "editorialNote": null,
+      "stem": "Which two sets of letters will come next in the following series? ZXW, VTS, RPO, NLK, ________, ________.",
+      "options": [],
+      "optionSource": "none",
+      "figures": [],
+      "answerKey": {
+        "kind": "multi-token",
+        "values": [
+          "JHG",
+          "FDC"
+        ]
+      },
+      "explanation": "The given series is in reverse order of English alphabet. Then in each set of elements, second letter will be removed from the series. i.e. ZYXW – Removing second letter Y – ZXW VUTS – Removing second letter U – VTS RQPO – Removing second letter Q – RPO NMLK – Removing second letter M – NLK JIHG – Removing second letter I – JHG FEDC – Removing second letter E – FDC Thus, the next two sets of letters will be JHG and FDC",
+      "curations": [],
+      "sourcePages": {
+        "question": 5,
+        "answer": 13
+      }
+    },
+    {
+      "id": "oir.0014",
+      "type": "oir-question",
+      "setNumber": 1,
+      "position": 14,
+      "usedBy": [
+        "oir"
+      ],
+      "version": 1,
+      "status": "active",
+      "provenance": {
+        "kind": "original",
+        "author": "SSB AI Interviewer platform",
+        "createdAt": "1970-01-01T00:00:00.000Z"
+      },
+      "tags": [],
+      "difficulty": null,
+      "authoredAt": "1970-01-01T00:00:00.000Z",
+      "editorialNote": null,
+      "stem": "Write the number of the figure which will come next in the series:",
+      "options": [],
+      "optionSource": "figure",
+      "figures": [
+        "oir/set-01/figures/q14-fig1.png"
+      ],
+      "answerKey": {
+        "kind": "single-option",
+        "optionId": "2"
+      },
+      "explanation": "𝑋 − 2 = 𝑉; 𝐴 − 2 = 𝑌; 𝐺 − 2 = 𝐸; 𝐽 − 2 = 𝐻 𝑉 − 3 = 𝑆; 𝑌 − 3 = 𝑉; 𝐸 − 3 = 𝐵; 𝐻 − 3 = 𝐸 𝑆 − 4 = 𝑂; 𝑉 − 4 = 𝑅; 𝐵 − 4 = 𝑋; 𝐸 − 4 = 𝐴 Thus, option (2) is the correct answer.",
+      "curations": [],
+      "sourcePages": {
+        "question": 5,
+        "answer": 13
+      }
+    },
+    {
+      "id": "oir.0015",
+      "type": "oir-question",
+      "setNumber": 1,
+      "position": 15,
+      "usedBy": [
+        "oir"
+      ],
+      "version": 1,
+      "status": "active",
+      "provenance": {
+        "kind": "original",
+        "author": "SSB AI Interviewer platform",
+        "createdAt": "1970-01-01T00:00:00.000Z"
+      },
+      "tags": [],
+      "difficulty": null,
+      "authoredAt": "1970-01-01T00:00:00.000Z",
+      "editorialNote": null,
+      "stem": "Which item will stand middle if the following are rearranged proper order?",
+      "options": [
+        {
+          "id": "1",
+          "text": "College"
+        },
+        {
+          "id": "2",
+          "text": "Marriage"
+        },
+        {
+          "id": "3",
+          "text": "Kindergarten"
+        },
+        {
+          "id": "4",
+          "text": "Profession"
+        },
+        {
+          "id": "5",
+          "text": "School"
+        }
+      ],
+      "optionSource": "text",
+      "figures": [],
+      "answerKey": {
+        "kind": "single-option",
+        "optionId": "3"
+      },
+      "explanation": "The rearranged proper order of the given words is Kindergarten, School, College, Profession, Marriage. Here, College is the middle term.",
+      "curations": [],
+      "sourcePages": {
+        "question": 6,
+        "answer": 13
+      }
+    },
+    {
+      "id": "oir.0016",
+      "type": "oir-question",
+      "setNumber": 1,
+      "position": 16,
+      "usedBy": [
+        "oir"
+      ],
+      "version": 1,
+      "status": "active",
+      "provenance": {
+        "kind": "original",
+        "author": "SSB AI Interviewer platform",
+        "createdAt": "1970-01-01T00:00:00.000Z"
+      },
+      "tags": [],
+      "difficulty": null,
+      "authoredAt": "1970-01-01T00:00:00.000Z",
+      "editorialNote": null,
+      "stem": "Which word does not belong to the same class as others?",
+      "options": [
+        {
+          "id": "1",
+          "text": "Deer"
+        },
+        {
+          "id": "2",
+          "text": "Kangaroo"
+        },
+        {
+          "id": "3",
+          "text": "Zebra"
+        },
+        {
+          "id": "4",
+          "text": "Hyena"
+        },
+        {
+          "id": "5",
+          "text": "Giraffe"
+        }
+      ],
+      "optionSource": "text",
+      "figures": [],
+      "answerKey": {
+        "kind": "single-option",
+        "optionId": "4"
+      },
+      "explanation": "Except Hyena, all other animals are herbivores.",
+      "curations": [],
+      "sourcePages": {
+        "question": 6,
+        "answer": 13
+      }
+    },
+    {
+      "id": "oir.0017",
+      "type": "oir-question",
+      "setNumber": 1,
+      "position": 17,
+      "usedBy": [
+        "oir"
+      ],
+      "version": 1,
+      "status": "active",
+      "provenance": {
+        "kind": "original",
+        "author": "SSB AI Interviewer platform",
+        "createdAt": "1970-01-01T00:00:00.000Z"
+      },
+      "tags": [],
+      "difficulty": null,
+      "authoredAt": "1970-01-01T00:00:00.000Z",
+      "editorialNote": null,
+      "stem": "",
+      "options": [],
+      "optionSource": "figure",
+      "figures": [
+        "oir/set-01/figures/q17-fig1.png"
+      ],
+      "answerKey": {
+        "kind": "single-option",
+        "optionId": "4"
+      },
+      "explanation": "The double lines are inserted at the successive figures in the clockwise direction. So, figure (4) completes the series.",
+      "curations": [],
+      "sourcePages": {
+        "question": 6,
+        "answer": 14
+      }
+    },
+    {
+      "id": "oir.0018",
+      "type": "oir-question",
+      "setNumber": 1,
+      "position": 18,
+      "usedBy": [
+        "oir"
+      ],
+      "version": 1,
+      "status": "active",
+      "provenance": {
+        "kind": "original",
+        "author": "SSB AI Interviewer platform",
+        "createdAt": "1970-01-01T00:00:00.000Z"
+      },
+      "tags": [],
+      "difficulty": null,
+      "authoredAt": "1970-01-01T00:00:00.000Z",
+      "editorialNote": null,
+      "stem": "Choose one word from each of the following three lines to make a correct, true and meaningful sentence. If you [(1) sing (2) hear (3) speak (4) dance] [(1) loud (2) mild (3) melody (4) jazz] music, it will [(1) impede (2) impair (3) impose (4) impel] your hearing",
+      "options": [],
+      "optionSource": "none",
+      "figures": [],
+      "answerKey": {
+        "kind": "ordered-sequence",
+        "values": [
+          "2",
+          "1",
+          "2"
+        ]
+      },
+      "explanation": "Hear, loud, impair. The meaningful sentence is “If you hear loud music, it will impair your hearing.”",
+      "curations": [],
+      "sourcePages": {
+        "question": 7,
+        "answer": 14
+      }
+    },
+    {
+      "id": "oir.0019",
+      "type": "oir-question",
+      "setNumber": 1,
+      "position": 19,
+      "usedBy": [
+        "oir"
+      ],
+      "version": 1,
+      "status": "active",
+      "provenance": {
+        "kind": "original",
+        "author": "SSB AI Interviewer platform",
+        "createdAt": "1970-01-01T00:00:00.000Z"
+      },
+      "tags": [],
+      "difficulty": null,
+      "authoredAt": "1970-01-01T00:00:00.000Z",
+      "editorialNote": null,
+      "stem": "Write the number which will come LAST in the dictionary?",
+      "options": [
+        {
+          "id": "1",
+          "text": "Sports"
+        },
+        {
+          "id": "2",
+          "text": "Sparrow"
+        },
+        {
+          "id": "3",
+          "text": "Study"
+        },
+        {
+          "id": "4",
+          "text": "Speaker"
+        },
+        {
+          "id": "5",
+          "text": "Swift"
+        }
+      ],
+      "optionSource": "text",
+      "figures": [],
+      "answerKey": {
+        "kind": "single-option",
+        "optionId": "5"
+      },
+      "explanation": "Among these given words, Swift will come last in the dictionary.",
+      "curations": [],
+      "sourcePages": {
+        "question": 7,
+        "answer": 14
+      }
+    },
+    {
+      "id": "oir.0020",
+      "type": "oir-question",
+      "setNumber": 1,
+      "position": 20,
+      "usedBy": [
+        "oir"
+      ],
+      "version": 1,
+      "status": "active",
+      "provenance": {
+        "kind": "original",
+        "author": "SSB AI Interviewer platform",
+        "createdAt": "1970-01-01T00:00:00.000Z"
+      },
+      "tags": [],
+      "difficulty": null,
+      "authoredAt": "1970-01-01T00:00:00.000Z",
+      "editorialNote": null,
+      "stem": "Subtract:",
+      "options": [],
+      "optionSource": "figure",
+      "figures": [
+        "oir/set-01/figures/q20-fig1.png"
+      ],
+      "answerKey": {
+        "kind": "short-text",
+        "value": "8"
+      },
+      "explanation": null,
+      "curations": [
+        {
+          "field": "answerKey",
+          "evidence": "The source prints this answer only as a figure. Two independent readings agree. (1) The answer figure on page 14 (y 458-547) shows the worked subtraction 5308 - 1823 = 34[8]5 with the digit 8 in the box. (2) The question figure alone determines it: 5308 - xx2x = 34_5 forces the subtrahend to 1823 (units 8-x=5 gives x=3; tens 0-2 borrows, making the boxed digit 8; hundreds 12-x=4 gives x=8; thousands 4-x=3 gives x=1), and 5308 - 1823 = 3485."
+        }
+      ],
+      "sourcePages": {
+        "question": 7,
+        "answer": 14
+      }
+    },
+    {
+      "id": "oir.0021",
+      "type": "oir-question",
+      "setNumber": 1,
+      "position": 21,
+      "usedBy": [
+        "oir"
+      ],
+      "version": 1,
+      "status": "active",
+      "provenance": {
+        "kind": "original",
+        "author": "SSB AI Interviewer platform",
+        "createdAt": "1970-01-01T00:00:00.000Z"
+      },
+      "tags": [],
+      "difficulty": null,
+      "authoredAt": "1970-01-01T00:00:00.000Z",
+      "editorialNote": null,
+      "stem": "Write the number of the figure which will come next in the series:",
+      "options": [],
+      "optionSource": "figure",
+      "figures": [
+        "oir/set-01/figures/q21-fig1.png"
+      ],
+      "answerKey": {
+        "kind": "single-option",
+        "optionId": "5"
+      },
+      "explanation": "The diamond shape in the outer side is shifted in anticlockwise direction and the circle in the inner side is shifted in clockwise direction. Thus, option (5) is the next figure in the series.",
+      "curations": [],
+      "sourcePages": {
+        "question": 7,
+        "answer": 14
+      }
+    },
+    {
+      "id": "oir.0022",
+      "type": "oir-question",
+      "setNumber": 1,
+      "position": 22,
+      "usedBy": [
+        "oir"
+      ],
+      "version": 1,
+      "status": "active",
+      "provenance": {
+        "kind": "original",
+        "author": "SSB AI Interviewer platform",
+        "createdAt": "1970-01-01T00:00:00.000Z"
+      },
+      "tags": [],
+      "difficulty": null,
+      "authoredAt": "1970-01-01T00:00:00.000Z",
+      "editorialNote": null,
+      "stem": "Which group of numbers does not belong to the same class as others?",
+      "options": [
+        {
+          "id": "1",
+          "text": "5212"
+        },
+        {
+          "id": "2",
+          "text": "7111"
+        },
+        {
+          "id": "3",
+          "text": "3214"
+        },
+        {
+          "id": "4",
+          "text": "1090"
+        },
+        {
+          "id": "5",
+          "text": "1608"
+        }
+      ],
+      "optionSource": "text",
+      "figures": [],
+      "answerKey": {
+        "kind": "single-option",
+        "optionId": "5"
+      },
+      "explanation": "The sum of all digits in the given number is 10 in all options except option 5. 5212 = 5 + 2 + 1 + 2 = 10 7111 = 7 + 1 + 1 + 1 = 10 3214 = 3 + 2 + 1 + 4 = 10 1090 = 1 + 0 + 9 + 0 = 10 1608 = 1 + 6 + 0 + 8 = 15 Thus option 5 is the correct answer.",
+      "curations": [],
+      "sourcePages": {
+        "question": 7,
+        "answer": 14
+      }
+    },
+    {
+      "id": "oir.0023",
+      "type": "oir-question",
+      "setNumber": 1,
+      "position": 23,
+      "usedBy": [
+        "oir"
+      ],
+      "version": 1,
+      "status": "active",
+      "provenance": {
+        "kind": "original",
+        "author": "SSB AI Interviewer platform",
+        "createdAt": "1970-01-01T00:00:00.000Z"
+      },
+      "tags": [],
+      "difficulty": null,
+      "authoredAt": "1970-01-01T00:00:00.000Z",
+      "editorialNote": null,
+      "stem": "Add:",
+      "options": [],
+      "optionSource": "figure",
+      "figures": [
+        "oir/set-01/figures/q23-fig1.png"
+      ],
+      "answerKey": {
+        "kind": "short-text",
+        "value": "9"
+      },
+      "explanation": null,
+      "curations": [
+        {
+          "field": "answerKey",
+          "evidence": "The source prints this answer only as a figure. Two independent readings agree. (1) The answer figure on page 14 (y 120-237) shows the worked addition 342 + 584 = [9]26 with the digit 9 in the box and the carry 1 circled. (2) The question figure alone determines it: 342 + 5xx = _26 forces the addend to 584 (units 2+x ends in 6 with no carry, so x=4; tens 4+x=12 gives x=8 and carries 1; hundreds 3+5+1=9), and 342 + 584 = 926."
+        }
+      ],
+      "sourcePages": {
+        "question": 7,
+        "answer": 14
+      }
+    },
+    {
+      "id": "oir.0025",
+      "type": "oir-question",
+      "setNumber": 1,
+      "position": 25,
+      "usedBy": [
+        "oir"
+      ],
+      "version": 1,
+      "status": "active",
+      "provenance": {
+        "kind": "original",
+        "author": "SSB AI Interviewer platform",
+        "createdAt": "1970-01-01T00:00:00.000Z"
+      },
+      "tags": [],
+      "difficulty": null,
+      "authoredAt": "1970-01-01T00:00:00.000Z",
+      "editorialNote": null,
+      "stem": "Which two of the following figures belong to Class A?",
+      "options": [],
+      "optionSource": "figure",
+      "figures": [
+        "oir/set-01/figures/q25-fig1.png",
+        "oir/set-01/figures/q25-fig2.png"
+      ],
+      "answerKey": {
+        "kind": "multiple-options",
+        "optionIds": [
+          "1",
+          "2"
+        ]
+      },
+      "explanation": "Each figure in class A consists of two similar combined figures. Hence, figures (1) and (2) belong to Class A.",
+      "curations": [],
+      "sourcePages": {
+        "question": 8,
+        "answer": 14
+      }
+    },
+    {
+      "id": "oir.0026",
+      "type": "oir-question",
+      "setNumber": 1,
+      "position": 26,
+      "usedBy": [
+        "oir"
+      ],
+      "version": 1,
+      "status": "active",
+      "provenance": {
+        "kind": "original",
+        "author": "SSB AI Interviewer platform",
+        "createdAt": "1970-01-01T00:00:00.000Z"
+      },
+      "tags": [],
+      "difficulty": null,
+      "authoredAt": "1970-01-01T00:00:00.000Z",
+      "editorialNote": null,
+      "stem": "Write the number of the word which will come last in the dictionary?",
+      "options": [
+        {
+          "id": "1",
+          "text": "People"
+        },
+        {
+          "id": "2",
+          "text": "Calculator"
+        },
+        {
+          "id": "3",
+          "text": "Etiquette"
+        },
+        {
+          "id": "4",
+          "text": "Newspaper"
+        }
+      ],
+      "optionSource": "text",
+      "figures": [],
+      "answerKey": {
+        "kind": "single-option",
+        "optionId": "4"
+      },
+      "explanation": "Among these given words, ‘Newspaper’ will come last in the dictionary.",
+      "curations": [],
+      "sourcePages": {
+        "question": 8,
+        "answer": 15
+      }
+    },
+    {
+      "id": "oir.0027",
+      "type": "oir-question",
+      "setNumber": 1,
+      "position": 27,
+      "usedBy": [
+        "oir"
+      ],
+      "version": 1,
+      "status": "active",
+      "provenance": {
+        "kind": "original",
+        "author": "SSB AI Interviewer platform",
+        "createdAt": "1970-01-01T00:00:00.000Z"
+      },
+      "tags": [],
+      "difficulty": null,
+      "authoredAt": "1970-01-01T00:00:00.000Z",
+      "editorialNote": null,
+      "stem": "Write the number of the word which will come last in the dictionary?",
+      "options": [
+        {
+          "id": "1",
+          "text": "Urgent"
+        },
+        {
+          "id": "2",
+          "text": "Utmost"
+        },
+        {
+          "id": "3",
+          "text": "University"
+        },
+        {
+          "id": "4",
+          "text": "Umbrella"
+        }
+      ],
+      "optionSource": "text",
+      "figures": [],
+      "answerKey": {
+        "kind": "single-option",
+        "optionId": "4"
+      },
+      "explanation": "Among these given words, ‘Utmost’ will come last in the dictionary.",
+      "curations": [],
+      "sourcePages": {
+        "question": 8,
+        "answer": 15
+      }
+    },
+    {
+      "id": "oir.0028",
+      "type": "oir-question",
+      "setNumber": 1,
+      "position": 28,
+      "usedBy": [
+        "oir"
+      ],
+      "version": 1,
+      "status": "active",
+      "provenance": {
+        "kind": "original",
+        "author": "SSB AI Interviewer platform",
+        "createdAt": "1970-01-01T00:00:00.000Z"
+      },
+      "tags": [],
+      "difficulty": null,
+      "authoredAt": "1970-01-01T00:00:00.000Z",
+      "editorialNote": null,
+      "stem": "Write the number of the correct choice. How many 6’s come just after 2 in the following numbers? 1 6 2 4 3 5 8 2 6 8 9 6 2 5 4 7 8 6 1 3 7 8 2 6 5 4 2 1 7 9 5 2 4 6 2 4 2 6 9 8",
+      "options": [
+        {
+          "id": "1",
+          "text": "3"
+        },
+        {
+          "id": "2",
+          "text": "5"
+        },
+        {
+          "id": "3",
+          "text": "1"
+        },
+        {
+          "id": "4",
+          "text": "6"
+        }
+      ],
+      "optionSource": "text",
+      "figures": [],
+      "answerKey": {
+        "kind": "single-option",
+        "optionId": "1"
+      },
+      "explanation": "There are three 6’s come just after 2 in the given numbers. They are",
+      "curations": [],
+      "sourcePages": {
+        "question": 8,
+        "answer": 15
+      }
+    },
+    {
+      "id": "oir.0029",
+      "type": "oir-question",
+      "setNumber": 1,
+      "position": 29,
+      "usedBy": [
+        "oir"
+      ],
+      "version": 1,
+      "status": "active",
+      "provenance": {
+        "kind": "original",
+        "author": "SSB AI Interviewer platform",
+        "createdAt": "1970-01-01T00:00:00.000Z"
+      },
+      "tags": [],
+      "difficulty": null,
+      "authoredAt": "1970-01-01T00:00:00.000Z",
+      "editorialNote": null,
+      "stem": "Write the number of the word which will come last in the dictionary?",
+      "options": [
+        {
+          "id": "1",
+          "text": "Traffic"
+        },
+        {
+          "id": "2",
+          "text": "Helicopter"
+        },
+        {
+          "id": "3",
+          "text": "Vaccination"
+        },
+        {
+          "id": "4",
+          "text": "Judgement"
+        }
+      ],
+      "optionSource": "text",
+      "figures": [],
+      "answerKey": {
+        "kind": "single-option",
+        "optionId": "3"
+      },
+      "explanation": "Among these given words, ‘Vaccination’ will come last in the dictionary.",
+      "curations": [],
+      "sourcePages": {
+        "question": 8,
+        "answer": 15
+      }
+    },
+    {
+      "id": "oir.0030",
+      "type": "oir-question",
+      "setNumber": 1,
+      "position": 30,
+      "usedBy": [
+        "oir"
+      ],
+      "version": 1,
+      "status": "active",
+      "provenance": {
+        "kind": "original",
+        "author": "SSB AI Interviewer platform",
+        "createdAt": "1970-01-01T00:00:00.000Z"
+      },
+      "tags": [],
+      "difficulty": null,
+      "authoredAt": "1970-01-01T00:00:00.000Z",
+      "editorialNote": null,
+      "stem": "Write the number of the word which will come last in the dictionary?",
+      "options": [
+        {
+          "id": "1",
+          "text": "Name"
+        },
+        {
+          "id": "2",
+          "text": "Common"
+        },
+        {
+          "id": "3",
+          "text": "Things"
+        },
+        {
+          "id": "4",
+          "text": "Mouse"
+        }
+      ],
+      "optionSource": "text",
+      "figures": [],
+      "answerKey": {
+        "kind": "single-option",
+        "optionId": "3"
+      },
+      "explanation": "Among these given words, ‘Things’ will come last in the dictionary.",
+      "curations": [],
+      "sourcePages": {
+        "question": 8,
+        "answer": 15
+      }
+    },
+    {
+      "id": "oir.0032",
+      "type": "oir-question",
+      "setNumber": 1,
+      "position": 32,
+      "usedBy": [
+        "oir"
+      ],
+      "version": 1,
+      "status": "active",
+      "provenance": {
+        "kind": "original",
+        "author": "SSB AI Interviewer platform",
+        "createdAt": "1970-01-01T00:00:00.000Z"
+      },
+      "tags": [],
+      "difficulty": null,
+      "authoredAt": "1970-01-01T00:00:00.000Z",
+      "editorialNote": null,
+      "stem": "Write the number of the word which will come last in the dictionary?",
+      "options": [
+        {
+          "id": "1",
+          "text": "Queen"
+        },
+        {
+          "id": "2",
+          "text": "Watch"
+        },
+        {
+          "id": "3",
+          "text": "Ultimate"
+        },
+        {
+          "id": "4",
+          "text": "Xerox"
+        }
+      ],
+      "optionSource": "text",
+      "figures": [],
+      "answerKey": {
+        "kind": "single-option",
+        "optionId": "4"
+      },
+      "explanation": "Among these given words, ‘Xerox’ will come last in the dictionary.",
+      "curations": [],
+      "sourcePages": {
+        "question": 9,
+        "answer": 15
+      }
+    },
+    {
+      "id": "oir.0033",
+      "type": "oir-question",
+      "setNumber": 1,
+      "position": 33,
+      "usedBy": [
+        "oir"
+      ],
+      "version": 1,
+      "status": "active",
+      "provenance": {
+        "kind": "original",
+        "author": "SSB AI Interviewer platform",
+        "createdAt": "1970-01-01T00:00:00.000Z"
+      },
+      "tags": [],
+      "difficulty": null,
+      "authoredAt": "1970-01-01T00:00:00.000Z",
+      "editorialNote": null,
+      "stem": "Write the number of the correct choice. Swathi started her bike at 20:30 and reached the destination at 22:00. Find how much time did she spend in her travel?",
+      "options": [
+        {
+          "id": "1",
+          "text": "70 minutes"
+        },
+        {
+          "id": "2",
+          "text": "150 minutes"
+        },
+        {
+          "id": "3",
+          "text": "90 minutes"
+        },
+        {
+          "id": "4",
+          "text": "30 minutes"
+        }
+      ],
+      "optionSource": "text",
+      "figures": [],
+      "answerKey": {
+        "kind": "single-option",
+        "optionId": "3"
+      },
+      "explanation": "The given time is in international clock 24 hrs format. It shows after 12 o’clock the time will be shown as 13, 14, 15… hours. Since 20:30 is 8:30 pm and 22:00 is 10:00 pm, subtracting both times we get the difference is one and half hour i.e.1 hr 30 mins which is equal to 90 minutes. Therefore, Swathi spent 90 minutes in her travel.",
+      "curations": [],
+      "sourcePages": {
+        "question": 9,
+        "answer": 15
+      }
+    },
+    {
+      "id": "oir.0034",
+      "type": "oir-question",
+      "setNumber": 1,
+      "position": 34,
+      "usedBy": [
+        "oir"
+      ],
+      "version": 1,
+      "status": "active",
+      "provenance": {
+        "kind": "original",
+        "author": "SSB AI Interviewer platform",
+        "createdAt": "1970-01-01T00:00:00.000Z"
+      },
+      "tags": [],
+      "difficulty": null,
+      "authoredAt": "1970-01-01T00:00:00.000Z",
+      "editorialNote": null,
+      "stem": "Which two of the following figures belong to Class A?",
+      "options": [],
+      "optionSource": "figure",
+      "figures": [
+        "oir/set-01/figures/q34-fig1.png",
+        "oir/set-01/figures/q34-fig2.png"
+      ],
+      "answerKey": {
+        "kind": "multiple-options",
+        "optionIds": [
+          "1",
+          "4"
+        ]
+      },
+      "explanation": "Each figure in class A consists of two of two different closed figures, one placed inside the other. Hence, figures (1) and (4) belong to Class A.",
+      "curations": [],
+      "sourcePages": {
+        "question": 9,
+        "answer": 15
+      }
+    },
+    {
+      "id": "oir.0035",
+      "type": "oir-question",
+      "setNumber": 1,
+      "position": 35,
+      "usedBy": [
+        "oir"
+      ],
+      "version": 1,
+      "status": "active",
+      "provenance": {
+        "kind": "original",
+        "author": "SSB AI Interviewer platform",
+        "createdAt": "1970-01-01T00:00:00.000Z"
+      },
+      "tags": [],
+      "difficulty": null,
+      "authoredAt": "1970-01-01T00:00:00.000Z",
+      "editorialNote": null,
+      "stem": "Which two of the following figures belong to Class A?",
+      "options": [],
+      "optionSource": "figure",
+      "figures": [
+        "oir/set-01/figures/q35-fig1.png",
+        "oir/set-01/figures/q35-fig2.png"
+      ],
+      "answerKey": {
+        "kind": "multiple-options",
+        "optionIds": [
+          "1",
+          "3"
+        ]
+      },
+      "explanation": "Each figure in class A consists of the shapes having line of symmetry. Hence, figures (1) and (3) belong to Class A.",
+      "curations": [],
+      "sourcePages": {
+        "question": 9,
+        "answer": 15
+      }
+    },
+    {
+      "id": "oir.0037",
+      "type": "oir-question",
+      "setNumber": 1,
+      "position": 37,
+      "usedBy": [
+        "oir"
+      ],
+      "version": 1,
+      "status": "active",
+      "provenance": {
+        "kind": "original",
+        "author": "SSB AI Interviewer platform",
+        "createdAt": "1970-01-01T00:00:00.000Z"
+      },
+      "tags": [],
+      "difficulty": null,
+      "authoredAt": "1970-01-01T00:00:00.000Z",
+      "editorialNote": null,
+      "stem": "Weakling is to Daring as Dangerous is to ___________.",
+      "options": [
+        {
+          "id": "1",
+          "text": "Hazardous"
+        },
+        {
+          "id": "2",
+          "text": "Perilous"
+        },
+        {
+          "id": "3",
+          "text": "Unthreatening"
+        },
+        {
+          "id": "4",
+          "text": "Detrimental"
+        },
+        {
+          "id": "5",
+          "text": "Wild"
+        }
+      ],
+      "optionSource": "text",
+      "figures": [],
+      "answerKey": {
+        "kind": "single-option",
+        "optionId": "3"
+      },
+      "explanation": "Weakling and daring are antonyms of each other similarly dangerous and unthreatening are antonyms of each other. All other options are synonyms of dangerous.",
+      "curations": [],
+      "sourcePages": {
+        "question": 10,
+        "answer": 15
+      }
+    },
+    {
+      "id": "oir.0038",
+      "type": "oir-question",
+      "setNumber": 1,
+      "position": 38,
+      "usedBy": [
+        "oir"
+      ],
+      "version": 1,
+      "status": "active",
+      "provenance": {
+        "kind": "original",
+        "author": "SSB AI Interviewer platform",
+        "createdAt": "1970-01-01T00:00:00.000Z"
+      },
+      "tags": [],
+      "difficulty": null,
+      "authoredAt": "1970-01-01T00:00:00.000Z",
+      "editorialNote": null,
+      "stem": "Which two of the following figures belong to Class A?",
+      "options": [],
+      "optionSource": "figure",
+      "figures": [
+        "oir/set-01/figures/q38-fig1.png",
+        "oir/set-01/figures/q38-fig2.png"
+      ],
+      "answerKey": {
+        "kind": "multiple-options",
+        "optionIds": [
+          "2",
+          "4"
+        ]
+      },
+      "explanation": "Each figure in class A consists of two joined lines.",
+      "curations": [],
+      "sourcePages": {
+        "question": 10,
+        "answer": 15
+      }
+    },
+    {
+      "id": "oir.0039",
+      "type": "oir-question",
+      "setNumber": 1,
+      "position": 39,
+      "usedBy": [
+        "oir"
+      ],
+      "version": 1,
+      "status": "active",
+      "provenance": {
+        "kind": "original",
+        "author": "SSB AI Interviewer platform",
+        "createdAt": "1970-01-01T00:00:00.000Z"
+      },
+      "tags": [],
+      "difficulty": null,
+      "authoredAt": "1970-01-01T00:00:00.000Z",
+      "editorialNote": null,
+      "stem": "Which two of the following figures belong to Class A?",
+      "options": [],
+      "optionSource": "figure",
+      "figures": [
+        "oir/set-01/figures/q39-fig1.png",
+        "oir/set-01/figures/q39-fig2.png"
+      ],
+      "answerKey": {
+        "kind": "multiple-options",
+        "optionIds": [
+          "3",
+          "4"
+        ]
+      },
+      "explanation": "Each figure in class A consists of lines inside the shape which are connecting the one edge to its opposite edge. Hence, figures (3) and (4) belong to Class A.",
+      "curations": [],
+      "sourcePages": {
+        "question": 10,
+        "answer": 16
+      }
+    },
+    {
+      "id": "oir.0040",
+      "type": "oir-question",
+      "setNumber": 1,
+      "position": 40,
+      "usedBy": [
+        "oir"
+      ],
+      "version": 1,
+      "status": "active",
+      "provenance": {
+        "kind": "original",
+        "author": "SSB AI Interviewer platform",
+        "createdAt": "1970-01-01T00:00:00.000Z"
+      },
+      "tags": [],
+      "difficulty": null,
+      "authoredAt": "1970-01-01T00:00:00.000Z",
+      "editorialNote": null,
+      "stem": "Which word does not belong to the same class as others?",
+      "options": [
+        {
+          "id": "1",
+          "text": "Can"
+        },
+        {
+          "id": "2",
+          "text": "Pot"
+        },
+        {
+          "id": "3",
+          "text": "Mug"
+        },
+        {
+          "id": "4",
+          "text": "Tank"
+        },
+        {
+          "id": "5",
+          "text": "River"
+        }
+      ],
+      "optionSource": "text",
+      "figures": [],
+      "answerKey": {
+        "kind": "single-option",
+        "optionId": "5",
+        "label": "River"
+      },
+      "explanation": "Except River, all are the things used to store the water.",
+      "curations": [],
+      "sourcePages": {
+        "question": 10,
+        "answer": 16
+      }
+    },
+    {
+      "id": "oir.0041",
+      "type": "oir-question",
+      "setNumber": 1,
+      "position": 41,
+      "usedBy": [
+        "oir"
+      ],
+      "version": 1,
+      "status": "active",
+      "provenance": {
+        "kind": "original",
+        "author": "SSB AI Interviewer platform",
+        "createdAt": "1970-01-01T00:00:00.000Z"
+      },
+      "tags": [],
+      "difficulty": null,
+      "authoredAt": "1970-01-01T00:00:00.000Z",
+      "editorialNote": null,
+      "stem": "Write the SECOND letter of the rearranged word. HTNAEPEL is the national animal of Thailand.",
+      "options": [],
+      "optionSource": "none",
+      "figures": [],
+      "answerKey": {
+        "kind": "short-text",
+        "value": "L"
+      },
+      "explanation": "The rearranged word of HTNAEPEL is ELEPHANT. The SECOND letter of the rearranged word ‘ELEPHANT’ is ‘L’",
+      "curations": [],
+      "sourcePages": {
+        "question": 10,
+        "answer": 16
+      }
+    },
+    {
+      "id": "oir.0042",
+      "type": "oir-question",
+      "setNumber": 1,
+      "position": 42,
+      "usedBy": [
+        "oir"
+      ],
+      "version": 1,
+      "status": "active",
+      "provenance": {
+        "kind": "original",
+        "author": "SSB AI Interviewer platform",
+        "createdAt": "1970-01-01T00:00:00.000Z"
+      },
+      "tags": [],
+      "difficulty": null,
+      "authoredAt": "1970-01-01T00:00:00.000Z",
+      "editorialNote": null,
+      "stem": "Write the LAST letter of the rearranged sentence. Ladakh is Anjali by to road going",
+      "options": [],
+      "optionSource": "none",
+      "figures": [],
+      "answerKey": {
+        "kind": "short-text",
+        "value": "D"
+      },
+      "explanation": "The rearranged sentence is “Anjali is going to Ladakh by road”. The last word is “road”. Its last letter is “d”.",
+      "curations": [],
+      "sourcePages": {
+        "question": 10,
+        "answer": 16
+      }
+    },
+    {
+      "id": "oir.0043",
+      "type": "oir-question",
+      "setNumber": 1,
+      "position": 43,
+      "usedBy": [
+        "oir"
+      ],
+      "version": 1,
+      "status": "active",
+      "provenance": {
+        "kind": "original",
+        "author": "SSB AI Interviewer platform",
+        "createdAt": "1970-01-01T00:00:00.000Z"
+      },
+      "tags": [],
+      "difficulty": null,
+      "authoredAt": "1970-01-01T00:00:00.000Z",
+      "editorialNote": null,
+      "stem": "",
+      "options": [],
+      "optionSource": "figure",
+      "figures": [
+        "oir/set-01/figures/q43-fig1.png"
+      ],
+      "answerKey": {
+        "kind": "single-option",
+        "optionId": "2"
+      },
+      "explanation": "The analogy between figure A and B is that the color state is reversed and the lines that existed outside the shape come inside the shape in figure (2).",
+      "curations": [],
+      "sourcePages": {
+        "question": 11,
+        "answer": 16
+      }
+    },
+    {
+      "id": "oir.0044",
+      "type": "oir-question",
+      "setNumber": 1,
+      "position": 44,
+      "usedBy": [
+        "oir"
+      ],
+      "version": 1,
+      "status": "active",
+      "provenance": {
+        "kind": "original",
+        "author": "SSB AI Interviewer platform",
+        "createdAt": "1970-01-01T00:00:00.000Z"
+      },
+      "tags": [],
+      "difficulty": null,
+      "authoredAt": "1970-01-01T00:00:00.000Z",
+      "editorialNote": null,
+      "stem": "",
+      "options": [],
+      "optionSource": "figure",
+      "figures": [
+        "oir/set-01/figures/q44-fig1.png"
+      ],
+      "answerKey": {
+        "kind": "single-option",
+        "optionId": "3"
+      },
+      "explanation": "The edges in the shape are equal to the number of circles added to the shape. Thus, figure (3) is the correct answer.",
+      "curations": [],
+      "sourcePages": {
+        "question": 11,
+        "answer": 16
+      }
+    },
+    {
+      "id": "oir.0045",
+      "type": "oir-question",
+      "setNumber": 1,
+      "position": 45,
+      "usedBy": [
+        "oir"
+      ],
+      "version": 1,
+      "status": "active",
+      "provenance": {
+        "kind": "original",
+        "author": "SSB AI Interviewer platform",
+        "createdAt": "1970-01-01T00:00:00.000Z"
+      },
+      "tags": [],
+      "difficulty": null,
+      "authoredAt": "1970-01-01T00:00:00.000Z",
+      "editorialNote": null,
+      "stem": "Which two numbers will come next in the following series? 1, 6, 10, 5, 10, 14, 7, 12, 16, _______, _______.",
+      "options": [],
+      "optionSource": "none",
+      "figures": [],
+      "answerKey": {
+        "kind": "ordered-sequence",
+        "values": [
+          "8",
+          "13"
+        ]
+      },
+      "explanation": "The given series is based on the following steps: 1+5=6; 6+4=10; 10÷2=5; 5+5=10; 10+4=14; 14÷2=7; 7+5=12; 12+4=16; 16÷2=8; 8+5=13",
+      "curations": [],
+      "sourcePages": {
+        "question": 11,
+        "answer": 16
+      }
+    },
+    {
+      "id": "oir.0046",
+      "type": "oir-question",
+      "setNumber": 1,
+      "position": 46,
+      "usedBy": [
+        "oir"
+      ],
+      "version": 1,
+      "status": "active",
+      "provenance": {
+        "kind": "original",
+        "author": "SSB AI Interviewer platform",
+        "createdAt": "1970-01-01T00:00:00.000Z"
+      },
+      "tags": [],
+      "difficulty": null,
+      "authoredAt": "1970-01-01T00:00:00.000Z",
+      "editorialNote": null,
+      "stem": "Cow is to Moo as Bee is to ___________.",
+      "options": [
+        {
+          "id": "1",
+          "text": "Quack"
+        },
+        {
+          "id": "2",
+          "text": "Cackle"
+        },
+        {
+          "id": "3",
+          "text": "Buzz"
+        },
+        {
+          "id": "4",
+          "text": "Sing"
+        },
+        {
+          "id": "5",
+          "text": "Tweet"
+        }
+      ],
+      "optionSource": "text",
+      "figures": [],
+      "answerKey": {
+        "kind": "single-option",
+        "optionId": "3"
+      },
+      "explanation": "Here moo is the sound of cow. Similarly, buzz is the sound of Bee. So, Cow is to Moo as Bee is to Buzz.",
+      "curations": [],
+      "sourcePages": {
+        "question": 11,
+        "answer": 16
+      }
+    },
+    {
+      "id": "oir.0047",
+      "type": "oir-question",
+      "setNumber": 1,
+      "position": 47,
+      "usedBy": [
+        "oir"
+      ],
+      "version": 1,
+      "status": "active",
+      "provenance": {
+        "kind": "original",
+        "author": "SSB AI Interviewer platform",
+        "createdAt": "1970-01-01T00:00:00.000Z"
+      },
+      "tags": [],
+      "difficulty": null,
+      "authoredAt": "1970-01-01T00:00:00.000Z",
+      "editorialNote": null,
+      "stem": "Which two of the following figures belong to Class A?",
+      "options": [],
+      "optionSource": "figure",
+      "figures": [
+        "oir/set-01/figures/q47-fig1.png",
+        "oir/set-01/figures/q47-fig2.png"
+      ],
+      "answerKey": {
+        "kind": "multiple-options",
+        "optionIds": [
+          "1",
+          "2"
+        ]
+      },
+      "explanation": "Each figure in class A consists of letter which is made by three lines Hence, figures (1) and (2) belong to Class A.",
+      "curations": [],
+      "sourcePages": {
+        "question": 11,
+        "answer": 16
+      }
+    },
+    {
+      "id": "oir.0048",
+      "type": "oir-question",
+      "setNumber": 1,
+      "position": 48,
+      "usedBy": [
+        "oir"
+      ],
+      "version": 1,
+      "status": "active",
+      "provenance": {
+        "kind": "original",
+        "author": "SSB AI Interviewer platform",
+        "createdAt": "1970-01-01T00:00:00.000Z"
+      },
+      "tags": [],
+      "difficulty": null,
+      "authoredAt": "1970-01-01T00:00:00.000Z",
+      "editorialNote": null,
+      "stem": "Which two of the following figures belong to Class A?",
+      "options": [],
+      "optionSource": "figure",
+      "figures": [
+        "oir/set-01/figures/q48-fig1.png",
+        "oir/set-01/figures/q48-fig2.png"
+      ],
+      "answerKey": {
+        "kind": "multiple-options",
+        "optionIds": [
+          "3",
+          "4"
+        ]
+      },
+      "explanation": "Each figure in class A consists of two shapes, where the number of edges in one shape is greater than another. Hence, figures (3) and (4) belong to Class A.",
+      "curations": [],
+      "sourcePages": {
+        "question": 12,
+        "answer": 16
+      }
+    },
+    {
+      "id": "oir.0049",
+      "type": "oir-question",
+      "setNumber": 1,
+      "position": 49,
+      "usedBy": [
+        "oir"
+      ],
+      "version": 1,
+      "status": "active",
+      "provenance": {
+        "kind": "original",
+        "author": "SSB AI Interviewer platform",
+        "createdAt": "1970-01-01T00:00:00.000Z"
+      },
+      "tags": [],
+      "difficulty": null,
+      "authoredAt": "1970-01-01T00:00:00.000Z",
+      "editorialNote": null,
+      "stem": "Which group of letters does not belong to the same class as others?",
+      "options": [
+        {
+          "id": "1",
+          "text": "RQNO"
+        },
+        {
+          "id": "2",
+          "text": "IHFG"
+        },
+        {
+          "id": "3",
+          "text": "MLJK"
+        },
+        {
+          "id": "4",
+          "text": "TSPQ"
+        },
+        {
+          "id": "5",
+          "text": "YXUV"
+        }
+      ],
+      "optionSource": "text",
+      "figures": [],
+      "answerKey": {
+        "kind": "single-option",
+        "optionId": "3"
+      },
+      "explanation": "Option (1)→ R-1=Q-3=N+1=O Option (2)→ I-1=H-3=F+1=G Option (3)→ M-1=L-2=J+1=K Option (4)→ T-1=S-3=P+1=Q Option (5)→ Y-1=X-3=U+1=V Among these options, 3 is different from others. Thus option (3) MLJK is the correct answer.",
+      "curations": [],
+      "sourcePages": {
+        "question": 12,
+        "answer": 16
+      }
+    },
+    {
+      "id": "oir.0050",
+      "type": "oir-question",
+      "setNumber": 1,
+      "position": 50,
+      "usedBy": [
+        "oir"
+      ],
+      "version": 1,
+      "status": "active",
+      "provenance": {
+        "kind": "original",
+        "author": "SSB AI Interviewer platform",
+        "createdAt": "1970-01-01T00:00:00.000Z"
+      },
+      "tags": [],
+      "difficulty": null,
+      "authoredAt": "1970-01-01T00:00:00.000Z",
+      "editorialNote": null,
+      "stem": "Which word does not belong to the same class as the others?",
+      "options": [
+        {
+          "id": "1",
+          "text": "Knife"
+        },
+        {
+          "id": "2",
+          "text": "Parrot"
+        },
+        {
+          "id": "3",
+          "text": "Green"
+        },
+        {
+          "id": "4",
+          "text": "Lotus"
+        },
+        {
+          "id": "5",
+          "text": "Class"
+        }
+      ],
+      "optionSource": "text",
+      "figures": [],
+      "answerKey": {
+        "kind": "single-option",
+        "optionId": "2"
+      },
+      "explanation": null,
+      "curations": [],
+      "sourcePages": {
+        "question": 12,
+        "answer": 16
+      }
+    }
+  ]
+}

@@ -1,5 +1,13 @@
 import type { AssessmentActivityKind } from "@/lib/assessment/activities";
 import type {
+  OirAnswerKey,
+  OirCuration,
+  OirFigureRef,
+  OirModality,
+  OirOptionSource,
+  OirSourcePages,
+} from "@/lib/assessment/oir/types";
+import type {
   ContentItemId,
   ContentProvenance,
   ContentStatus,
@@ -59,6 +67,37 @@ export interface MultipleChoiceItem extends ContentItemBase {
    */
   readonly correctOptionId: string;
   readonly explanation: string | null;
+}
+
+/**
+ * An OIR question as the practice book prints it.
+ *
+ * Separate from `MultipleChoiceItem` because an OIR question need not offer
+ * text options at all: about half of them number their choices inside the
+ * diagram, and several ask for a written value. `answerKey` is a union for the
+ * same reason — see `oir/types.ts`.
+ */
+export interface OirQuestionItem extends ContentItemBase {
+  readonly type: "oir-question";
+  /** Empty when the question is drawn entirely inside its figure. */
+  readonly stem: string;
+  /** Empty when the choices are numbered inside the figure, or when there are none. */
+  readonly options: readonly ChoiceOption[];
+  readonly optionSource: OirOptionSource;
+  readonly figures: readonly OirFigureRef[];
+  readonly modality: OirModality;
+  /**
+   * The answer key. This is exactly why the bank is server-only: shipping it
+   * to a browser would hand the candidate the marks.
+   */
+  readonly answerKey: OirAnswerKey;
+  readonly explanation: string | null;
+  /** Which set of the source book this came from, and where in it. */
+  readonly setNumber: number;
+  readonly position: number;
+  readonly sourcePages: OirSourcePages;
+  /** Fields a reviewer supplied because the source could not be parsed for them. */
+  readonly curations: readonly OirCuration[];
 }
 
 /** PP&DT and TAT pictures. */
@@ -142,6 +181,7 @@ export interface InterviewPromptItem extends ContentItemBase {
 
 export type ContentItem =
   | MultipleChoiceItem
+  | OirQuestionItem
   | PictureItem
   | BlankPictureItem
   | WordPromptItem
@@ -156,6 +196,7 @@ export type ContentItemType = ContentItem["type"];
 
 export const CONTENT_ITEM_TYPES: readonly ContentItemType[] = [
   "multiple-choice",
+  "oir-question",
   "picture",
   "blank-picture",
   "word-prompt",
@@ -189,6 +230,15 @@ export function isContentItemOfType<T extends ContentItemType>(
  */
 export type CandidateFacingItem =
   | { readonly id: ContentItemId; readonly type: "multiple-choice"; readonly prompt: string; readonly options: readonly ChoiceOption[] }
+  | {
+      readonly id: ContentItemId;
+      readonly type: "oir-question";
+      readonly stem: string;
+      readonly options: readonly ChoiceOption[];
+      readonly optionSource: OirOptionSource;
+      readonly figures: readonly OirFigureRef[];
+      readonly modality: OirModality;
+    }
   | { readonly id: ContentItemId; readonly type: "picture"; readonly mediaId: MediaAssetId; readonly caption: string | null }
   | { readonly id: ContentItemId; readonly type: "blank-picture"; readonly instruction: string }
   | { readonly id: ContentItemId; readonly type: "word-prompt"; readonly word: string }
@@ -204,6 +254,19 @@ export function toCandidateFacingItem(item: ContentItem): CandidateFacingItem {
     case "multiple-choice":
       // correctOptionId and explanation stay behind.
       return { id: item.id, type: "multiple-choice", prompt: item.prompt, options: item.options };
+    case "oir-question":
+      // answerKey, explanation, sourcePages and curations stay behind. The
+      // figures are references to media, not the pictures themselves, and carry
+      // no answer of their own.
+      return {
+        id: item.id,
+        type: "oir-question",
+        stem: item.stem,
+        options: item.options,
+        optionSource: item.optionSource,
+        figures: item.figures,
+        modality: item.modality,
+      };
     case "picture":
       return { id: item.id, type: "picture", mediaId: item.mediaId, caption: item.caption };
     case "blank-picture":

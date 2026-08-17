@@ -1,0 +1,20 @@
+{
+  "setNumber": 1,
+  "note": "Human-verified facts that the extractor cannot recover from the PDF text layer. Each entry cites the evidence that establishes it. The extractor refuses an entry that would overwrite a value it resolved itself, so curation can only fill genuine gaps and can never silently mask a regression.",
+  "entries": [
+    {
+      "question": 20,
+      "field": "answerKey",
+      "value": { "kind": "short-text", "value": "8" },
+      "evidence": "The source prints this answer only as a figure. Two independent readings agree. (1) The answer figure on page 14 (y 458-547) shows the worked subtraction 5308 - 1823 = 34[8]5 with the digit 8 in the box. (2) The question figure alone determines it: 5308 - xx2x = 34_5 forces the subtrahend to 1823 (units 8-x=5 gives x=3; tens 0-2 borrows, making the boxed digit 8; hundreds 12-x=4 gives x=8; thousands 4-x=3 gives x=1), and 5308 - 1823 = 3485.",
+      "verifiedBy": "rendered-page inspection and independent arithmetic derivation"
+    },
+    {
+      "question": 23,
+      "field": "answerKey",
+      "value": { "kind": "short-text", "value": "9" },
+      "evidence": "The source prints this answer only as a figure. Two independent readings agree. (1) The answer figure on page 14 (y 120-237) shows the worked addition 342 + 584 = [9]26 with the digit 9 in the box and the carry 1 circled. (2) The question figure alone determines it: 342 + 5xx = _26 forces the addend to 584 (units 2+x ends in 6 with no carry, so x=4; tens 4+x=12 gives x=8 and carries 1; hundreds 3+5+1=9), and 342 + 584 = 926.",
+      "verifiedBy": "rendered-page inspection and independent arithmetic derivation"
+    }
+  ]
+}
