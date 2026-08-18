@@ -18,7 +18,11 @@ import "server-only";
  */
 import type { ChoiceOption } from "@/lib/assessment/content";
 import { candidateFacingOirSet } from "@/lib/assessment/oir/projection";
-import type { OirModality, OirOptionSource } from "@/lib/assessment/oir/types";
+import type {
+  OirModality,
+  OirOptionSource,
+  OirResponseFormat,
+} from "@/lib/assessment/oir/types";
 import type { MediaAssetId } from "@/lib/assessment/types";
 
 /** Where the media route lives. One definition, used to build every URL. */
@@ -52,6 +56,14 @@ export interface DeliveredOirQuestion {
   readonly stem: string;
   readonly options: readonly ChoiceOption[];
   readonly optionSource: OirOptionSource;
+  /**
+   * The numbered choices the diagram shows. Empty unless `optionSource` is
+   * "figure". The browser needs it to render exactly the choices the candidate
+   * can see, rather than guessing at how many there are.
+   */
+  readonly pictorialOptionIds: readonly string[];
+  /** How a written answer must be shaped. Null when the question offers choices. */
+  readonly responseFormat: OirResponseFormat;
   readonly modality: OirModality;
   readonly figures: readonly DeliveredOirFigure[];
 }
@@ -94,6 +106,8 @@ export function deliverOirSet(setNumber: number): DeliveredOirSet {
       stem: question.stem,
       options: question.options,
       optionSource: question.optionSource,
+      pictorialOptionIds: question.pictorialOptionIds,
+      responseFormat: question.responseFormat,
       modality: question.modality,
       figures,
     };

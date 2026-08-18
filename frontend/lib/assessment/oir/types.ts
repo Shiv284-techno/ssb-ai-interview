@@ -58,6 +58,42 @@ export type OirAnswerKey =
 
 export type OirAnswerKeyKind = OirAnswerKey["kind"];
 
+/**
+ * What a written answer must look like, on a question that offers no choices.
+ *
+ * Derived at ingestion from the answer key's SHAPE — never from its value, and
+ * never from the wording of the stem. A renderer needs to know whether to draw
+ * Yes/No, one box, or two ordered boxes; the source says so only in prose, and
+ * prose is not something a browser should be parsing during an exam.
+ *
+ * The count is not a secret: the paper prints one blank per value. Null on any
+ * question answered by choosing.
+ */
+export type OirResponseFormat =
+  | { readonly kind: "single-option" }
+  | { readonly kind: "multiple-options"; readonly count: number }
+  | { readonly kind: "boolean" }
+  | { readonly kind: "short-text"; readonly maxLength: number }
+  | { readonly kind: "multi-token"; readonly count: number }
+  | { readonly kind: "ordered-sequence"; readonly count: number };
+
+/**
+ * What a candidate submits.
+ *
+ * Deliberately the same set of forms as the key, so grading is a comparison
+ * rather than a translation, and so there is exactly one OIR answer vocabulary
+ * in the codebase. It differs in one respect: there is no `label`. That field
+ * exists on a key only because the source book sometimes reprints the chosen
+ * option's text beside it, which is editorial and nothing a candidate sends.
+ */
+export type OirAnswer =
+  | { readonly kind: "single-option"; readonly optionId: string }
+  | { readonly kind: "multiple-options"; readonly optionIds: readonly string[] }
+  | { readonly kind: "ordered-sequence"; readonly values: readonly string[] }
+  | { readonly kind: "multi-token"; readonly values: readonly string[] }
+  | { readonly kind: "short-text"; readonly value: string }
+  | { readonly kind: "boolean"; readonly value: boolean };
+
 export const OIR_ANSWER_KEY_KINDS: readonly OirAnswerKeyKind[] = [
   "single-option",
   "multiple-options",
@@ -103,7 +139,7 @@ export interface OirSourcePages {
 
 /** A field filled in by a reviewer because the source could not be parsed for it. */
 export interface OirCuration {
-  readonly field: "answerKey";
+  readonly field: "answerKey" | "pictorialOptions";
   /** What establishes the value. Required, and checked for substance on load. */
   readonly evidence: string;
 }
@@ -116,7 +152,7 @@ export interface OirCuration {
 export function isAnswerKeyResolvable(question: {
   readonly answerKey: OirAnswerKey;
   readonly options: readonly { readonly id: string }[];
-  readonly figures: readonly unknown[];
+  readonly pictorialOptionIds: readonly string[];
 }): boolean {
   const key = question.answerKey;
   if (key.kind !== "single-option" && key.kind !== "multiple-options") return true;
@@ -124,8 +160,13 @@ export function isAnswerKeyResolvable(question: {
   if (question.options.length > 0) {
     return ids.every((id) => question.options.some((option) => option.id === id));
   }
-  // Pictorial choices are numbered inside the diagram, so a figure must exist.
-  return question.figures.length > 0;
+  // Pictorial choices are numbered inside the diagram. Which numbers exist is
+  // recorded at ingestion from the rendered figure, so the key can be checked
+  // against a real answer space rather than merely against "a figure exists".
+  return (
+    question.pictorialOptionIds.length > 0 &&
+    ids.every((id) => question.pictorialOptionIds.includes(id))
+  );
 }
 
 /** The modality a question has, given what it carries. */

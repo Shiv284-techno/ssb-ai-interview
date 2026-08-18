@@ -24,7 +24,9 @@
         "answer": 12
       },
       "reasons": [
-        "page 4 renders ink at y=571-730.9 that continues underneath the running header or footer; the diagram cannot be recovered whole, so this question may be incomplete."
+        "page 4 renders ink at y=571-730.9 that continues underneath the running header or footer; the diagram cannot be recovered whole, so this question may be incomplete.",
+        "the figure's numbered choices have not been recorded, so an answer against it could not be checked. Add a curated pictorialOptions entry to serve this question.",
+        "the answer selects option 5, but the question offers no options"
       ]
     },
     {
@@ -36,7 +38,7 @@
       "reasons": [
         "page 7 renders ink at y=42.5-46.9 that too small to be a whole diagram; the diagram cannot be recovered whole, so this question may be incomplete.",
         "page 8 renders ink at y=629.7-730.9 that continues underneath the running header or footer; the diagram cannot be recovered whole, so this question may be incomplete.",
-        "the answer selects option 3, but the question prints no options"
+        "the answer selects option 3, but the question offers no options"
       ]
     },
     {
@@ -58,7 +60,9 @@
         "answer": 15
       },
       "reasons": [
-        "page 10 renders ink at y=651.7-730.9 that continues underneath the running header or footer; the diagram cannot be recovered whole, so this question may be incomplete."
+        "page 10 renders ink at y=651.7-730.9 that continues underneath the running header or footer; the diagram cannot be recovered whole, so this question may be incomplete.",
+        "the figure's numbered choices have not been recorded, so an answer against it could not be checked. Add a curated pictorialOptions entry to serve this question.",
+        "the answer selects option 5, but the question offers no options"
       ]
     }
   ],
@@ -134,6 +138,14 @@
       "stem": "Which one of the following cubes can possibly belong to Group A?",
       "options": [],
       "optionSource": "figure",
+      "pictorialOptionIds": [
+        "1",
+        "2",
+        "3"
+      ],
+      "responseFormat": {
+        "kind": "single-option"
+      },
       "figures": [
         "oir/set-01/figures/q01-fig1.png",
         "oir/set-01/figures/q01-fig2.png"
@@ -143,7 +155,12 @@
         "optionId": "3"
       },
       "explanation": "The elements in Group A are consonants and elements in Group B are vowels of English Alphabet. Cube (1) consists of 1 vowel. So, it does not belong to Group A. Cube (2) consists of 2 vowels. So, it does not belong to Group A. Cube (3) consists of only consonants. So, it belongs to Group A only. Thus, cube (3) is the correct answer.",
-      "curations": [],
+      "curations": [
+        {
+          "field": "pictorialOptions",
+          "evidence": "Read from the rendered figure q01-fig2.png: three numbered cubes. The labels are drawn as graphics and are absent from the PDF text layer, so they cannot be extracted; they are recorded here after opening the figure rather than inferred at run time."
+        }
+      ],
       "sourcePages": {
         "question": 3,
         "answer": 12
@@ -188,6 +205,10 @@
         }
       ],
       "optionSource": "text",
+      "pictorialOptionIds": [],
+      "responseFormat": {
+        "kind": "single-option"
+      },
       "figures": [],
       "answerKey": {
         "kind": "single-option",
@@ -221,7 +242,11 @@
       "editorialNote": null,
       "stem": "Find if the two cubes are alike. Write ‘Yes’ or ‘No’ on the answer sheet:",
       "options": [],
-      "optionSource": "figure",
+      "optionSource": "none",
+      "pictorialOptionIds": [],
+      "responseFormat": {
+        "kind": "boolean"
+      },
       "figures": [
         "oir/set-01/figures/q03-fig1.png"
       ],
@@ -230,7 +255,12 @@
         "value": true
       },
       "explanation": "Both are same where pentagon and heart symbols are opposite to each other.",
-      "curations": [],
+      "curations": [
+        {
+          "field": "pictorialOptions",
+          "evidence": "Read from the rendered figure q03-fig1.png: the numerals 1 and 2 label the two cubes being compared, not choices; the answer is Yes or No. The labels are drawn as graphics and are absent from the PDF text layer, so they cannot be extracted; they are recorded here after opening the figure rather than inferred at run time."
+        }
+      ],
       "sourcePages": {
         "question": 3,
         "answer": 12
@@ -257,7 +287,11 @@
       "editorialNote": null,
       "stem": "Find if the two cubes are alike. Write ‘Yes’ or ‘No’ on the answer sheet:",
       "options": [],
-      "optionSource": "figure",
+      "optionSource": "none",
+      "pictorialOptionIds": [],
+      "responseFormat": {
+        "kind": "boolean"
+      },
       "figures": [
         "oir/set-01/figures/q04-fig1.png"
       ],
@@ -266,7 +300,12 @@
         "value": true
       },
       "explanation": "Both are same when dice 1 is rotating 90° clockwise.",
-      "curations": [],
+      "curations": [
+        {
+          "field": "pictorialOptions",
+          "evidence": "Read from the rendered figure q04-fig1.png: the numerals 1 and 2 label the two cubes being compared, not choices; the answer is Yes or No. The labels are drawn as graphics and are absent from the PDF text layer, so they cannot be extracted; they are recorded here after opening the figure rather than inferred at run time."
+        }
+      ],
       "sourcePages": {
         "question": 3,
         "answer": 12
@@ -294,6 +333,16 @@
       "stem": "Which two of the following figures belong to Class A?",
       "options": [],
       "optionSource": "figure",
+      "pictorialOptionIds": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "responseFormat": {
+        "kind": "multiple-options",
+        "count": 2
+      },
       "figures": [
         "oir/set-01/figures/q06-fig1.png",
         "oir/set-01/figures/q06-fig2.png"
@@ -306,7 +355,12 @@
         ]
       },
       "explanation": "Each figure in class A consists of two similar closed figures, one placed inside the other. Hence, figures (2) and (3) belong to Class A.",
-      "curations": [],
+      "curations": [
+        {
+          "field": "pictorialOptions",
+          "evidence": "Read from the rendered figure q06-fig2.png: four numbered boxes. The labels are drawn as graphics and are absent from the PDF text layer, so they cannot be extracted; they are recorded here after opening the figure rather than inferred at run time."
+        }
+      ],
       "sourcePages": {
         "question": 4,
         "answer": 12
@@ -334,6 +388,16 @@
       "stem": "Write the number of the figure which will come next in the series:",
       "options": [],
       "optionSource": "figure",
+      "pictorialOptionIds": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5"
+      ],
+      "responseFormat": {
+        "kind": "single-option"
+      },
       "figures": [
         "oir/set-01/figures/q07-fig1.png"
       ],
@@ -342,7 +406,12 @@
         "optionId": "3"
       },
       "explanation": "The longer arrow is moved 90° clockwise direction whereas the shorter arrow remains constant. Thus, figure (3) will come next in the given series.",
-      "curations": [],
+      "curations": [
+        {
+          "field": "pictorialOptions",
+          "evidence": "Read from the rendered figure q07-fig1.png: five numbered arrow diagrams. The labels are drawn as graphics and are absent from the PDF text layer, so they cannot be extracted; they are recorded here after opening the figure rather than inferred at run time."
+        }
+      ],
       "sourcePages": {
         "question": 4,
         "answer": 12
@@ -370,6 +439,16 @@
       "stem": "Write the number of the figure which will come next in the series:",
       "options": [],
       "optionSource": "figure",
+      "pictorialOptionIds": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5"
+      ],
+      "responseFormat": {
+        "kind": "single-option"
+      },
       "figures": [
         "oir/set-01/figures/q08-fig1.png"
       ],
@@ -378,7 +457,12 @@
         "optionId": "3"
       },
       "explanation": "In the given question figures, the analogy is that the second one is opposite to first one. Similarly, the fourth one will be the opposite of third one. Thus option 3 is the correct answer.",
-      "curations": [],
+      "curations": [
+        {
+          "field": "pictorialOptions",
+          "evidence": "Read from the rendered figure q08-fig1.png: five numbered stars. The labels are drawn as graphics and are absent from the PDF text layer, so they cannot be extracted; they are recorded here after opening the figure rather than inferred at run time."
+        }
+      ],
       "sourcePages": {
         "question": 5,
         "answer": 13
@@ -406,6 +490,11 @@
       "stem": "Write the last letter of the rearranged sentence. not that gold glitters is all",
       "options": [],
       "optionSource": "none",
+      "pictorialOptionIds": [],
+      "responseFormat": {
+        "kind": "short-text",
+        "maxLength": 16
+      },
       "figures": [],
       "answerKey": {
         "kind": "short-text",
@@ -440,6 +529,11 @@
       "stem": "Write the SECOND letter of the rearranged word. LESINANCSEL is next to godliness.",
       "options": [],
       "optionSource": "none",
+      "pictorialOptionIds": [],
+      "responseFormat": {
+        "kind": "short-text",
+        "maxLength": 16
+      },
       "figures": [],
       "answerKey": {
         "kind": "short-text",
@@ -495,6 +589,10 @@
         }
       ],
       "optionSource": "text",
+      "pictorialOptionIds": [],
+      "responseFormat": {
+        "kind": "single-option"
+      },
       "figures": [],
       "answerKey": {
         "kind": "single-option",
@@ -529,6 +627,16 @@
       "stem": "",
       "options": [],
       "optionSource": "figure",
+      "pictorialOptionIds": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5"
+      ],
+      "responseFormat": {
+        "kind": "single-option"
+      },
       "figures": [
         "oir/set-01/figures/q12-fig1.png"
       ],
@@ -537,7 +645,12 @@
         "optionId": "2"
       },
       "explanation": "All the opposite edges in the shape are connected. Thus, option 2 is the correct answer.",
-      "curations": [],
+      "curations": [
+        {
+          "field": "pictorialOptions",
+          "evidence": "Read from the rendered figure q12-fig1.png: five numbered hexagons. The labels are drawn as graphics and are absent from the PDF text layer, so they cannot be extracted; they are recorded here after opening the figure rather than inferred at run time."
+        }
+      ],
       "sourcePages": {
         "question": 5,
         "answer": 13
@@ -565,6 +678,11 @@
       "stem": "Which two sets of letters will come next in the following series? ZXW, VTS, RPO, NLK, ________, ________.",
       "options": [],
       "optionSource": "none",
+      "pictorialOptionIds": [],
+      "responseFormat": {
+        "kind": "multi-token",
+        "count": 2
+      },
       "figures": [],
       "answerKey": {
         "kind": "multi-token",
@@ -602,6 +720,16 @@
       "stem": "Write the number of the figure which will come next in the series:",
       "options": [],
       "optionSource": "figure",
+      "pictorialOptionIds": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5"
+      ],
+      "responseFormat": {
+        "kind": "single-option"
+      },
       "figures": [
         "oir/set-01/figures/q14-fig1.png"
       ],
@@ -610,7 +738,12 @@
         "optionId": "2"
       },
       "explanation": "𝑋 − 2 = 𝑉; 𝐴 − 2 = 𝑌; 𝐺 − 2 = 𝐸; 𝐽 − 2 = 𝐻 𝑉 − 3 = 𝑆; 𝑌 − 3 = 𝑉; 𝐸 − 3 = 𝐵; 𝐻 − 3 = 𝐸 𝑆 − 4 = 𝑂; 𝑉 − 4 = 𝑅; 𝐵 − 4 = 𝑋; 𝐸 − 4 = 𝐴 Thus, option (2) is the correct answer.",
-      "curations": [],
+      "curations": [
+        {
+          "field": "pictorialOptions",
+          "evidence": "Read from the rendered figure q14-fig1.png: five numbered letter crosses. The labels are drawn as graphics and are absent from the PDF text layer, so they cannot be extracted; they are recorded here after opening the figure rather than inferred at run time."
+        }
+      ],
       "sourcePages": {
         "question": 5,
         "answer": 13
@@ -659,6 +792,10 @@
         }
       ],
       "optionSource": "text",
+      "pictorialOptionIds": [],
+      "responseFormat": {
+        "kind": "single-option"
+      },
       "figures": [],
       "answerKey": {
         "kind": "single-option",
@@ -714,6 +851,10 @@
         }
       ],
       "optionSource": "text",
+      "pictorialOptionIds": [],
+      "responseFormat": {
+        "kind": "single-option"
+      },
       "figures": [],
       "answerKey": {
         "kind": "single-option",
@@ -748,6 +889,16 @@
       "stem": "",
       "options": [],
       "optionSource": "figure",
+      "pictorialOptionIds": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5"
+      ],
+      "responseFormat": {
+        "kind": "single-option"
+      },
       "figures": [
         "oir/set-01/figures/q17-fig1.png"
       ],
@@ -756,7 +907,12 @@
         "optionId": "4"
       },
       "explanation": "The double lines are inserted at the successive figures in the clockwise direction. So, figure (4) completes the series.",
-      "curations": [],
+      "curations": [
+        {
+          "field": "pictorialOptions",
+          "evidence": "Read from the rendered figure q17-fig1.png: five numbered chevrons. The labels are drawn as graphics and are absent from the PDF text layer, so they cannot be extracted; they are recorded here after opening the figure rather than inferred at run time."
+        }
+      ],
       "sourcePages": {
         "question": 6,
         "answer": 14
@@ -784,6 +940,11 @@
       "stem": "Choose one word from each of the following three lines to make a correct, true and meaningful sentence. If you [(1) sing (2) hear (3) speak (4) dance] [(1) loud (2) mild (3) melody (4) jazz] music, it will [(1) impede (2) impair (3) impose (4) impel] your hearing",
       "options": [],
       "optionSource": "none",
+      "pictorialOptionIds": [],
+      "responseFormat": {
+        "kind": "ordered-sequence",
+        "count": 3
+      },
       "figures": [],
       "answerKey": {
         "kind": "ordered-sequence",
@@ -843,6 +1004,10 @@
         }
       ],
       "optionSource": "text",
+      "pictorialOptionIds": [],
+      "responseFormat": {
+        "kind": "single-option"
+      },
       "figures": [],
       "answerKey": {
         "kind": "single-option",
@@ -876,7 +1041,12 @@
       "editorialNote": null,
       "stem": "Subtract:",
       "options": [],
-      "optionSource": "figure",
+      "optionSource": "none",
+      "pictorialOptionIds": [],
+      "responseFormat": {
+        "kind": "short-text",
+        "maxLength": 16
+      },
       "figures": [
         "oir/set-01/figures/q20-fig1.png"
       ],
@@ -889,6 +1059,10 @@
         {
           "field": "answerKey",
           "evidence": "The source prints this answer only as a figure. Two independent readings agree. (1) The answer figure on page 14 (y 458-547) shows the worked subtraction 5308 - 1823 = 34[8]5 with the digit 8 in the box. (2) The question figure alone determines it: 5308 - xx2x = 34_5 forces the subtrahend to 1823 (units 8-x=5 gives x=3; tens 0-2 borrows, making the boxed digit 8; hundreds 12-x=4 gives x=8; thousands 4-x=3 gives x=1), and 5308 - 1823 = 3485."
+        },
+        {
+          "field": "pictorialOptions",
+          "evidence": "Read from the rendered figure q20-fig1.png: a worked subtraction with a boxed digit; the figure offers no choices. The labels are drawn as graphics and are absent from the PDF text layer, so they cannot be extracted; they are recorded here after opening the figure rather than inferred at run time."
         }
       ],
       "sourcePages": {
@@ -918,6 +1092,16 @@
       "stem": "Write the number of the figure which will come next in the series:",
       "options": [],
       "optionSource": "figure",
+      "pictorialOptionIds": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5"
+      ],
+      "responseFormat": {
+        "kind": "single-option"
+      },
       "figures": [
         "oir/set-01/figures/q21-fig1.png"
       ],
@@ -926,7 +1110,12 @@
         "optionId": "5"
       },
       "explanation": "The diamond shape in the outer side is shifted in anticlockwise direction and the circle in the inner side is shifted in clockwise direction. Thus, option (5) is the next figure in the series.",
-      "curations": [],
+      "curations": [
+        {
+          "field": "pictorialOptions",
+          "evidence": "Read from the rendered figure q21-fig1.png: five numbered hexagons. The labels are drawn as graphics and are absent from the PDF text layer, so they cannot be extracted; they are recorded here after opening the figure rather than inferred at run time."
+        }
+      ],
       "sourcePages": {
         "question": 7,
         "answer": 14
@@ -975,6 +1164,10 @@
         }
       ],
       "optionSource": "text",
+      "pictorialOptionIds": [],
+      "responseFormat": {
+        "kind": "single-option"
+      },
       "figures": [],
       "answerKey": {
         "kind": "single-option",
@@ -1008,7 +1201,12 @@
       "editorialNote": null,
       "stem": "Add:",
       "options": [],
-      "optionSource": "figure",
+      "optionSource": "none",
+      "pictorialOptionIds": [],
+      "responseFormat": {
+        "kind": "short-text",
+        "maxLength": 16
+      },
       "figures": [
         "oir/set-01/figures/q23-fig1.png"
       ],
@@ -1021,6 +1219,10 @@
         {
           "field": "answerKey",
           "evidence": "The source prints this answer only as a figure. Two independent readings agree. (1) The answer figure on page 14 (y 120-237) shows the worked addition 342 + 584 = [9]26 with the digit 9 in the box and the carry 1 circled. (2) The question figure alone determines it: 342 + 5xx = _26 forces the addend to 584 (units 2+x ends in 6 with no carry, so x=4; tens 4+x=12 gives x=8 and carries 1; hundreds 3+5+1=9), and 342 + 584 = 926."
+        },
+        {
+          "field": "pictorialOptions",
+          "evidence": "Read from the rendered figure q23-fig1.png: a worked addition with a boxed digit; the figure offers no choices. The labels are drawn as graphics and are absent from the PDF text layer, so they cannot be extracted; they are recorded here after opening the figure rather than inferred at run time."
         }
       ],
       "sourcePages": {
@@ -1050,6 +1252,16 @@
       "stem": "Which two of the following figures belong to Class A?",
       "options": [],
       "optionSource": "figure",
+      "pictorialOptionIds": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "responseFormat": {
+        "kind": "multiple-options",
+        "count": 2
+      },
       "figures": [
         "oir/set-01/figures/q25-fig1.png",
         "oir/set-01/figures/q25-fig2.png"
@@ -1062,7 +1274,12 @@
         ]
       },
       "explanation": "Each figure in class A consists of two similar combined figures. Hence, figures (1) and (2) belong to Class A.",
-      "curations": [],
+      "curations": [
+        {
+          "field": "pictorialOptions",
+          "evidence": "Read from the rendered figure q25-fig2.png: four numbered boxes. The labels are drawn as graphics and are absent from the PDF text layer, so they cannot be extracted; they are recorded here after opening the figure rather than inferred at run time."
+        }
+      ],
       "sourcePages": {
         "question": 8,
         "answer": 14
@@ -1107,6 +1324,10 @@
         }
       ],
       "optionSource": "text",
+      "pictorialOptionIds": [],
+      "responseFormat": {
+        "kind": "single-option"
+      },
       "figures": [],
       "answerKey": {
         "kind": "single-option",
@@ -1158,6 +1379,10 @@
         }
       ],
       "optionSource": "text",
+      "pictorialOptionIds": [],
+      "responseFormat": {
+        "kind": "single-option"
+      },
       "figures": [],
       "answerKey": {
         "kind": "single-option",
@@ -1209,6 +1434,10 @@
         }
       ],
       "optionSource": "text",
+      "pictorialOptionIds": [],
+      "responseFormat": {
+        "kind": "single-option"
+      },
       "figures": [],
       "answerKey": {
         "kind": "single-option",
@@ -1260,6 +1489,10 @@
         }
       ],
       "optionSource": "text",
+      "pictorialOptionIds": [],
+      "responseFormat": {
+        "kind": "single-option"
+      },
       "figures": [],
       "answerKey": {
         "kind": "single-option",
@@ -1311,6 +1544,10 @@
         }
       ],
       "optionSource": "text",
+      "pictorialOptionIds": [],
+      "responseFormat": {
+        "kind": "single-option"
+      },
       "figures": [],
       "answerKey": {
         "kind": "single-option",
@@ -1362,6 +1599,10 @@
         }
       ],
       "optionSource": "text",
+      "pictorialOptionIds": [],
+      "responseFormat": {
+        "kind": "single-option"
+      },
       "figures": [],
       "answerKey": {
         "kind": "single-option",
@@ -1413,6 +1654,10 @@
         }
       ],
       "optionSource": "text",
+      "pictorialOptionIds": [],
+      "responseFormat": {
+        "kind": "single-option"
+      },
       "figures": [],
       "answerKey": {
         "kind": "single-option",
@@ -1447,6 +1692,16 @@
       "stem": "Which two of the following figures belong to Class A?",
       "options": [],
       "optionSource": "figure",
+      "pictorialOptionIds": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "responseFormat": {
+        "kind": "multiple-options",
+        "count": 2
+      },
       "figures": [
         "oir/set-01/figures/q34-fig1.png",
         "oir/set-01/figures/q34-fig2.png"
@@ -1459,7 +1714,12 @@
         ]
       },
       "explanation": "Each figure in class A consists of two of two different closed figures, one placed inside the other. Hence, figures (1) and (4) belong to Class A.",
-      "curations": [],
+      "curations": [
+        {
+          "field": "pictorialOptions",
+          "evidence": "Read from the rendered figure q34-fig2.png: four numbered boxes. The labels are drawn as graphics and are absent from the PDF text layer, so they cannot be extracted; they are recorded here after opening the figure rather than inferred at run time."
+        }
+      ],
       "sourcePages": {
         "question": 9,
         "answer": 15
@@ -1487,6 +1747,16 @@
       "stem": "Which two of the following figures belong to Class A?",
       "options": [],
       "optionSource": "figure",
+      "pictorialOptionIds": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "responseFormat": {
+        "kind": "multiple-options",
+        "count": 2
+      },
       "figures": [
         "oir/set-01/figures/q35-fig1.png",
         "oir/set-01/figures/q35-fig2.png"
@@ -1499,7 +1769,12 @@
         ]
       },
       "explanation": "Each figure in class A consists of the shapes having line of symmetry. Hence, figures (1) and (3) belong to Class A.",
-      "curations": [],
+      "curations": [
+        {
+          "field": "pictorialOptions",
+          "evidence": "Read from the rendered figure q35-fig2.png: four numbered boxes. The labels are drawn as graphics and are absent from the PDF text layer, so they cannot be extracted; they are recorded here after opening the figure rather than inferred at run time."
+        }
+      ],
       "sourcePages": {
         "question": 9,
         "answer": 15
@@ -1548,6 +1823,10 @@
         }
       ],
       "optionSource": "text",
+      "pictorialOptionIds": [],
+      "responseFormat": {
+        "kind": "single-option"
+      },
       "figures": [],
       "answerKey": {
         "kind": "single-option",
@@ -1582,6 +1861,16 @@
       "stem": "Which two of the following figures belong to Class A?",
       "options": [],
       "optionSource": "figure",
+      "pictorialOptionIds": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "responseFormat": {
+        "kind": "multiple-options",
+        "count": 2
+      },
       "figures": [
         "oir/set-01/figures/q38-fig1.png",
         "oir/set-01/figures/q38-fig2.png"
@@ -1594,7 +1883,12 @@
         ]
       },
       "explanation": "Each figure in class A consists of two joined lines.",
-      "curations": [],
+      "curations": [
+        {
+          "field": "pictorialOptions",
+          "evidence": "Read from the rendered figure q38-fig2.png: four numbered boxes. The labels are drawn as graphics and are absent from the PDF text layer, so they cannot be extracted; they are recorded here after opening the figure rather than inferred at run time."
+        }
+      ],
       "sourcePages": {
         "question": 10,
         "answer": 15
@@ -1622,6 +1916,16 @@
       "stem": "Which two of the following figures belong to Class A?",
       "options": [],
       "optionSource": "figure",
+      "pictorialOptionIds": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "responseFormat": {
+        "kind": "multiple-options",
+        "count": 2
+      },
       "figures": [
         "oir/set-01/figures/q39-fig1.png",
         "oir/set-01/figures/q39-fig2.png"
@@ -1634,7 +1938,12 @@
         ]
       },
       "explanation": "Each figure in class A consists of lines inside the shape which are connecting the one edge to its opposite edge. Hence, figures (3) and (4) belong to Class A.",
-      "curations": [],
+      "curations": [
+        {
+          "field": "pictorialOptions",
+          "evidence": "Read from the rendered figure q39-fig2.png: four numbered boxes. The labels are drawn as graphics and are absent from the PDF text layer, so they cannot be extracted; they are recorded here after opening the figure rather than inferred at run time."
+        }
+      ],
       "sourcePages": {
         "question": 10,
         "answer": 16
@@ -1683,6 +1992,10 @@
         }
       ],
       "optionSource": "text",
+      "pictorialOptionIds": [],
+      "responseFormat": {
+        "kind": "single-option"
+      },
       "figures": [],
       "answerKey": {
         "kind": "single-option",
@@ -1718,6 +2031,11 @@
       "stem": "Write the SECOND letter of the rearranged word. HTNAEPEL is the national animal of Thailand.",
       "options": [],
       "optionSource": "none",
+      "pictorialOptionIds": [],
+      "responseFormat": {
+        "kind": "short-text",
+        "maxLength": 16
+      },
       "figures": [],
       "answerKey": {
         "kind": "short-text",
@@ -1752,6 +2070,11 @@
       "stem": "Write the LAST letter of the rearranged sentence. Ladakh is Anjali by to road going",
       "options": [],
       "optionSource": "none",
+      "pictorialOptionIds": [],
+      "responseFormat": {
+        "kind": "short-text",
+        "maxLength": 16
+      },
       "figures": [],
       "answerKey": {
         "kind": "short-text",
@@ -1786,6 +2109,16 @@
       "stem": "",
       "options": [],
       "optionSource": "figure",
+      "pictorialOptionIds": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5"
+      ],
+      "responseFormat": {
+        "kind": "single-option"
+      },
       "figures": [
         "oir/set-01/figures/q43-fig1.png"
       ],
@@ -1794,7 +2127,12 @@
         "optionId": "2"
       },
       "explanation": "The analogy between figure A and B is that the color state is reversed and the lines that existed outside the shape come inside the shape in figure (2).",
-      "curations": [],
+      "curations": [
+        {
+          "field": "pictorialOptions",
+          "evidence": "Read from the rendered figure q43-fig1.png: five numbered panels. The labels are drawn as graphics and are absent from the PDF text layer, so they cannot be extracted; they are recorded here after opening the figure rather than inferred at run time."
+        }
+      ],
       "sourcePages": {
         "question": 11,
         "answer": 16
@@ -1822,6 +2160,16 @@
       "stem": "",
       "options": [],
       "optionSource": "figure",
+      "pictorialOptionIds": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5"
+      ],
+      "responseFormat": {
+        "kind": "single-option"
+      },
       "figures": [
         "oir/set-01/figures/q44-fig1.png"
       ],
@@ -1830,7 +2178,12 @@
         "optionId": "3"
       },
       "explanation": "The edges in the shape are equal to the number of circles added to the shape. Thus, figure (3) is the correct answer.",
-      "curations": [],
+      "curations": [
+        {
+          "field": "pictorialOptions",
+          "evidence": "Read from the rendered figure q44-fig1.png: five numbered panels. The labels are drawn as graphics and are absent from the PDF text layer, so they cannot be extracted; they are recorded here after opening the figure rather than inferred at run time."
+        }
+      ],
       "sourcePages": {
         "question": 11,
         "answer": 16
@@ -1858,6 +2211,11 @@
       "stem": "Which two numbers will come next in the following series? 1, 6, 10, 5, 10, 14, 7, 12, 16, _______, _______.",
       "options": [],
       "optionSource": "none",
+      "pictorialOptionIds": [],
+      "responseFormat": {
+        "kind": "ordered-sequence",
+        "count": 2
+      },
       "figures": [],
       "answerKey": {
         "kind": "ordered-sequence",
@@ -1916,6 +2274,10 @@
         }
       ],
       "optionSource": "text",
+      "pictorialOptionIds": [],
+      "responseFormat": {
+        "kind": "single-option"
+      },
       "figures": [],
       "answerKey": {
         "kind": "single-option",
@@ -1950,6 +2312,16 @@
       "stem": "Which two of the following figures belong to Class A?",
       "options": [],
       "optionSource": "figure",
+      "pictorialOptionIds": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "responseFormat": {
+        "kind": "multiple-options",
+        "count": 2
+      },
       "figures": [
         "oir/set-01/figures/q47-fig1.png",
         "oir/set-01/figures/q47-fig2.png"
@@ -1962,7 +2334,12 @@
         ]
       },
       "explanation": "Each figure in class A consists of letter which is made by three lines Hence, figures (1) and (2) belong to Class A.",
-      "curations": [],
+      "curations": [
+        {
+          "field": "pictorialOptions",
+          "evidence": "Read from the rendered figure q47-fig2.png: four numbered letters. The labels are drawn as graphics and are absent from the PDF text layer, so they cannot be extracted; they are recorded here after opening the figure rather than inferred at run time."
+        }
+      ],
       "sourcePages": {
         "question": 11,
         "answer": 16
@@ -1990,6 +2367,16 @@
       "stem": "Which two of the following figures belong to Class A?",
       "options": [],
       "optionSource": "figure",
+      "pictorialOptionIds": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "responseFormat": {
+        "kind": "multiple-options",
+        "count": 2
+      },
       "figures": [
         "oir/set-01/figures/q48-fig1.png",
         "oir/set-01/figures/q48-fig2.png"
@@ -2002,7 +2389,12 @@
         ]
       },
       "explanation": "Each figure in class A consists of two shapes, where the number of edges in one shape is greater than another. Hence, figures (3) and (4) belong to Class A.",
-      "curations": [],
+      "curations": [
+        {
+          "field": "pictorialOptions",
+          "evidence": "Read from the rendered figure q48-fig2.png: four numbered boxes. The labels are drawn as graphics and are absent from the PDF text layer, so they cannot be extracted; they are recorded here after opening the figure rather than inferred at run time."
+        }
+      ],
       "sourcePages": {
         "question": 12,
         "answer": 16
@@ -2051,6 +2443,10 @@
         }
       ],
       "optionSource": "text",
+      "pictorialOptionIds": [],
+      "responseFormat": {
+        "kind": "single-option"
+      },
       "figures": [],
       "answerKey": {
         "kind": "single-option",
@@ -2106,6 +2502,10 @@
         }
       ],
       "optionSource": "text",
+      "pictorialOptionIds": [],
+      "responseFormat": {
+        "kind": "single-option"
+      },
       "figures": [],
       "answerKey": {
         "kind": "single-option",

@@ -1,20 +1,265 @@
 {
   "setNumber": 1,
-  "note": "Human-verified facts that the extractor cannot recover from the PDF text layer. Each entry cites the evidence that establishes it. The extractor refuses an entry that would overwrite a value it resolved itself, so curation can only fill genuine gaps and can never silently mask a regression.",
+  "note": "Human-verified facts that the extractor cannot recover from the PDF text layer. Each entry cites the evidence that establishes it. The extractor refuses an entry that would overwrite a value it resolved itself, so curation can only fill genuine gaps and can never silently mask a regression. Pictorial option labels are recorded the same way: the source draws them as graphics, so no extractor can read them, and the ingestion refuses to emit a figure-choice question without one of these entries.",
   "entries": [
     {
       "question": 20,
       "field": "answerKey",
-      "value": { "kind": "short-text", "value": "8" },
+      "value": {
+        "kind": "short-text",
+        "value": "8"
+      },
       "evidence": "The source prints this answer only as a figure. Two independent readings agree. (1) The answer figure on page 14 (y 458-547) shows the worked subtraction 5308 - 1823 = 34[8]5 with the digit 8 in the box. (2) The question figure alone determines it: 5308 - xx2x = 34_5 forces the subtrahend to 1823 (units 8-x=5 gives x=3; tens 0-2 borrows, making the boxed digit 8; hundreds 12-x=4 gives x=8; thousands 4-x=3 gives x=1), and 5308 - 1823 = 3485.",
       "verifiedBy": "rendered-page inspection and independent arithmetic derivation"
     },
     {
       "question": 23,
       "field": "answerKey",
-      "value": { "kind": "short-text", "value": "9" },
+      "value": {
+        "kind": "short-text",
+        "value": "9"
+      },
       "evidence": "The source prints this answer only as a figure. Two independent readings agree. (1) The answer figure on page 14 (y 120-237) shows the worked addition 342 + 584 = [9]26 with the digit 9 in the box and the carry 1 circled. (2) The question figure alone determines it: 342 + 5xx = _26 forces the addend to 584 (units 2+x ends in 6 with no carry, so x=4; tens 4+x=12 gives x=8 and carries 1; hundreds 3+5+1=9), and 342 + 584 = 926.",
       "verifiedBy": "rendered-page inspection and independent arithmetic derivation"
+    },
+    {
+      "question": 1,
+      "field": "pictorialOptions",
+      "value": [
+        "1",
+        "2",
+        "3"
+      ],
+      "evidence": "Read from the rendered figure q01-fig2.png: three numbered cubes. The labels are drawn as graphics and are absent from the PDF text layer, so they cannot be extracted; they are recorded here after opening the figure rather than inferred at run time.",
+      "verifiedBy": "rendered-figure inspection"
+    },
+    {
+      "question": 3,
+      "field": "pictorialOptions",
+      "value": [],
+      "evidence": "Read from the rendered figure q03-fig1.png: the numerals 1 and 2 label the two cubes being compared, not choices; the answer is Yes or No. The labels are drawn as graphics and are absent from the PDF text layer, so they cannot be extracted; they are recorded here after opening the figure rather than inferred at run time.",
+      "verifiedBy": "rendered-figure inspection"
+    },
+    {
+      "question": 4,
+      "field": "pictorialOptions",
+      "value": [],
+      "evidence": "Read from the rendered figure q04-fig1.png: the numerals 1 and 2 label the two cubes being compared, not choices; the answer is Yes or No. The labels are drawn as graphics and are absent from the PDF text layer, so they cannot be extracted; they are recorded here after opening the figure rather than inferred at run time.",
+      "verifiedBy": "rendered-figure inspection"
+    },
+    {
+      "question": 6,
+      "field": "pictorialOptions",
+      "value": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "evidence": "Read from the rendered figure q06-fig2.png: four numbered boxes. The labels are drawn as graphics and are absent from the PDF text layer, so they cannot be extracted; they are recorded here after opening the figure rather than inferred at run time.",
+      "verifiedBy": "rendered-figure inspection"
+    },
+    {
+      "question": 7,
+      "field": "pictorialOptions",
+      "value": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5"
+      ],
+      "evidence": "Read from the rendered figure q07-fig1.png: five numbered arrow diagrams. The labels are drawn as graphics and are absent from the PDF text layer, so they cannot be extracted; they are recorded here after opening the figure rather than inferred at run time.",
+      "verifiedBy": "rendered-figure inspection"
+    },
+    {
+      "question": 8,
+      "field": "pictorialOptions",
+      "value": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5"
+      ],
+      "evidence": "Read from the rendered figure q08-fig1.png: five numbered stars. The labels are drawn as graphics and are absent from the PDF text layer, so they cannot be extracted; they are recorded here after opening the figure rather than inferred at run time.",
+      "verifiedBy": "rendered-figure inspection"
+    },
+    {
+      "question": 12,
+      "field": "pictorialOptions",
+      "value": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5"
+      ],
+      "evidence": "Read from the rendered figure q12-fig1.png: five numbered hexagons. The labels are drawn as graphics and are absent from the PDF text layer, so they cannot be extracted; they are recorded here after opening the figure rather than inferred at run time.",
+      "verifiedBy": "rendered-figure inspection"
+    },
+    {
+      "question": 14,
+      "field": "pictorialOptions",
+      "value": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5"
+      ],
+      "evidence": "Read from the rendered figure q14-fig1.png: five numbered letter crosses. The labels are drawn as graphics and are absent from the PDF text layer, so they cannot be extracted; they are recorded here after opening the figure rather than inferred at run time.",
+      "verifiedBy": "rendered-figure inspection"
+    },
+    {
+      "question": 17,
+      "field": "pictorialOptions",
+      "value": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5"
+      ],
+      "evidence": "Read from the rendered figure q17-fig1.png: five numbered chevrons. The labels are drawn as graphics and are absent from the PDF text layer, so they cannot be extracted; they are recorded here after opening the figure rather than inferred at run time.",
+      "verifiedBy": "rendered-figure inspection"
+    },
+    {
+      "question": 20,
+      "field": "pictorialOptions",
+      "value": [],
+      "evidence": "Read from the rendered figure q20-fig1.png: a worked subtraction with a boxed digit; the figure offers no choices. The labels are drawn as graphics and are absent from the PDF text layer, so they cannot be extracted; they are recorded here after opening the figure rather than inferred at run time.",
+      "verifiedBy": "rendered-figure inspection"
+    },
+    {
+      "question": 21,
+      "field": "pictorialOptions",
+      "value": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5"
+      ],
+      "evidence": "Read from the rendered figure q21-fig1.png: five numbered hexagons. The labels are drawn as graphics and are absent from the PDF text layer, so they cannot be extracted; they are recorded here after opening the figure rather than inferred at run time.",
+      "verifiedBy": "rendered-figure inspection"
+    },
+    {
+      "question": 23,
+      "field": "pictorialOptions",
+      "value": [],
+      "evidence": "Read from the rendered figure q23-fig1.png: a worked addition with a boxed digit; the figure offers no choices. The labels are drawn as graphics and are absent from the PDF text layer, so they cannot be extracted; they are recorded here after opening the figure rather than inferred at run time.",
+      "verifiedBy": "rendered-figure inspection"
+    },
+    {
+      "question": 25,
+      "field": "pictorialOptions",
+      "value": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "evidence": "Read from the rendered figure q25-fig2.png: four numbered boxes. The labels are drawn as graphics and are absent from the PDF text layer, so they cannot be extracted; they are recorded here after opening the figure rather than inferred at run time.",
+      "verifiedBy": "rendered-figure inspection"
+    },
+    {
+      "question": 34,
+      "field": "pictorialOptions",
+      "value": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "evidence": "Read from the rendered figure q34-fig2.png: four numbered boxes. The labels are drawn as graphics and are absent from the PDF text layer, so they cannot be extracted; they are recorded here after opening the figure rather than inferred at run time.",
+      "verifiedBy": "rendered-figure inspection"
+    },
+    {
+      "question": 35,
+      "field": "pictorialOptions",
+      "value": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "evidence": "Read from the rendered figure q35-fig2.png: four numbered boxes. The labels are drawn as graphics and are absent from the PDF text layer, so they cannot be extracted; they are recorded here after opening the figure rather than inferred at run time.",
+      "verifiedBy": "rendered-figure inspection"
+    },
+    {
+      "question": 38,
+      "field": "pictorialOptions",
+      "value": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "evidence": "Read from the rendered figure q38-fig2.png: four numbered boxes. The labels are drawn as graphics and are absent from the PDF text layer, so they cannot be extracted; they are recorded here after opening the figure rather than inferred at run time.",
+      "verifiedBy": "rendered-figure inspection"
+    },
+    {
+      "question": 39,
+      "field": "pictorialOptions",
+      "value": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "evidence": "Read from the rendered figure q39-fig2.png: four numbered boxes. The labels are drawn as graphics and are absent from the PDF text layer, so they cannot be extracted; they are recorded here after opening the figure rather than inferred at run time.",
+      "verifiedBy": "rendered-figure inspection"
+    },
+    {
+      "question": 43,
+      "field": "pictorialOptions",
+      "value": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5"
+      ],
+      "evidence": "Read from the rendered figure q43-fig1.png: five numbered panels. The labels are drawn as graphics and are absent from the PDF text layer, so they cannot be extracted; they are recorded here after opening the figure rather than inferred at run time.",
+      "verifiedBy": "rendered-figure inspection"
+    },
+    {
+      "question": 44,
+      "field": "pictorialOptions",
+      "value": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5"
+      ],
+      "evidence": "Read from the rendered figure q44-fig1.png: five numbered panels. The labels are drawn as graphics and are absent from the PDF text layer, so they cannot be extracted; they are recorded here after opening the figure rather than inferred at run time.",
+      "verifiedBy": "rendered-figure inspection"
+    },
+    {
+      "question": 47,
+      "field": "pictorialOptions",
+      "value": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "evidence": "Read from the rendered figure q47-fig2.png: four numbered letters. The labels are drawn as graphics and are absent from the PDF text layer, so they cannot be extracted; they are recorded here after opening the figure rather than inferred at run time.",
+      "verifiedBy": "rendered-figure inspection"
+    },
+    {
+      "question": 48,
+      "field": "pictorialOptions",
+      "value": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "evidence": "Read from the rendered figure q48-fig2.png: four numbered boxes. The labels are drawn as graphics and are absent from the PDF text layer, so they cannot be extracted; they are recorded here after opening the figure rather than inferred at run time.",
+      "verifiedBy": "rendered-figure inspection"
     }
   ]
 }

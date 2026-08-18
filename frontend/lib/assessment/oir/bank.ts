@@ -34,6 +34,7 @@ import {
   type OirFigureRef,
   type OirOmission,
   type OirOptionSource,
+  type OirResponseFormat,
 } from "@/lib/assessment/oir/types";
 import {
   contentItemId,
@@ -155,6 +156,40 @@ function parseAnswerKey(value: unknown, what: string): OirAnswerKey {
   }
 }
 
+/** Bounds a written answer's shape, so a corrupt file cannot ask for 900 boxes. */
+const MAX_RESPONSE_VALUES = 8;
+const MAX_RESPONSE_TEXT_LENGTH = 64;
+
+function parseResponseFormat(value: unknown, what: string): OirResponseFormat | null {
+  if (value === null || value === undefined) return null;
+  const record = asRecord(value, what);
+  const kind = asString(record.kind, `${what}.kind`);
+
+  if (kind === "single-option" || kind === "boolean") return { kind };
+  if (kind === "multiple-options") {
+    const count = asNumber(record.count, `${what}.count`);
+    if (!Number.isInteger(count) || count < 2 || count > MAX_RESPONSE_VALUES) {
+      invalid(`${what}.count is not a usable number of selections`);
+    }
+    return { kind, count };
+  }
+  if (kind === "short-text") {
+    const maxLength = asNumber(record.maxLength, `${what}.maxLength`);
+    if (!Number.isInteger(maxLength) || maxLength < 1 || maxLength > MAX_RESPONSE_TEXT_LENGTH) {
+      invalid(`${what}.maxLength is not a usable length`);
+    }
+    return { kind, maxLength };
+  }
+  if (kind === "multi-token" || kind === "ordered-sequence") {
+    const count = asNumber(record.count, `${what}.count`);
+    if (!Number.isInteger(count) || count < 1 || count > MAX_RESPONSE_VALUES) {
+      invalid(`${what}.count is not a usable number of values`);
+    }
+    return { kind, count };
+  }
+  return invalid(`${what}.kind is ${JSON.stringify(kind)}, which is not a written answer shape`);
+}
+
 function parseStatus(value: unknown, what: string): ContentStatus {
   const status = asString(value, what);
   if (status !== "draft" && status !== "active" && status !== "retired") {
@@ -197,7 +232,9 @@ function parseCurations(value: unknown, what: string): OirCuration[] {
   return asArray(value, what).map((entry, i) => {
     const record = asRecord(entry, `${what}[${i}]`);
     const field = asString(record.field, `${what}[${i}].field`);
-    if (field !== "answerKey") invalid(`${what}[${i}].field ${JSON.stringify(field)} is not curatable`);
+    if (field !== "answerKey" && field !== "pictorialOptions") {
+      invalid(`${what}[${i}].field ${JSON.stringify(field)} is not curatable`);
+    }
     const evidence = asString(record.evidence, `${what}[${i}].evidence`);
     if (evidence.trim().length < MIN_CURATION_EVIDENCE) {
       invalid(`${what}[${i}] cites no substantive evidence`);
@@ -253,6 +290,31 @@ function loadSet(setNumber: number): OirSet {
     const optionSource = asString(record.optionSource, `${where}.optionSource`) as OirOptionSource;
     if (optionSource !== "text" && optionSource !== "figure" && optionSource !== "none") {
       invalid(`${where}.optionSource ${JSON.stringify(optionSource)} is not a known source`);
+    }
+    const pictorialOptionIds = asArray(record.pictorialOptionIds, `${where}.pictorialOptionIds`).map(
+      (id, i) => asString(id, `${where}.pictorialOptionIds[${i}]`),
+    );
+    if (new Set(pictorialOptionIds).size !== pictorialOptionIds.length) {
+      invalid(`${where}.pictorialOptionIds repeats a label`);
+    }
+    if (pictorialOptionIds.some((id) => !/^[0-9]{1,2}$/.test(id))) {
+      invalid(`${where}.pictorialOptionIds holds something that is not a numbered choice`);
+    }
+    const responseFormat = parseResponseFormat(record.responseFormat, `${where}.responseFormat`);
+    if (responseFormat === null) invalid(`${where}.responseFormat is missing`);
+    // Every question declares how it is answered, and that declaration has to
+    // agree with where its choices come from: a question answered by choosing
+    // must offer choices, and one answered by writing must not.
+    const choosesOption =
+      responseFormat.kind === "single-option" || responseFormat.kind === "multiple-options";
+    if (choosesOption === (optionSource === "none")) {
+      invalid(
+        `${where}.optionSource says "${optionSource}" but its response format is ` +
+          `"${responseFormat.kind}", which does not match how the question is answered.`,
+      );
+    }
+    if ((optionSource === "figure") !== pictorialOptionIds.length > 0) {
+      invalid(`${where}.optionSource says "${optionSource}" but ${pictorialOptionIds.length} pictorial choices are recorded`);
     }
     if ((optionSource === "text") !== options.length > 0) {
       invalid(`${where}.optionSource says "${optionSource}" but ${options.length} options are printed`);
@@ -314,6 +376,8 @@ function loadSet(setNumber: number): OirSet {
       stem,
       options,
       optionSource,
+      pictorialOptionIds,
+      responseFormat,
       figures,
       modality: modalityOf({ figures }),
       answerKey,

@@ -106,6 +106,11 @@ const FIGURE_MARGIN_PT = 4;
 const FIGURE_MIN_HEIGHT_PT = 8;
 const FIGURE_MIN_INK_PIXELS = 200;
 
+/** A curated fact has to say what establishes it, not merely assert it. */
+const MIN_CURATION_EVIDENCE = 40;
+/** A written OIR answer is a letter, a digit, or a very short token. */
+const SHORT_TEXT_MAX_LENGTH = 16;
+
 class IngestError extends Error {}
 
 function fail(message) {
@@ -809,8 +814,41 @@ async function main() {
       figureCount: figures.length,
     });
 
+    // Pictorial choices are numbered inside the diagram, and the source draws
+    // those numerals as graphics: no extractor can read them. They are curated
+    // with evidence instead, and a figure-bearing question WITHOUT an entry is
+    // refused rather than served with an answer space nothing can check.
+    const pictorialEntry = curated.entries.find(
+      (e) => e.question === start.number && e.field === "pictorialOptions",
+    );
+    if (figures.length > 0 && !pictorialEntry) {
+      // Omitted rather than fatal: the questions this catches today are the ones
+      // already being dropped for damaged figures, and recording labels for a
+      // diagram nobody will be shown would be busywork. What it must never do is
+      // let the question through with an answer space nothing can check.
+      omit(
+        start.number,
+        "the figure's numbered choices have not been recorded, so an answer against it could " +
+          "not be checked. Add a curated pictorialOptions entry to serve this question.",
+      );
+    }
+    const pictorialOptionIds = pictorialEntry ? pictorialEntry.value : [];
+    if (!Array.isArray(pictorialOptionIds) || pictorialOptionIds.some((id) => !/^[0-9]{1,2}$/.test(id))) {
+      fail(`Q${start.number}: curated pictorialOptions must be a list of numeric labels`);
+    }
+    if (new Set(pictorialOptionIds).size !== pictorialOptionIds.length) {
+      fail(`Q${start.number}: curated pictorialOptions repeats a label`);
+    }
+
     const curations = [];
     for (const entry of curated.entries.filter((e) => e.question === start.number)) {
+      if (entry.field === "pictorialOptions") {
+        if (!entry.evidence || entry.evidence.trim().length < MIN_CURATION_EVIDENCE) {
+          fail(`Q${start.number}: the curated pictorialOptions entry cites no substantive evidence`);
+        }
+        curations.push({ field: entry.field, evidence: entry.evidence });
+        continue;
+      }
       if (entry.field !== "answerKey") fail(`Q${start.number}: unsupported curated field ${entry.field}`);
       if (answerKey.kind !== "unresolved") {
         fail(
@@ -830,7 +868,58 @@ async function main() {
       .join(" ")
       .trim();
 
-    const optionSource = options.length > 0 ? "text" : figures.length > 0 ? "figure" : "none";
+    // "figure" now means the diagram genuinely carries numbered choices. A
+    // question with a figure but no choices in it — Q20's worked subtraction,
+    // Q3's pair of cubes answered Yes or No — is "none", which is what it
+    // always was in substance.
+    const optionSource =
+      options.length > 0 ? "text" : pictorialOptionIds.length > 0 ? "figure" : "none";
+
+    /**
+     * What a written answer has to look like.
+     *
+     * Derived from the answer key's SHAPE — never from its value, and never
+     * from the wording of the stem. A candidate needs to know whether to write
+     * "Yes", one letter, or two numbers in order; the source states that in
+     * prose, and prose is not something a renderer can parse reliably. Recording
+     * it here means the browser can draw the right input without the question
+     * text being sniffed at run time.
+     *
+     * Null unless the question is answered by writing. The count is not a
+     * secret: the paper prints one blank per value.
+     */
+    let responseFormat = null;
+    {
+      switch (answerKey.kind) {
+        case "single-option":
+          responseFormat = { kind: "single-option" };
+          break;
+        case "multiple-options":
+          // "Which TWO of the following" is printed in the stem, but a renderer
+          // must not have to read English to know it needs checkboxes.
+          responseFormat = { kind: "multiple-options", count: answerKey.optionIds.length };
+          break;
+        case "boolean":
+          responseFormat = { kind: "boolean" };
+          break;
+        case "short-text":
+          responseFormat = { kind: "short-text", maxLength: SHORT_TEXT_MAX_LENGTH };
+          break;
+        case "multi-token":
+        case "ordered-sequence":
+          responseFormat = { kind: answerKey.kind, count: answerKey.values.length };
+          break;
+        default:
+          // Reached only by a question whose choices were lost, so its key
+          // names an option that no longer exists. Already destined for
+          // omission; recorded here too rather than crashing the build.
+          omit(
+            start.number,
+            `it is answered by writing but its key is ${answerKey.kind}, which no input can ` +
+              `represent, so there is no way for a candidate to give the answer it expects.`,
+          );
+      }
+    }
 
     // --- candidate-readiness ------------------------------------------------
     if (stem.length === 0 && figures.length === 0) {
@@ -847,8 +936,17 @@ async function main() {
             omit(start.number, `the answer selects option ${id}, which the question does not print`);
           }
         }
-      } else if (optionSource === "none") {
-        omit(start.number, `the answer selects option ${ids.join(" and ")}, but the question prints no options`);
+      } else if (optionSource === "figure") {
+        // The curated labels are now a real answer space, so a key naming a
+        // choice the diagram does not show is caught here rather than surviving
+        // to be graded against nothing.
+        for (const id of ids) {
+          if (!pictorialOptionIds.includes(id)) {
+            omit(start.number, `the answer selects option ${id}, which the figure does not show`);
+          }
+        }
+      } else {
+        omit(start.number, `the answer selects option ${ids.join(" and ")}, but the question offers no options`);
       }
     }
 
@@ -857,6 +955,8 @@ async function main() {
       stem,
       options,
       optionSource,
+      pictorialOptionIds,
+      responseFormat,
       figures,
       answerKey,
       curations,
@@ -891,6 +991,8 @@ async function main() {
     stem: r.stem,
     options: r.options,
     optionSource: r.optionSource,
+    pictorialOptionIds: r.pictorialOptionIds,
+    responseFormat: r.responseFormat,
     figures: r.figures.map((f) => `oir/${setSlug}/figures/${f.name}.png`),
     answerKey: r.answerKey,
     explanation: r.explanation,

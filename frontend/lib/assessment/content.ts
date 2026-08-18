@@ -5,6 +5,7 @@ import type {
   OirFigureRef,
   OirModality,
   OirOptionSource,
+  OirResponseFormat,
   OirSourcePages,
 } from "@/lib/assessment/oir/types";
 import type {
@@ -84,6 +85,14 @@ export interface OirQuestionItem extends ContentItemBase {
   /** Empty when the choices are numbered inside the figure, or when there are none. */
   readonly options: readonly ChoiceOption[];
   readonly optionSource: OirOptionSource;
+  /**
+   * The numbered choices the diagram shows, recorded at ingestion from the
+   * rendered figure. Empty unless `optionSource` is "figure". Without it an
+   * answer naming picture 9 of 4 could not be told from a valid one.
+   */
+  readonly pictorialOptionIds: readonly string[];
+  /** How a written answer must be shaped. Null when the question offers choices. */
+  readonly responseFormat: OirResponseFormat;
   readonly figures: readonly OirFigureRef[];
   readonly modality: OirModality;
   /**
@@ -236,6 +245,8 @@ export type CandidateFacingItem =
       readonly stem: string;
       readonly options: readonly ChoiceOption[];
       readonly optionSource: OirOptionSource;
+      readonly pictorialOptionIds: readonly string[];
+      readonly responseFormat: OirResponseFormat;
       readonly figures: readonly OirFigureRef[];
       readonly modality: OirModality;
     }
@@ -264,6 +275,12 @@ export function toCandidateFacingItem(item: ContentItem): CandidateFacingItem {
         stem: item.stem,
         options: item.options,
         optionSource: item.optionSource,
+        // Both of these were reviewed as candidate-safe: the numbered choices
+        // are printed inside the figure the candidate is looking at, and the
+        // response format describes the shape of the box they must fill in,
+        // never its contents.
+        pictorialOptionIds: item.pictorialOptionIds,
+        responseFormat: item.responseFormat,
         figures: item.figures,
         modality: item.modality,
       };
