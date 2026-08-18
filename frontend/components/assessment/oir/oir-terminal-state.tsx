@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 import { ShieldIcon, TimerIcon } from "@/components/icons";
-import type { OirAttemptStatus } from "@/lib/oir/client/attempt-client";
+import type { OirAttemptResult, OirAttemptStatus } from "@/lib/oir/client/attempt-client";
 
 /**
  * What the candidate sees once the attempt is over.
@@ -11,8 +11,16 @@ import type { OirAttemptStatus } from "@/lib/oir/client/attempt-client";
  * both further answers and a second submission, and an interface that implied
  * otherwise would only produce a rejected request and a confused candidate.
  *
- * Deliberately no score, no correct answers and no explanations. Marking is
- * Step 5C, and until it exists this screen says what happened and nothing more.
+ * The marks are counts: how many questions were served, answered, right and
+ * wrong. Deliberately nothing else — no correct answers, no explanations, no
+ * per-question breakdown, and above all no reading of what any of it says about
+ * the candidate. A board reaches that judgement over five days with trained
+ * assessors; a tally of reasoning questions is not a shortcut to it, and a
+ * screen that implied otherwise would be the lie.
+ *
+ * The result may be absent: it is fetched separately and the screen has to be
+ * useful before it arrives, so the counts appear when they do and the outcome
+ * is stated either way.
  */
 
 interface OirTerminalStateProps {
@@ -20,6 +28,8 @@ interface OirTerminalStateProps {
   readonly answeredCount: number;
   readonly questionCount: number;
   readonly submittedAt: string | null;
+  /** Null until it has been fetched, or if it could not be. */
+  readonly result: OirAttemptResult | null;
 }
 
 export function OirTerminalState({
@@ -27,8 +37,30 @@ export function OirTerminalState({
   answeredCount,
   questionCount,
   submittedAt,
+  result,
 }: OirTerminalStateProps) {
   const submitted = status === "submitted";
+  const figures: readonly { readonly label: string; readonly value: string }[] =
+    result === null
+      ? [
+          { label: "Answered", value: `${answeredCount} / ${questionCount}` },
+          {
+            label: submitted ? "Submitted" : "Closed",
+            value:
+              submittedAt === null
+                ? "—"
+                : new Date(submittedAt).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+          },
+        ]
+      : [
+          { label: "Questions", value: String(result.questionCount) },
+          { label: "Answered", value: String(result.answeredCount) },
+          { label: "Correct", value: String(result.correctCount) },
+          { label: "Incorrect", value: String(result.incorrectCount) },
+          { label: "Unanswered", value: String(result.unansweredCount) },
+          { label: "Score", value: `${result.score} / ${result.maxScore}` },
+          { label: "Accuracy", value: `${result.accuracyPercent}%` },
+        ];
 
   return (
     <main className="mx-auto flex min-h-dvh max-w-2xl flex-col items-center justify-center gap-6 px-4 py-12 text-center">
@@ -53,28 +85,21 @@ export function OirTerminalState({
         </p>
       </div>
 
-      <dl className="grid w-full max-w-sm grid-cols-2 gap-3 text-sm">
-        <div className="rounded-lg border border-white/10 bg-white/5 p-3">
-          <dt className="text-xs text-slate-400">Answered</dt>
-          <dd className="mt-1 text-lg font-semibold tabular-nums text-slate-100">
-            {answeredCount} / {questionCount}
-          </dd>
-        </div>
-        <div className="rounded-lg border border-white/10 bg-white/5 p-3">
-          <dt className="text-xs text-slate-400">{submitted ? "Submitted" : "Closed"}</dt>
-          <dd className="mt-1 text-lg font-semibold tabular-nums text-slate-100">
-            {submittedAt === null
-              ? "—"
-              : new Date(submittedAt).toLocaleTimeString([], {
-                  hour: "2-digit",
-                  minute: "2-digit",
-                })}
-          </dd>
-        </div>
+      <dl className="grid w-full max-w-md grid-cols-2 gap-3 text-sm sm:grid-cols-3">
+        {figures.map((figure) => (
+          <div key={figure.label} className="rounded-lg border border-white/10 bg-white/5 p-3">
+            <dt className="text-xs text-slate-400">{figure.label}</dt>
+            <dd className="mt-1 text-lg font-semibold tabular-nums text-slate-100">
+              {figure.value}
+            </dd>
+          </div>
+        ))}
       </dl>
 
-      <p className="text-xs text-slate-500">
-        Results are not available yet.
+      <p className="max-w-md text-xs text-slate-500">
+        {result === null
+          ? "Your marks are being worked out."
+          : "This counts reasoning questions answered correctly. It is not a measure of your suitability, and it is only one part of the selection procedure."}
       </p>
 
       <Link

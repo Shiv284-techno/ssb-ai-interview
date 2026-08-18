@@ -234,10 +234,12 @@ export function OirQuestionPanel({
 
       {(responseFormat.kind === "multi-token" || responseFormat.kind === "ordered-sequence") && (
         <fieldset disabled={disabled} className="space-y-2">
+          {/* Both kinds are positional: the paper prints one blank per value and
+              the series continues in the order it is read, so marking compares
+              box for box. The candidate is told so rather than left to find out
+              from the result. */}
           <legend className="mb-1 text-xs text-slate-400">
-            {responseFormat.kind === "ordered-sequence"
-              ? `Your answer — ${responseFormat.count} values, in order`
-              : `Your answer — ${responseFormat.count} values`}
+            {`Your answer — ${responseFormat.count} values, in order`}
           </legend>
           <div className="flex flex-wrap gap-2">
             {Array.from({ length: responseFormat.count }, (_, index) => (

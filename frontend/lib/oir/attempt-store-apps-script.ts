@@ -167,6 +167,12 @@ export const appsScriptAttemptStore: OirAttemptStore = {
     return parseAttempt(record.attempt);
   },
 
+  async findLatestFor(candidateRef) {
+    const record = await call("getLatestOirAttemptFor", { candidate_ref: candidateRef });
+    if (record.attempt === null || record.attempt === undefined) return null;
+    return parseAttempt(record.attempt);
+  },
+
   async update(attempt, expectedRevision) {
     await call("updateOirAttempt", {
       attempt_id: attempt.id,

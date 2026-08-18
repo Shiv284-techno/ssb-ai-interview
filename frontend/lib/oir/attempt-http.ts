@@ -20,10 +20,13 @@ export function failureStatus(failure: AttemptFailure): number {
   switch (failure) {
     // The request was valid; the deployment cannot honour it yet.
     case "insufficient-bank":
+    case "unmarkable":
     case "store-unavailable":
       return 503;
     // The attempt is not in a state that permits this.
     case "already-active":
+    case "already-taken":
+    case "not-settled":
     case "not-active":
     case "expired":
     case "conflict":
@@ -45,6 +48,9 @@ export function failureStatus(failure: AttemptFailure): number {
  */
 const MESSAGES: Readonly<Record<AttemptFailure, string>> = {
   "insufficient-bank": "The assessment is not available yet.",
+  "already-taken": "You have already taken this test.",
+  "not-settled": "Your test is still in progress.",
+  unmarkable: "Your result is not available.",
   "already-active": "You already have an attempt in progress.",
   "not-found": "No attempt in progress.",
   "not-active": "That attempt is already finished.",

@@ -100,6 +100,25 @@ export interface OirFailure {
   readonly message: string;
 }
 
+/**
+ * What the candidate is told once the paper is marked.
+ *
+ * Counts and a score. No question-level breakdown, no correct answers, no
+ * explanations — those are a different product decision and this is not it.
+ */
+export interface OirAttemptResult {
+  readonly status: "submitted" | "timed-out";
+  readonly questionCount: number;
+  readonly answeredCount: number;
+  readonly unansweredCount: number;
+  readonly correctCount: number;
+  readonly incorrectCount: number;
+  readonly score: number;
+  readonly maxScore: number;
+  readonly accuracyPercent: number;
+  readonly settledAt: string;
+}
+
 export type OirResult<T> =
   | { readonly ok: true; readonly value: T }
   | { readonly ok: false; readonly failure: OirFailure };
@@ -190,6 +209,10 @@ export const submitAttempt = (attemptId: string): Promise<OirResult<OirAttemptVi
     { method: "POST", headers: JSON_HEADERS, body: JSON.stringify({ attemptId }) },
     [200],
   );
+
+/** The candidate's own marked result. Nothing is sent; the session identifies them. */
+export const fetchResult = (): Promise<OirResult<OirAttemptResult>> =>
+  request<OirAttemptResult>("/api/assessment/oir/attempt/result", { method: "GET" }, [200]);
 
 /** True when two answers are the same, so an unchanged selection is not re-saved. */
 export function sameAnswer(a: OirAnswer | null, b: OirAnswer | null): boolean {

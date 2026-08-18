@@ -1,3 +1,4 @@
+import { OIR_ANSWER_KEY_KINDS } from "@/lib/assessment/oir/types";
 import {
   activityDefinitionId,
   type ActivityDefinitionId,
@@ -24,24 +25,37 @@ import type {
 
 const id = (value: string): ActivityDefinitionId => activityDefinitionId(value);
 
+/**
+ * The OIR paper as this platform actually runs it.
+ *
+ * One set of fifty questions over twenty-five minutes, mixing verbal and
+ * non-verbal reasoning rather than separating them — which is what the bank
+ * holds and what `OIR_PRODUCTION_CONFIG` serves. An earlier version of this
+ * definition described two seventeen-minute sets and claimed every question had
+ * exactly one correct option; neither was true of the paper being sat, and a
+ * definition that disagrees with the thing it defines is worse than none.
+ *
+ * The numbers here and in `lib/oir/attempt.ts` must agree. The test suite
+ * checks that they do, because two places holding the same fact is two places
+ * for it to drift.
+ */
 export const OIR_DEFINITION: Extract<AssessmentActivity, { kind: "oir" }> = {
   kind: "oir",
   id: id("oir-standard"),
   title: "OIR",
   fullTitle: "Officer Intelligence Rating",
   instructions: [
-    "Two timed sets of reasoning questions.",
-    "Answer as many as you can; you may not return to a set once it closes.",
-    "Each question has exactly one correct option.",
+    "One timed set of reasoning questions, verbal and non-verbal together.",
+    "Answer as many as you can. You may move between questions freely until you submit or the time runs out.",
+    "Most questions ask you to choose. Some ask for two choices, some are answered yes or no, and some are written into blanks — each question says which.",
+    "There is no negative marking, so a wrong answer costs you nothing.",
   ],
   participation: "individual",
-  timing: { totalSeconds: 34 * 60, enforcement: "hard" },
+  timing: { totalSeconds: 25 * 60, enforcement: "hard" },
   piqAspects: [],
-  sections: [
-    { label: "Verbal reasoning", questionCount: 50, timeLimitSeconds: 17 * 60 },
-    { label: "Non-verbal reasoning", questionCount: 50, timeLimitSeconds: 17 * 60 },
-  ],
+  sections: [{ label: "Reasoning", questionCount: 50, timeLimitSeconds: 25 * 60 }],
   negativeMarking: false,
+  answerFormats: OIR_ANSWER_KEY_KINDS,
 };
 
 export const PPDT_DEFINITION: Extract<AssessmentActivity, { kind: "ppdt" }> = {

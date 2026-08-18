@@ -1,3 +1,4 @@
+import type { OirAnswerKeyKind } from "@/lib/assessment/oir/types";
 import type {
   ActivityDefinitionId,
   DifficultyBand,
@@ -148,6 +149,15 @@ export interface OirSection {
 export interface OirActivity extends ActivityDefinitionBase<"oir"> {
   readonly sections: readonly OirSection[];
   readonly negativeMarking: boolean;
+  /**
+   * The forms an answer may take on this paper.
+   *
+   * Stated rather than assumed. An OIR paper is not uniformly multiple choice:
+   * some questions want two of the printed figures, some are answered yes or
+   * no, and some are written into blanks. Code that assumed one correct option
+   * per question would mark a two-value answer wrong for being two values.
+   */
+  readonly answerFormats: readonly OirAnswerKeyKind[];
 }
 
 export interface PpdtActivity extends ActivityDefinitionBase<"ppdt"> {

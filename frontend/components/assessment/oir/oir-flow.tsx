@@ -12,11 +12,13 @@ import { cn } from "@/lib/cn";
 import {
   fetchAttempt,
   fetchQuestions,
+  fetchResult,
   sameAnswer,
   saveAnswer,
   startAttempt,
   submitAttempt,
   type OirAnswer,
+  type OirAttemptResult,
   type OirAttemptView,
   type OirFailure,
   type OirQuestion,
@@ -66,6 +68,7 @@ export function OirFlow({ candidateName }: OirFlowProps) {
   const [notice, setNotice] = useState<string | null>(null);
   const [confirming, setConfirming] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const [result, setResult] = useState<OirAttemptResult | null>(null);
 
   // The queue lives in refs: it must survive re-renders without causing them,
   // and only one write may be in flight at a time.
@@ -179,6 +182,26 @@ export function OirFlow({ candidateName }: OirFlowProps) {
     }, POLL_WHEN_EXPIRED_MS);
     return () => window.clearInterval(id);
   }, [phase, settled, remainingSeconds, adopt]);
+
+  /**
+   * The marks, once there are any.
+   *
+   * Asked for only after the server says the attempt has settled, and only
+   * once. Marking is a recomputation on the server, so asking again would
+   * return the same numbers — but a screen that re-fetched on every render
+   * would still be wrong about why it was doing it.
+   */
+  useEffect(() => {
+    if (!settled || result !== null) return;
+    let cancelled = false;
+    void (async () => {
+      const fetched = await fetchResult();
+      if (!cancelled && fetched.ok) setResult(fetched.value);
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [settled, result]);
 
   // ---- the serial save queue ----------------------------------------------
 
@@ -407,6 +430,7 @@ export function OirFlow({ candidateName }: OirFlowProps) {
         answeredCount={attempt.answers.length}
         questionCount={attempt.questionCount}
         submittedAt={attempt.submittedAt}
+        result={result}
       />
     );
   }

@@ -2,7 +2,7 @@
  * OIR attempt storage for the SSB AI Interviewer.
  *
  * Add these functions to the SAME Apps Script project that already serves
- * createUser / findUser / findUserById, and add the four branches at the bottom
+ * createUser / findUser / findUserById, and add the five branches at the bottom
  * to your existing doPost(e). The application posts to one endpoint and
  * distinguishes requests by `action`, exactly as it already does for accounts.
  *
@@ -97,7 +97,10 @@ function createOirAttempt(payload) {
     var rows = oirRows_(sheet);
     for (var i = 0; i < rows.length; i++) {
       var row = rows[i][1];
-      if (String(row[1]).trim() === payload.candidate_ref && !oirIsSettled_(row[2])) {
+      // Any attempt, settled or not. A candidate sits this paper once: a
+      // submitted row must block a second start just as firmly as a live one,
+      // or a reload after submitting hands out a fresh twenty-five minutes.
+      if (String(row[1]).trim() === payload.candidate_ref) {
         return { success: false, error: 'ATTEMPT_ALREADY_ACTIVE' };
       }
       if (String(row[0]).trim() === payload.attempt_id) {
@@ -140,6 +143,27 @@ function getUnsettledOirAttempt(candidateRef) {
     if (String(row[1]).trim() === target && !oirIsSettled_(row[2])) return String(row[4]);
   }
   return null;
+}
+
+/**
+ * The candidate's most recent attempt, whatever state it is in.
+ *
+ * `getUnsettledOirAttempt` cannot answer this: it filters settled rows out by
+ * design, which is right for finding a paper still being sat but wrong for
+ * everything afterwards. A submitted attempt has to stay findable, or the
+ * candidate who reloads is told they have no attempt and is given a new one.
+ *
+ * Rows are appended, so the last match is the newest.
+ */
+function getLatestOirAttemptFor(candidateRef) {
+  var rows = oirRows_(oirSheet_());
+  var target = String(candidateRef).trim();
+  var latest = null;
+  for (var i = 0; i < rows.length; i++) {
+    var row = rows[i][1];
+    if (String(row[1]).trim() === target) latest = String(row[4]);
+  }
+  return latest;
 }
 
 /**
@@ -201,6 +225,11 @@ function oir_doPost_branches_example(body) {
   if (action === 'getUnsettledOirAttempt') {
     if (!body.candidate_ref) return { success: false, error: 'MISSING_FIELDS' };
     return { success: true, attempt: getUnsettledOirAttempt(body.candidate_ref) };
+  }
+
+  if (action === 'getLatestOirAttemptFor') {
+    if (!body.candidate_ref) return { success: false, error: 'MISSING_FIELDS' };
+    return { success: true, attempt: getLatestOirAttemptFor(body.candidate_ref) };
   }
 
   if (action === 'updateOirAttempt') {

@@ -33,6 +33,7 @@ import {
 import { appsScriptAttemptStore } from "@/lib/oir/attempt-store-apps-script";
 import { OirStoreConflict, type OirAttemptStore } from "@/lib/oir/attempt-store";
 import { getOirSet } from "@/lib/assessment/oir/bank";
+import { evaluateAttempt, type OirResult } from "@/lib/oir/result";
 import type { ContentItemId } from "@/lib/assessment/types";
 import { isServable } from "@/lib/assessment/types";
 
@@ -44,6 +45,12 @@ export type AttemptFailure =
   | "insufficient-bank"
   /** The candidate already holds an unsettled attempt. */
   | "already-active"
+  /** The candidate has already sat this paper. One attempt each, and it is spent. */
+  | "already-taken"
+  /** A result was asked for while the candidate is still sitting the paper. */
+  | "not-settled"
+  /** The bank no longer holds a question this attempt served, so it cannot be marked. */
+  | "unmarkable"
   | "not-found"
   | "not-active"
   | "expired"
@@ -171,26 +178,36 @@ export async function startAttempt(
   const selected = selectQuestionIds(config);
   if (!selected.ok) return selected;
 
-  // A candidate who already holds an unsettled attempt is given it back rather
-  // than a second one, so a double-click cannot consume their paper.
+  // One paper per candidate, spent or not. A candidate still sitting theirs is
+  // handed it back rather than a second one, so a double-click cannot consume
+  // it; a candidate who has finished is refused, because "submit, reload, sit
+  // it again" is not a thing an exam may allow.
+  //
+  // The lookup is deliberately `findLatestFor` and not `findUnsettledFor`. The
+  // latter cannot see a submitted attempt at all, which read as "no attempt"
+  // and handed the candidate a fresh twenty-five minutes.
   let existing: OirAttempt | null;
   try {
-    existing = await deps.store.findUnsettledFor(candidateRef);
+    existing = await deps.store.findLatestFor(candidateRef);
   } catch {
     return { ok: false, failure: "store-unavailable" };
   }
   if (existing) {
     const current = settle(existing, deps.now());
     if (!isSettled(current)) return { ok: true, value: current };
-    // It expired. THIS is the one place a settlement is written: the moment the
-    // candidate asks for a new paper is the moment the old one stops being the
-    // current one. Reads never write, so re-reading an expired attempt cannot
-    // move its settlement timestamp — and cannot make it vanish either.
-    try {
-      await deps.store.update(current, existing.revision);
-    } catch (error) {
-      if (!(error instanceof OirStoreConflict)) return { ok: false, failure: "store-unavailable" };
+    // The clock settled it and nothing has written that down yet. THIS is the
+    // one place a settlement is persisted: reads never write, so re-reading an
+    // expired attempt cannot move its settlement timestamp — and cannot make it
+    // vanish either. Writing it here means the sheet agrees with what every
+    // reader has already been told.
+    if (current.status !== existing.status) {
+      try {
+        await deps.store.update(current, existing.revision);
+      } catch (error) {
+        if (!(error instanceof OirStoreConflict)) return { ok: false, failure: "store-unavailable" };
+      }
     }
+    return { ok: false, failure: "already-taken" };
   }
 
   const startedAt = deps.now().toISOString();
@@ -226,8 +243,9 @@ export async function startAttempt(
  * attempt" as soon as something happens to persist it.
  *
  * `not-found` is reserved for its literal meaning: this candidate has no
- * attempt. An expired attempt is emphatically not that, and must never be
- * reported as one.
+ * attempt. An expired attempt is emphatically not that, and neither is a
+ * submitted one — both must come back as themselves, or the client that reads
+ * "no attempt" will quite reasonably start another.
  */
 export async function currentAttempt(
   candidateRef: string,
@@ -235,7 +253,7 @@ export async function currentAttempt(
 ): Promise<AttemptResult<OirAttempt>> {
   let stored: OirAttempt | null;
   try {
-    stored = await deps.store.findUnsettledFor(candidateRef);
+    stored = await deps.store.findLatestFor(candidateRef);
   } catch {
     return { ok: false, failure: "store-unavailable" };
   }
@@ -360,6 +378,37 @@ export async function submitAttempt(
     return conflictOr("conflict", error);
   }
   return { ok: true, value: submitted };
+}
+
+/**
+ * The candidate's result.
+ *
+ * One store read and one bank load, then every question is marked in memory.
+ * Nothing is written: the attempt is immutable once settled and pins the exact
+ * questions it served, so the same attempt marked twice gives the same numbers
+ * and a stored copy would only be a second thing to keep in step.
+ *
+ * Only the served questions are marked. The four source questions Set 01 could
+ * not recover are not in the bank and not in the attempt, so they cannot appear
+ * as zeros; there is nothing here that could invent them.
+ */
+export async function attemptResult(
+  candidateRef: string,
+  deps: AttemptDeps = defaultDeps,
+): Promise<AttemptResult<OirResult>> {
+  const current = await currentAttempt(candidateRef, deps);
+  if (!current.ok) return current;
+
+  const attempt = current.value;
+  if (!isSettled(attempt)) return { ok: false, failure: "not-settled" };
+
+  const setNumber = AVAILABLE_SETS[0];
+  const outcome = evaluateAttempt(attempt, getOirSet(setNumber).questions, setNumber);
+  if (outcome.ok) return { ok: true, value: outcome.value };
+  return {
+    ok: false,
+    failure: outcome.failure === "not-settled" ? "not-settled" : "unmarkable",
+  };
 }
 
 /** Exposed so a route can echo whether answers are still being taken. */
