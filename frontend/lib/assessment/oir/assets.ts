@@ -18,7 +18,7 @@ import { readFileSync, realpathSync } from "node:fs";
 import { join, resolve, sep } from "node:path";
 
 import { isMediaReference } from "@/lib/assessment/media";
-import { getOirSet, oirContentRoot, oirSetSlug } from "@/lib/assessment/oir/bank";
+import { getOirMediaById, OIR_SETS, oirContentRoot, oirSetSlug } from "@/lib/assessment/oir/bank";
 import type { MediaAssetId } from "@/lib/assessment/types";
 
 export class OirAssetError extends Error {}
@@ -44,8 +44,8 @@ function isContainedBy(child: string, parent: string): boolean {
  * `OirAssetError` means the bank and the filesystem disagree, which is a fault
  * in the deployment rather than a bad request, and must not be reported as one.
  */
-export function readOirFigure(setNumber: number, mediaId: MediaAssetId): OirAssetBytes | null {
-  const asset = getOirSet(setNumber).media.get(mediaId);
+export function readOirFigure(mediaId: MediaAssetId): OirAssetBytes | null {
+  const asset = getOirMediaById(mediaId);
   if (!asset) return null;
 
   // The bank validates this on load; re-checking costs one regex and keeps this
@@ -53,14 +53,27 @@ export function readOirFigure(setNumber: number, mediaId: MediaAssetId): OirAsse
   if (!isMediaReference(asset.reference)) {
     throw new OirAssetError(`media ${mediaId} has a reference that is not safe to resolve`);
   }
-  if (!asset.reference.startsWith(`oir/${oirSetSlug(setNumber)}/figures/`)) {
-    throw new OirAssetError(`media ${mediaId} does not belong to set ${setNumber}`);
+
+  // Which set owns the figure is read from the bank's own stored reference, not
+  // taken from the caller. A production paper mixes sets, so the caller no
+  // longer knows the set — and asking it to would have put a second
+  // caller-supplied value on the one path where that must never happen.
+  //
+  // The prefix must still match an INGESTED set exactly, so a reference the
+  // bank somehow held for `oir/set-99/` or for anything outside `oir/` resolves
+  // to nothing rather than to a directory that is merely plausible.
+  const owner = OIR_SETS.find((setNumber) =>
+    asset.reference.startsWith(`oir/${oirSetSlug(setNumber)}/figures/`),
+  );
+  if (owner === undefined) {
+    throw new OirAssetError(`media ${mediaId} does not belong to any ingested set`);
   }
 
-  const setRoot = join(oirContentRoot(), oirSetSlug(setNumber), "figures");
+  const prefix = `oir/${oirSetSlug(owner)}/figures/`;
+  const setRoot = join(oirContentRoot(), oirSetSlug(owner), "figures");
   // The reference is repository-relative and begins with `oir/<slug>/`, which
   // the content root already accounts for, so only the file name is joined on.
-  const fileName = asset.reference.slice(`oir/${oirSetSlug(setNumber)}/figures/`.length);
+  const fileName = asset.reference.slice(prefix.length);
   const path = join(setRoot, fileName);
 
   if (!isContainedBy(path, setRoot)) {

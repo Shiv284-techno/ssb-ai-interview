@@ -9,7 +9,7 @@ import { mediaAssetId } from "@/lib/assessment/types";
 /**
  * OIR figure delivery.
  *
- *   GET /api/assessment/oir/media/<mediaId>?set=1
+ *   GET /api/assessment/oir/media/<mediaId>
  *     -> image/png
  *
  * The figures live in `content/oir/`, outside the Next application root, and
@@ -26,8 +26,6 @@ import { mediaAssetId } from "@/lib/assessment/types";
  * This route returns bytes and nothing else. It never touches the question
  * record, so no answer key, explanation or provenance can leave through it.
  */
-
-const AVAILABLE_SETS: readonly number[] = [1];
 
 function fail(error: string, status: number): NextResponse {
   return NextResponse.json({ error }, { status });
@@ -47,18 +45,12 @@ export async function GET(
   }
   if (!isAuthenticated) return fail("Not authenticated.", 401);
 
-  // 2. Which set. Same allowlist as the question route.
+  // 2. No query parameters at all. The set used to be one, and is not any more:
+  //    media ids are global, the bank knows which set owns a figure, and a
+  //    paper mixing sets meant the client could not have supplied it anyway.
+  //    Anything unrecognised is refused rather than ignored.
   const url = new URL(request.url);
-  for (const name of url.searchParams.keys()) {
-    if (name !== "set") return fail("Unsupported query parameter.", 400);
-  }
-  const rawSet = url.searchParams.get("set");
-  let setNumber = AVAILABLE_SETS[0];
-  if (rawSet !== null) {
-    if (!/^[0-9]{1,2}$/.test(rawSet)) return fail("Invalid set.", 400);
-    setNumber = Number(rawSet);
-    if (!AVAILABLE_SETS.includes(setNumber)) return fail("No such media.", 404);
-  }
+  if (url.searchParams.size > 0) return fail("Unsupported query parameter.", 400);
 
   // 3. Parse the id. A malformed id is a bad request; a well-formed id that
   //    names nothing is a miss. Keeping the two apart means a caller learns
@@ -73,7 +65,7 @@ export async function GET(
 
   let asset;
   try {
-    asset = readOirFigure(setNumber, id);
+    asset = readOirFigure(id);
   } catch {
     // The bank and the content tree disagree — a deployment fault. The
     // underlying message can name a path, so it is not forwarded.

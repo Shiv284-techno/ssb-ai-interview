@@ -32,13 +32,10 @@ import {
 } from "@/lib/oir/attempt";
 import { appsScriptAttemptStore } from "@/lib/oir/attempt-store-apps-script";
 import { OirStoreConflict, type OirAttemptStore } from "@/lib/oir/attempt-store";
-import { getOirSet } from "@/lib/assessment/oir/bank";
+import { getOirBank, getOirQuestionById } from "@/lib/assessment/oir/bank";
 import { evaluateAttempt, type OirResult } from "@/lib/oir/result";
 import type { ContentItemId } from "@/lib/assessment/types";
 import { isServable } from "@/lib/assessment/types";
-
-/** Which set attempts are drawn from. One today; a list when there are more. */
-const AVAILABLE_SETS: readonly number[] = [1];
 
 export type AttemptFailure =
   /** Fewer verified questions exist than the configuration demands. */
@@ -66,11 +63,18 @@ export type AttemptResult<T> =
 export interface AttemptDeps {
   readonly store: OirAttemptStore;
   readonly now: () => Date;
+  /**
+   * Uniform in [0, 1). Injected for the same reason the clock is: a shuffle
+   * that can only be observed by running it a few thousand times and squinting
+   * is a shuffle nobody tests. Production uses the default.
+   */
+  readonly random: () => number;
 }
 
 const defaultDeps: AttemptDeps = {
   store: appsScriptAttemptStore,
   now: () => new Date(),
+  random: Math.random,
 };
 
 /**
@@ -125,26 +129,50 @@ export function configuredAttempt(): OirAttemptConfig {
 }
 
 /**
+ * Every question that may be put in front of a candidate, across every set.
+ *
+ * Omitted questions never appear because they are not in the bank at all — the
+ * ingest tool records them in a separate `omitted` list and ships neither their
+ * text nor their figures. The `isServable` filter is therefore a second line
+ * rather than the only one, and no omission number is written down here: a
+ * selector that hardcoded "not 5, 24, 31, 36" would silently serve the wrong
+ * questions the moment a set was re-ingested.
+ */
+export function eligibleQuestionIds(): readonly ContentItemId[] {
+  const available: ContentItemId[] = [];
+  const seen = new Set<string>();
+  for (const question of getOirBank().questions) {
+    if (!isServable(question)) continue;
+    if (seen.has(question.id)) continue;
+    seen.add(question.id);
+    available.push(question.id);
+  }
+  return available;
+}
+
+/**
  * The questions this attempt will serve, in the order they will be served.
  *
- * Reproducible on purpose: the bank is read in its stored order, filtered to
- * what is servable, and the first `questionCount` are taken. No shuffling, no
- * randomness, no clock — so an attempt can be reconstructed later from the set
- * number and the configuration alone, and two runs of the same code cannot
- * disagree about what the candidate saw.
+ * A random sample of the whole verified bank, not the first `questionCount` of
+ * it. Taking a prefix would have been simpler and is what this did while one
+ * set existed, but over a combined bank it means every candidate sits Set 01
+ * plus the same four questions of Set 02, and the other forty-one are ingested
+ * and never seen. Sampling is what makes a second set worth having.
  *
- * Omitted questions never appear because they are not in the bank at all; the
- * `isServable` filter is a second line, not the only one.
+ * The consequence is deliberate and bounded: two candidates may sit different
+ * papers. Neither paper changes after it is dealt — the ids are written into
+ * the attempt at creation and every later read serves that stored list — so a
+ * refresh, a reconnect and a reload all return the same fifty in the same
+ * order. Randomness happens once, when the paper is created, and never again.
+ *
+ * Shuffled by Fisher-Yates over a copy, which is uniform and, unlike
+ * `sort(() => random() - 0.5)`, actually is.
  */
-export function selectQuestionIds(config: OirAttemptConfig): AttemptResult<readonly ContentItemId[]> {
-  const available: ContentItemId[] = [];
-  for (const setNumber of AVAILABLE_SETS) {
-    for (const question of getOirSet(setNumber).questions) {
-      if (!isServable(question)) continue;
-      if (available.includes(question.id)) continue;
-      available.push(question.id);
-    }
-  }
+export function selectQuestionIds(
+  config: OirAttemptConfig,
+  random: () => number = Math.random,
+): AttemptResult<readonly ContentItemId[]> {
+  const available = [...eligibleQuestionIds()];
 
   if (available.length < config.questionCount) {
     return {
@@ -154,6 +182,11 @@ export function selectQuestionIds(config: OirAttemptConfig): AttemptResult<reado
         `${config.mode} needs ${config.questionCount} verified questions and the bank holds ` +
         `${available.length}. Ingest another verified set rather than lowering the count.`,
     };
+  }
+
+  for (let i = available.length - 1; i > 0; i -= 1) {
+    const j = Math.floor(random() * (i + 1));
+    [available[i], available[j]] = [available[j], available[i]];
   }
   return { ok: true, value: available.slice(0, config.questionCount) };
 }
@@ -175,7 +208,7 @@ export async function startAttempt(
 
   // Refuse before touching the store: an insufficient bank is a configuration
   // fault, and creating nothing is the correct outcome.
-  const selected = selectQuestionIds(config);
+  const selected = selectQuestionIds(config, deps.random);
   if (!selected.ok) return selected;
 
   // One paper per candidate, spent or not. A candidate still sitting theirs is
@@ -319,7 +352,11 @@ export async function saveAnswer(
     return { ok: false, failure: "unknown-question" };
   }
 
-  const question = getOirSet(AVAILABLE_SETS[0]).questions.find((q) => q.id === input.questionId);
+  // Looked up by global id across the whole bank. Scoping this to one set was
+  // correct while a paper came from one set and would now reject every Set 02
+  // question on a mixed paper as unknown — the candidate would be unable to
+  // answer roughly half of it.
+  const question = getOirQuestionById(input.questionId);
   if (!question) return { ok: false, failure: "unknown-question" };
 
   const validation = validateAnswer(input.answer, question);
@@ -388,9 +425,9 @@ export async function submitAttempt(
  * questions it served, so the same attempt marked twice gives the same numbers
  * and a stored copy would only be a second thing to keep in step.
  *
- * Only the served questions are marked. The four source questions Set 01 could
- * not recover are not in the bank and not in the attempt, so they cannot appear
- * as zeros; there is nothing here that could invent them.
+ * Only the served questions are marked. The nine source questions the two sets
+ * could not recover are not in the bank and not in the attempt, so they cannot
+ * appear as zeros; there is nothing here that could invent them.
  */
 export async function attemptResult(
   candidateRef: string,
@@ -402,8 +439,9 @@ export async function attemptResult(
   const attempt = current.value;
   if (!isSettled(attempt)) return { ok: false, failure: "not-settled" };
 
-  const setNumber = AVAILABLE_SETS[0];
-  const outcome = evaluateAttempt(attempt, getOirSet(setNumber).questions, setNumber);
+  // The whole bank, for the same reason: a mixed paper marked against one set
+  // reports `bank-drift` for every question drawn from the other.
+  const outcome = evaluateAttempt(attempt, getOirBank().questions);
   if (outcome.ok) return { ok: true, value: outcome.value };
   return {
     ok: false,

@@ -42,8 +42,15 @@ export interface OirQuestion {
   readonly figures: readonly OirFigure[];
 }
 
-export interface OirQuestionSet {
-  readonly setNumber: number;
+/**
+ * The candidate-facing bank, spanning every ingested set.
+ *
+ * No `setNumber`: the endpoint returns all sets combined, question ids are
+ * global, and which set a question came from is not something the browser is
+ * told or needs. The field was here while one set existed and would now be a
+ * number that answered a question nobody asked.
+ */
+export interface OirQuestionBank {
   readonly questionCount: number;
   readonly questions: readonly OirQuestion[];
 }
@@ -176,8 +183,8 @@ async function request<T>(
 
 const JSON_HEADERS = { "Content-Type": "application/json" };
 
-export const fetchQuestions = (): Promise<OirResult<OirQuestionSet>> =>
-  request<OirQuestionSet>("/api/assessment/oir/questions", { method: "GET" }, [200]);
+export const fetchQuestions = (): Promise<OirResult<OirQuestionBank>> =>
+  request<OirQuestionBank>("/api/assessment/oir/questions", { method: "GET" }, [200]);
 
 /** Starts an attempt, or returns the one already running. */
 export const startAttempt = (): Promise<OirResult<OirAttemptView>> =>

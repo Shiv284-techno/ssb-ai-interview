@@ -33,8 +33,14 @@ import { OIR_SUBMITTED, isSettled, type OirAttempt } from "@/lib/oir/attempt";
 /** What the server knows about a marked attempt. */
 export interface OirResult {
   readonly attemptId: string;
-  /** Which set of the source book the questions came from. */
-  readonly setNumber: number;
+  /**
+   * Which sets of the source book the questions came from, ascending.
+   *
+   * A list rather than a number because a production paper is drawn from the
+   * combined bank and genuinely spans sets. Server-side only — it is not in
+   * `CandidateFacingResult` and never has been.
+   */
+  readonly setNumbers: readonly number[];
   readonly status: "submitted" | "timed-out";
   /** Questions actually put in front of this candidate. Never the source's 50. */
   readonly servedCount: number;
@@ -71,6 +77,8 @@ export type ResultOutcome =
 export interface GradableQuestion {
   readonly id: string;
   readonly answerKey: OirAnswerKey;
+  /** Which set holds it, so the result can report what was actually served. */
+  readonly setNumber: number;
 }
 
 /**
@@ -83,29 +91,32 @@ export interface GradableQuestion {
 export function evaluateAttempt(
   attempt: OirAttempt,
   questions: readonly GradableQuestion[],
-  setNumber: number,
 ): ResultOutcome {
   const settled = isSettled(attempt);
   if (!settled) return { ok: false, failure: "not-settled" };
 
-  const keys = new Map(questions.map((question) => [question.id, question.answerKey]));
+  const byId = new Map(questions.map((question) => [question.id, question]));
   const answers = new Map(attempt.answers.map((entry) => [entry.questionId, entry.answer]));
 
   let correct = 0;
   let answered = 0;
+  // Collected from the questions actually served, never asserted by the caller.
+  // A caller that named the set was a caller that could be wrong about it.
+  const setNumbers = new Set<number>();
 
   // Iterating the SERVED ids, never the bank and never the answers. A question
   // the candidate was never shown cannot be marked, and an answer against a
   // question not on this paper cannot count — neither can happen if the served
   // list is the thing being walked.
   for (const questionId of attempt.questionIds) {
-    const key = keys.get(questionId);
-    if (key === undefined) return { ok: false, failure: "bank-drift" };
+    const question = byId.get(questionId);
+    if (question === undefined) return { ok: false, failure: "bank-drift" };
+    setNumbers.add(question.setNumber);
 
     const answer = answers.get(questionId) ?? null;
     if (answer === null) continue;
     answered += 1;
-    if (isCorrect(answer, key)) correct += 1;
+    if (isCorrect(answer, question.answerKey)) correct += 1;
   }
 
   const served = attempt.questionIds.length;
@@ -113,7 +124,7 @@ export function evaluateAttempt(
     ok: true,
     value: {
       attemptId: attempt.id,
-      setNumber,
+      setNumbers: [...setNumbers].sort((a, b) => a - b),
       status: attempt.status === OIR_SUBMITTED ? "submitted" : "timed-out",
       servedCount: served,
       answeredCount: answered,

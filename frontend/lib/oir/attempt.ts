@@ -27,12 +27,15 @@ import type {
 /**
  * How many questions a real OIR runs, and for how long.
  *
- * Set 01 currently yields 46 verified questions, four short of production. That
- * shortfall is deliberately NOT papered over: a production attempt against an
- * insufficient bank refuses to start. Development mode exists so the rest of
- * the system can be built and tested meanwhile, and it is named `development`
- * everywhere it appears so that nobody mistakes a 46-question run for the real
- * thing.
+ * The combined bank now holds 91 verified questions across Sets 01 and 02, so
+ * production's 50 can be drawn from it. The guard that refuses to start against
+ * an insufficient bank stays exactly as it was: it is what makes the count a
+ * requirement rather than an aspiration, and a third of the book still remains
+ * un-ingested.
+ *
+ * Development mode remains 46 — the size of Set 01 alone — and is named
+ * `development` everywhere it appears so that nobody mistakes a short run for
+ * the real thing.
  */
 export type OirMode = "production" | "development";
 
@@ -49,11 +52,12 @@ export const OIR_PRODUCTION_CONFIG: OirAttemptConfig = {
 };
 
 /**
- * The whole of verified Set 01, over the production clock.
+ * The size of verified Set 01, over the production clock.
  *
  * The duration is deliberately the same 1500 seconds: shortening it would make
  * development timings meaningless, and the point of this mode is the question
- * count, not the pace.
+ * count, not the pace. The 46 is now a count rather than "all of Set 01" — the
+ * sample is drawn from the same combined bank production uses.
  */
 export const OIR_DEVELOPMENT_CONFIG: OirAttemptConfig = {
   mode: "development",

@@ -14,7 +14,7 @@ import "server-only";
  */
 import { toCandidateFacingItem, type CandidateFacingItem } from "@/lib/assessment/content";
 import { toCandidateFacingMedia, type CandidateFacingMedia } from "@/lib/assessment/media";
-import { getOirSet } from "@/lib/assessment/oir/bank";
+import { getOirBank, getOirSet } from "@/lib/assessment/oir/bank";
 import type { MediaAssetId } from "@/lib/assessment/types";
 
 /** One question and the pictures it needs, with nothing else attached. */
@@ -59,6 +59,19 @@ export function candidateFacingOirSet(setNumber: number): CandidateFacingOirSet 
       .sort((a, b) => a.position - b.position)
       .map((q) => project(setNumber, q.position)),
   };
+}
+
+/**
+ * Every servable question in every ingested set.
+ *
+ * The same projection as `candidateFacingOirSet`, over the combined bank, so a
+ * paper drawn from more than one set has one place to be projected from. It
+ * deliberately reuses `project` rather than mapping items itself: the
+ * field-by-field construction that keeps answer keys server-side is worth
+ * having exactly once.
+ */
+export function candidateFacingOirBank(): readonly CandidateFacingOirQuestion[] {
+  return getOirBank().questions.map((q) => project(q.setNumber, q.position));
 }
 
 export function candidateFacingOirQuestion(

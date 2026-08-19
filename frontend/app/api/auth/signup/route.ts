@@ -17,7 +17,24 @@ const MAX_NAME_LENGTH = 100;
 const MAX_EMAIL_LENGTH = 254;
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-const APPS_SCRIPT_TIMEOUT_MS = 15_000;
+/**
+ * How long to wait for the account service before giving up.
+ *
+ * Thirty seconds, matching `REQUEST_TIMEOUT_MS` in the OIR attempt store,
+ * because both talk to the SAME Apps Script deployment and therefore share its
+ * cold start: Google suspends an idle deployment, and the first request after a
+ * quiet period was measured at 22.2s — over the fifteen this used to allow. At
+ * fifteen, the first person to sign up after a quiet period was told the account
+ * service was down while Google was still answering.
+ *
+ * It bounds the `createUser` request and nothing else. There is one attempt and
+ * no retry; a timeout still fails exactly as before. It has no bearing on
+ * session lifetime, on any credential rule, or on the assessment clock.
+ *
+ * Declared here and in the other two Apps Script callers, which share no
+ * module. The three must agree — the auth suite checks that they do.
+ */
+const APPS_SCRIPT_TIMEOUT_MS = 30_000;
 
 /**
  * scrypt parameters. They are stored inside every hash, so raising the cost

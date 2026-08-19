@@ -3,11 +3,19 @@ import "server-only";
 import { NextResponse } from "next/server";
 
 import { verifySession } from "@/lib/auth/dal";
-import { deliverOirSet, type DeliveredOirSet } from "@/lib/assessment/oir/delivery";
+import {
+  deliverOirBank,
+  deliverOirSet,
+  OIR_SETS,
+  type DeliveredOirBank,
+  type DeliveredOirSet,
+} from "@/lib/assessment/oir/delivery";
 
 /**
  * OIR question delivery.
  *
+ *   GET /api/assessment/oir/questions
+ *     -> { questionCount, questions: DeliveredOirQuestion[] }   (every set)
  *   GET /api/assessment/oir/questions?set=1
  *     -> { setNumber, questionCount, questions: DeliveredOirQuestion[] }
  *
@@ -20,14 +28,20 @@ import { deliverOirSet, type DeliveredOirSet } from "@/lib/assessment/oir/delive
  * live in the bank and stop there. Nothing on this path can reach them, because
  * the only thing this route can call is the delivery mapping.
  *
- * Step 5 owns pacing, timing, sectioning and answer submission. This route
- * deliberately returns the whole servable set in source order and does no
- * selection: a delivery boundary that also chose questions would have to be
- * rewritten the moment selection became real.
+ * The attempt service owns pacing, timing and which fifty questions a
+ * candidate actually sits. This route deliberately returns the whole verified
+ * bank in source order and does no selection: the served questions are pinned
+ * in the attempt, the client resolves them by id, and a delivery boundary that
+ * also chose questions would be a second place selection could disagree with
+ * itself.
+ *
+ * Omitting `set` returns every ingested set combined, which is what a paper
+ * drawn from the whole bank needs. Naming a set still returns that set alone —
+ * kept because it is how a set is inspected on its own, and it costs nothing.
  */
 
-/** The only ingested set. A request for any other is a 404, not an error. */
-const AVAILABLE_SETS: readonly number[] = [1];
+/** Ingested sets. A request for any other is a 404, not an error. */
+const AVAILABLE_SETS: readonly number[] = OIR_SETS;
 
 /** The only ordering on offer. Named so a future one has to be added on purpose. */
 const ORDERINGS: readonly string[] = ["source"];
@@ -59,7 +73,7 @@ export async function GET(request: Request) {
   }
 
   const rawSet = url.searchParams.get("set");
-  let setNumber = AVAILABLE_SETS[0];
+  let setNumber: number | null = null;
   if (rawSet !== null) {
     if (!/^[0-9]{1,2}$/.test(rawSet)) return fail("Invalid set.", 400);
     setNumber = Number(rawSet);
@@ -74,9 +88,9 @@ export async function GET(request: Request) {
   // 3. Build the response. `deliverOirSet` reads the bank, which revalidates
   //    the content and refuses to serve a question whose answer cannot be
   //    resolved — so a corrupt bank fails here rather than reaching a candidate.
-  let body: DeliveredOirSet;
+  let body: DeliveredOirSet | DeliveredOirBank;
   try {
-    body = deliverOirSet(setNumber);
+    body = setNumber === null ? deliverOirBank() : deliverOirSet(setNumber);
   } catch {
     // The underlying message can name internal paths, so it is not forwarded.
     console.error("[assessment/oir/questions] the content bank could not be served");

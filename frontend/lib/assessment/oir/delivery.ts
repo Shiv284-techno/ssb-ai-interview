@@ -17,13 +17,27 @@ import "server-only";
  * candidate can see it.
  */
 import type { ChoiceOption } from "@/lib/assessment/content";
-import { candidateFacingOirSet } from "@/lib/assessment/oir/projection";
+import {
+  candidateFacingOirBank,
+  candidateFacingOirSet,
+  type CandidateFacingOirQuestion,
+} from "@/lib/assessment/oir/projection";
 import type {
   OirModality,
   OirOptionSource,
   OirResponseFormat,
 } from "@/lib/assessment/oir/types";
 import type { MediaAssetId } from "@/lib/assessment/types";
+
+/**
+ * Which sets exist, for callers on this side of the delivery boundary.
+ *
+ * Re-exported rather than imported from the bank by each caller. The question
+ * route needs the list to validate `?set=`, and it must not reach into
+ * `oir/bank` to get it: the whole point of this module is that a route can
+ * only ever see what delivery chooses to expose.
+ */
+export { OIR_SETS } from "@/lib/assessment/oir/bank";
 
 /** Where the media route lives. One definition, used to build every URL. */
 export const OIR_MEDIA_ROUTE = "/api/assessment/oir/media";
@@ -74,10 +88,22 @@ export interface DeliveredOirSet {
   readonly questions: readonly DeliveredOirQuestion[];
 }
 
-export function deliverOirSet(setNumber: number): DeliveredOirSet {
-  const facing = candidateFacingOirSet(setNumber);
+/**
+ * The combined bank as delivered.
+ *
+ * No `setNumber`, deliberately: it spans sets, and a single number here would
+ * be a lie a client could act on. Which set a question came from is not
+ * something a candidate is told — the id is global and that is all they need.
+ */
+export interface DeliveredOirBank {
+  readonly questionCount: number;
+  readonly questions: readonly DeliveredOirQuestion[];
+}
 
-  const questions = facing.questions.map(({ question, media }): DeliveredOirQuestion => {
+function deliverQuestions(
+  facing: readonly CandidateFacingOirQuestion[],
+): readonly DeliveredOirQuestion[] {
+  return facing.map(({ question, media }): DeliveredOirQuestion => {
     const byId = new Map(media.map((asset) => [asset.id, asset]));
 
     const figures = question.figures.map((figure): DeliveredOirFigure => {
@@ -112,6 +138,29 @@ export function deliverOirSet(setNumber: number): DeliveredOirSet {
       figures,
     };
   });
+}
 
+export function deliverOirSet(setNumber: number): DeliveredOirSet {
+  const questions = deliverQuestions(candidateFacingOirSet(setNumber).questions);
   return { setNumber, questionCount: questions.length, questions };
+}
+
+/**
+ * Every candidate-ready question across every ingested set.
+ *
+ * What the OIR client actually needs now that a paper mixes sets: it holds the
+ * attempt's question ids and looks each one up, so it must be able to resolve
+ * an id from any set. Delivering the whole verified bank rather than only the
+ * fifty served keeps this boundary doing no selection, which is what the
+ * per-set version was written to do and is still the right split — the served
+ * fifty are decided by the attempt service and pinned in the attempt, and this
+ * route has no business knowing which fifty they were.
+ *
+ * Nothing new crosses the boundary. These are the same field-by-field
+ * projections, with the same answer keys, explanations, provenance, curations
+ * and source pages left behind; there are simply more of them.
+ */
+export function deliverOirBank(): DeliveredOirBank {
+  const questions = deliverQuestions(candidateFacingOirBank());
+  return { questionCount: questions.length, questions };
 }

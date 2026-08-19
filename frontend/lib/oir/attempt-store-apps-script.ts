@@ -25,7 +25,24 @@ import {
 } from "@/lib/oir/attempt-store";
 import type { OirAttempt } from "@/lib/oir/attempt";
 
-const REQUEST_TIMEOUT_MS = 15_000;
+/**
+ * How long one store call may take before it is abandoned.
+ *
+ * Thirty seconds, not fifteen, because fifteen was below the endpoint's real
+ * worst case. Apps Script suspends an idle deployment and pays a cold start on
+ * the next request: measured round trips are 1.9-4.7s once warm, and a real
+ * cold request was observed at 22.2s — over the old limit, so the very first
+ * candidate after a quiet period was told the store was unavailable while
+ * Google was still answering. Thirty leaves headroom over that observation
+ * without letting a genuinely dead endpoint hold a request for a minute.
+ *
+ * This bounds the HTTP call and nothing else. It is not a retry — there is one
+ * attempt, and a timeout still fails cleanly as `OirStoreError`. It has no
+ * relationship to the assessment clock, which is fixed at
+ * `OIR_PRODUCTION_CONFIG.durationSeconds` when the attempt is created and is
+ * derived from the server's own timestamps, never from how long a request took.
+ */
+const REQUEST_TIMEOUT_MS = 30_000;
 
 /**
  * The attempt store may be pointed somewhere else than the account service —
