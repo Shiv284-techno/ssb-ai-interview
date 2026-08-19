@@ -1,0 +1,257 @@
+{
+  "setNumber": 2,
+  "note": "Human-verified facts the extractor could not resolve, each with the evidence that establishes it. Every entry here was read from the rendered source page by a person; none was inferred from the answer key, produced by OCR, or guessed. Entries may only FILL a field the extractor left unresolved, never overwrite one it determined. THIS FILE IS INCOMPLETE: the figure-bearing questions not listed below have not yet been read, and they stay omitted until they are.",
+  "entries": [
+    {
+      "question": 1,
+      "field": "pictorialOptions",
+      "value": [
+        "1",
+        "2",
+        "3"
+      ],
+      "evidence": "Read from the rendered page 17. The question shows a reference row headed 'Group A' and 'Group B' whose cubes carry no numerals, then the stem 'Which one of the following cubes can possibly belong to Group A?', then three cubes labelled 1, 2 and 3. Those three numerals are the answer choices. The labels are drawn as graphics and absent from the PDF text layer, so they cannot be extracted.",
+      "verifiedBy": "rendered-page inspection"
+    },
+    {
+      "question": 3,
+      "field": "pictorialOptions",
+      "value": [],
+      "evidence": "Read from the rendered page 17. The stem is 'Find if the two cubes are alike. Write ‘Yes’ or ‘No’ on the answer sheet' and the figure shows exactly two cubes labelled 1 and 2. Those numerals identify the two cubes being compared, not answer choices — the answer is the word Yes or No, and the printed key is 'Yes'. Recorded as an empty option list so the question is servable as a boolean without an option space nothing could check.",
+      "verifiedBy": "rendered-page inspection"
+    },
+    {
+      "question": 4,
+      "field": "pictorialOptions",
+      "value": [],
+      "evidence": "Read from the rendered page 17. Structurally identical to question 3: the stem asks 'Find if the two cubes are alike. Write ‘Yes’ or ‘No’ on the answer sheet' and the figure shows two cubes labelled 1 and 2, which identify the cubes being compared rather than offering choices. The printed key is 'No'.",
+      "verifiedBy": "rendered-page inspection"
+    },
+    {
+      "question": 5,
+      "field": "pictorialOptions",
+      "value": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5"
+      ],
+      "evidence": "Read from the rendered page 17. Below the stem 'Write the number of the figure which will come next in the series:' three unnumbered series figures are printed, then five candidate figures labelled 1, 2, 3 on one row and 4, 5 on the row beneath. Five numbered choices in total.",
+      "verifiedBy": "rendered-page inspection"
+    },
+    {
+      "question": 6,
+      "field": "pictorialOptions",
+      "value": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "evidence": "Read from the rendered page 18. A reference row headed 'Class A' and 'Class B' carries no numerals; the stem is 'Which two of the following figures belong to Class A?' and beneath it a single boxed row shows four figures labelled 1, 2, 3 and 4. Four numbered choices, of which the printed key selects two.",
+      "verifiedBy": "rendered-page inspection"
+    },
+    {
+      "question": 7,
+      "field": "pictorialOptions",
+      "value": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5"
+      ],
+      "evidence": "Read from the rendered page 18. Under 'Write the number of the figure which will come next in the series:' five star figures are printed as candidates, labelled 1, 2, 3 on the first row and 4, 5 on the second.",
+      "verifiedBy": "rendered-page inspection"
+    },
+    {
+      "question": 8,
+      "field": "pictorialOptions",
+      "value": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5"
+      ],
+      "evidence": "Read from the rendered page 18. Under the series stem, five outline shapes are printed as candidates, labelled 1, 2, 3 on the first row and 4, 5 on the second.",
+      "verifiedBy": "rendered-page inspection"
+    },
+    {
+      "question": 12,
+      "field": "pictorialOptions",
+      "value": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5"
+      ],
+      "evidence": "Read from the rendered page 19. The analogy panels are lettered A, B and C — letters, not numerals — and read 'A IS TO B AS C IS TO'. The answer row that follows shows five boxed figures labelled 1, 2, 3, 4 and 5. Only the numerals are choices; the letters are reference labels.",
+      "verifiedBy": "rendered-page inspection"
+    },
+    {
+      "question": 14,
+      "field": "pictorialOptions",
+      "value": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5"
+      ],
+      "evidence": "Read from the rendered pages 19 and 20. The stem and the three unnumbered series figures are at the foot of page 19; the candidate figures continue at the head of page 20, labelled 1, 2, 3 on the first row and 4, 5 on the second. Five numbered choices, spanning the page break.",
+      "verifiedBy": "rendered-page inspection across the page boundary"
+    },
+    {
+      "question": 17,
+      "field": "pictorialOptions",
+      "value": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5"
+      ],
+      "evidence": "Read from the rendered page 20. Under 'Write the number of the figure which will come next in the series:' three unnumbered series figures are printed, then five candidates labelled 1, 2, 3 on one row and 4, 5 on the next.",
+      "verifiedBy": "rendered-page inspection"
+    },
+    {
+      "question": 21,
+      "field": "pictorialOptions",
+      "value": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5"
+      ],
+      "evidence": "Read from the rendered page 21. Under the series stem, five arrow figures are printed as candidates, labelled 1, 2, 3 on the first row and 4, 5 on the second.",
+      "verifiedBy": "rendered-page inspection"
+    },
+    {
+      "question": 24,
+      "field": "pictorialOptions",
+      "value": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5"
+      ],
+      "evidence": "Read from the rendered page 21. Under the series stem, five shape-pair figures are printed as candidates, labelled 1, 2, 3 on the first row and 4, 5 on the second.",
+      "verifiedBy": "rendered-page inspection"
+    },
+    {
+      "question": 25,
+      "field": "pictorialOptions",
+      "value": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "evidence": "Read from the rendered page 22. A reference row headed 'Class A' and 'Class B' carries no numerals; the stem is 'Which two of the following figures belong to Class A?' and the boxed row below shows four figures labelled 1, 2, 3 and 4. Four numbered choices, of which the printed key selects two.",
+      "verifiedBy": "rendered-page inspection"
+    },
+    {
+      "question": 34,
+      "field": "pictorialOptions",
+      "value": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "evidence": "Read from the rendered page 23. Unnumbered 'Class A' and 'Class B' reference rows, then the stem 'Which two of the following figures belong to Class A?', then a boxed row of four figures labelled 1, 2, 3 and 4.",
+      "verifiedBy": "rendered-page inspection"
+    },
+    {
+      "question": 35,
+      "field": "pictorialOptions",
+      "value": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "evidence": "Read from the rendered page 23. The reference rows headed 'Class A' and 'Class B' hold lettered and numeric cells but carry no choice numerals; the answer row below the stem shows four boxed cells labelled 1, 2, 3 and 4.",
+      "verifiedBy": "rendered-page inspection"
+    },
+    {
+      "question": 36,
+      "field": "pictorialOptions",
+      "value": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5"
+      ],
+      "evidence": "Read from the rendered page 23. The analogy panels are lettered A, B and C and read 'A IS TO B AS C IS TO'; the answer row that follows shows five boxed figures labelled 1, 2, 3, 4 and 5. Only the numerals are choices.",
+      "verifiedBy": "rendered-page inspection"
+    },
+    {
+      "question": 38,
+      "field": "pictorialOptions",
+      "value": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "evidence": "Read from the rendered page 24. Unnumbered 'Class A' and 'Class B' reference rows of letter-like glyphs, then the stem 'Which two of the following figures belong to Class A?', then a boxed row of four figures labelled 1, 2, 3 and 4.",
+      "verifiedBy": "rendered-page inspection"
+    },
+    {
+      "question": 39,
+      "field": "pictorialOptions",
+      "value": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "evidence": "Read from the rendered page 24. Unnumbered 'Class A' and 'Class B' reference strips of shaded squares, then the stem 'Which two of the following figures belong to Class A?', then a strip of four figures labelled 1, 2, 3 and 4.",
+      "verifiedBy": "rendered-page inspection"
+    },
+    {
+      "question": 44,
+      "field": "pictorialOptions",
+      "value": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5"
+      ],
+      "evidence": "Read from the rendered page 25. The analogy panels are lettered A, B and C; the answer row below panel C shows five boxed figures labelled 1, 2, 3, 4 and 5. The whole question sits clear of the running header and footer.",
+      "verifiedBy": "rendered-page inspection"
+    },
+    {
+      "question": 47,
+      "field": "pictorialOptions",
+      "value": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "evidence": "Read from the rendered page 25. Unnumbered 'Class A' and 'Class B' reference rows whose cells carry two-digit numbers inside the shapes; those numbers are part of the figures, not choices. The answer row below the stem shows four boxed figures labelled 1, 2, 3 and 4.",
+      "verifiedBy": "rendered-page inspection"
+    },
+    {
+      "question": 48,
+      "field": "pictorialOptions",
+      "value": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "evidence": "Read from the rendered page 26. Question 48's 'Class A' / 'Class B' reference rows are at the foot of page 25; the stem 'Which two of the following figures belong to Class A?' and the answer row continue at the head of page 26, showing four boxed figures labelled 1, 2, 3 and 4. The stem line runs under the running header but the numbered labels and their boxes sit well clear of it.",
+      "verifiedBy": "rendered-page inspection across the page boundary"
+    }
+  ]
+}

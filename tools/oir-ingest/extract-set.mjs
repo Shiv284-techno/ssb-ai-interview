@@ -71,6 +71,29 @@ const PROVENANCE = {
   createdAt: new Date(0).toISOString(),
 };
 
+/** Sets that have been through verification and may be ingested. */
+const APPROVED_SETS = [1, 2];
+
+/**
+ * Where each set's question ids begin in the ONE global sequence.
+ *
+ * There is a single id space across the whole book — `oir.NNNN` and nothing
+ * else — because a question id has to mean one question no matter which set it
+ * came from. Ids derived from a set's own numbering collide the moment a second
+ * set exists: Set 02's Q2 and Set 01's Q2 would both be `oir.0002`, and the
+ * combined bank would silently drop one of them as a duplicate.
+ *
+ * Set 01 is frozen. Its ids were allocated by source position, they are
+ * committed, and stored attempts record them — renumbering would orphan every
+ * attempt already sat. So it keeps position allocation and its whole 1..50
+ * block, gaps included, and Set 02 starts after that block at 51.
+ *
+ * Later sets allocate sequentially over ACCEPTED records, so an omission leaves
+ * no hole and the id says nothing about where in the book the question came
+ * from. `setNumber` and `position` carry that, and they are the only mapping
+ * back to the source that anything should rely on.
+ */
+const SET_ID_START = { 1: 1, 2: 51 };
 const EXPECTED_QUESTIONS = 50;
 const RENDER_DPI = 200;
 /** A pixel darker than this counts as ink. */
@@ -614,8 +637,14 @@ async function main() {
   if (!Number.isInteger(setNumber) || setNumber < 1 || setNumber > 32) {
     fail("--set must be an integer from 1 to 32");
   }
-  if (setNumber !== 1) {
-    fail("only Set 01 is approved for ingestion; Sets 02-32 are not yet in scope");
+  // A scope guard, not a capability limit. Everything about locating a set is
+  // derived from the book — the running header gives the page range, the
+  // "ANSWERS AND EXPLANATIONS" heading splits questions from keys — so the
+  // extractor does not care which set it is asked for. What the guard buys is
+  // that a set only becomes candidate content once someone has verified it,
+  // rather than the moment the tool happens to run.
+  if (!APPROVED_SETS.includes(setNumber)) {
+    fail(`set ${setNumber} is not approved for ingestion; approved: ${APPROVED_SETS.join(", ")}`);
   }
   const setSlug = `set-${String(setNumber).padStart(2, "0")}`;
 
@@ -975,8 +1004,16 @@ async function main() {
   const verified = records.filter((r) => !omittedNumbers.has(r.number));
   const omitted = records.filter((r) => omittedNumbers.has(r.number));
 
-  const questions = verified.map((r) => ({
-    id: `oir.${String(r.number).padStart(4, "0")}`,
+  const idStart = SET_ID_START[setNumber];
+  if (idStart === undefined) fail(`set ${setNumber} has no allocated id range`);
+  // Set 01 by position, frozen; every later set sequentially over accepted
+  // records. Both produce `oir.NNNN` — one format, two allocation rules, and
+  // the second exists only because the first cannot be changed.
+  const idNumberFor = (record, index) =>
+    setNumber === 1 ? idStart - 1 + record.number : idStart + index;
+
+  const questions = verified.map((r, index) => ({
+    id: `oir.${String(idNumberFor(r, index)).padStart(4, "0")}`,
     type: "oir-question",
     setNumber,
     position: r.number,
