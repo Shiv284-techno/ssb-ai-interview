@@ -1,0 +1,153 @@
+{
+  "setNumber": 3,
+  "note": "Numbered choices that a figure draws as graphics rather than text. They are absent from the PDF text layer, so the extractor cannot read them and refuses to guess; each entry below was read from the page rendered at 150 DPI and records only what the page prints. No stem, option or answer key is supplied here — only which numerals the figure offers as choices. Questions whose answer key the source prints only as a figure (20, 23), whose answer is a pair of decimals the written-answer format cannot carry (45), or whose diagram cannot be recovered whole (16, 29, 41, 47) are deliberately NOT curated: they stay omitted with their reasons.",
+  "entries": [
+    {
+      "question": 1,
+      "field": "pictorialOptions",
+      "value": ["1", "2", "3"],
+      "evidence": "Read from the rendered page 31. A reference row headed 'Group A' and 'Group B' shows three cubes each, carrying face numerals but no choice labels. Below the stem 'Which one of the following cubes can possibly belong to Group A?' three further cubes are labelled 1, 2 and 3 above them. Those three numerals are the answer choices; the printed key is (2).",
+      "verifiedBy": "rendered-page inspection"
+    },
+    {
+      "question": 3,
+      "field": "pictorialOptions",
+      "value": [],
+      "evidence": "Read from the rendered page 31. The stem is 'Find if the two cubes are alike. Write ‘Yes’ or ‘No’ on the answer sheet' and the figure shows exactly two cubes labelled 1 and 2. Those numerals identify the two cubes being compared, not answer choices — the answer is the word Yes or No, and the printed key is 'No'. Recorded as an empty option list so the question is servable as a boolean.",
+      "verifiedBy": "rendered-page inspection"
+    },
+    {
+      "question": 4,
+      "field": "pictorialOptions",
+      "value": [],
+      "evidence": "Read from the rendered page 31. Same form as question 3: the stem asks 'Find if the two cubes are alike. Write ‘Yes’ or ‘No’ on the answer sheet' and the figure shows two cubes labelled 1 and 2, which identify the cubes being compared rather than offering choices. The printed key is 'No'. Recorded as an empty option list so it is servable as a boolean.",
+      "verifiedBy": "rendered-page inspection"
+    },
+    {
+      "question": 5,
+      "field": "pictorialOptions",
+      "value": ["1", "2", "3", "4", "5"],
+      "evidence": "Read from the rendered page 31. The stem is 'Write the number of the figure which will come next in the series:' above three unlabelled series circles. Beneath them five candidate circles are labelled 1, 2 and 3 on one row and 4 and 5 on the next. Those five numerals are the answer choices; the printed key is (4).",
+      "verifiedBy": "rendered-page inspection"
+    },
+    {
+      "question": 6,
+      "field": "pictorialOptions",
+      "value": ["1", "2", "3", "4"],
+      "evidence": "Read from the rendered page 32. A reference row headed 'Class A' and 'Class B' shows three unlabelled panels each. Below the stem 'Which two of the following figures belong to Class A?' four panels are labelled 1, 2, 3 and 4. Those four numerals are the answer choices; the printed key is '3 and 4', which selects two of them.",
+      "verifiedBy": "rendered-page inspection"
+    },
+    {
+      "question": 7,
+      "field": "pictorialOptions",
+      "value": ["1", "2", "3", "4", "5"],
+      "evidence": "Read from the rendered page 32. The stem is 'Write the number of the figure which will come next in the series:' above four unlabelled symbol groups. Five candidate groups follow, labelled 1, 2 and 3 on one row and 4 and 5 on the next. Those five numerals are the answer choices; the printed key is (3).",
+      "verifiedBy": "rendered-page inspection"
+    },
+    {
+      "question": 8,
+      "field": "pictorialOptions",
+      "value": ["1", "2", "3", "4", "5"],
+      "evidence": "Read from the rendered page 32. The stem is 'Write the number of the figure which will come next in the series:' above three unlabelled zig-zag glyphs. Five candidate glyphs follow, labelled 1, 2 and 3 on one row and 4 and 5 on the next. Those five numerals are the answer choices; the printed key is (1).",
+      "verifiedBy": "rendered-page inspection"
+    },
+    {
+      "question": 12,
+      "field": "pictorialOptions",
+      "value": ["1", "2", "3", "4", "5"],
+      "evidence": "Read from the rendered page 33. The figure is an analogy laid out as 'A IS TO B AS C IS TO ?', with A, B and C drawn as labelled reference panels. To the right of C a row of five panels is labelled 1, 2, 3, 4 and 5. Those five numerals are the answer choices; the printed key is (3).",
+      "verifiedBy": "rendered-page inspection"
+    },
+    {
+      "question": 14,
+      "field": "pictorialOptions",
+      "value": ["1", "2", "3", "4", "5"],
+      "evidence": "Read from the rendered page 33. The stem is 'Write the number of the figure which will come next in the series:' above three unlabelled letter-cross diagrams. Five candidate diagrams follow, labelled 1, 2 and 3 on one row and 4 and 5 on the next. Those five numerals are the answer choices; the printed key is (1).",
+      "verifiedBy": "rendered-page inspection"
+    },
+    {
+      "question": 17,
+      "field": "pictorialOptions",
+      "value": ["1", "2", "3", "4", "5"],
+      "evidence": "Read from the rendered page 34. The stem is 'Write the number of the figure which will come next in the series:' above three unlabelled hexagon figures. Five candidate hexagons follow, labelled 1, 2 and 3 on one row and 4 and 5 on the next. Those five numerals are the answer choices; the printed key is (4).",
+      "verifiedBy": "rendered-page inspection"
+    },
+    {
+      "question": 21,
+      "field": "pictorialOptions",
+      "value": ["1", "2", "3", "4", "5"],
+      "evidence": "Read from the rendered page 34. The stem is 'Write the number of the figure which will come next in the series:' above four unlabelled square-cluster figures. Five candidate clusters follow, labelled 1, 2 and 3 on one row and 4 and 5 on the next. Those five numerals are the answer choices; the printed key is (4).",
+      "verifiedBy": "rendered-page inspection"
+    },
+    {
+      "question": 24,
+      "field": "pictorialOptions",
+      "value": ["1", "2", "3", "4", "5"],
+      "evidence": "Read from the rendered page 35. The stem is 'Write the number of the figure which will come next in the series:' above a single row of small shapes. Five candidate shapes follow, labelled 1, 2 and 3 on one row and 4 and 5 on the next. Those five numerals are the answer choices; the printed key is (1).",
+      "verifiedBy": "rendered-page inspection"
+    },
+    {
+      "question": 25,
+      "field": "pictorialOptions",
+      "value": ["1", "2", "3", "4"],
+      "evidence": "Read from the rendered page 35. A reference row headed 'Class A' and 'Class B' shows three unlabelled panels each. Below the stem 'Which two of the following figures belong to Class A?' four panels are labelled 1, 2, 3 and 4. Those four numerals are the answer choices; the printed key is '2 and 3', which selects two of them.",
+      "verifiedBy": "rendered-page inspection"
+    },
+    {
+      "question": 34,
+      "field": "pictorialOptions",
+      "value": ["1", "2", "3", "4"],
+      "evidence": "Read from the rendered page 36. A reference row headed 'Class A' and 'Class B' shows three unlabelled arrow panels each. Below the stem 'Which two of the following figures belong to Class A?' four arrow panels are labelled 1, 2, 3 and 4. Those four numerals are the answer choices; the printed key is '1 and 2'.",
+      "verifiedBy": "rendered-page inspection"
+    },
+    {
+      "question": 35,
+      "field": "pictorialOptions",
+      "value": ["1", "2", "3", "4"],
+      "evidence": "Read from the rendered page 36. A reference row headed 'Class A' and 'Class B' shows three unlabelled panels of diamonds and triangles each. Below the stem 'Which two of the following figures belong to Class A?' four such panels are labelled 1, 2, 3 and 4. Those four numerals are the answer choices; the printed key is '1 and 2'.",
+      "verifiedBy": "rendered-page inspection"
+    },
+    {
+      "question": 36,
+      "field": "pictorialOptions",
+      "value": ["1", "2", "3", "4", "5"],
+      "evidence": "Read from the rendered page 37. The figure is an analogy laid out as 'A IS TO B AS C IS TO ?', with A, B and C drawn as labelled reference panels. To the right of C a row of five panels is labelled 1, 2, 3, 4 and 5. Those five numerals are the answer choices; the printed key is (2).",
+      "verifiedBy": "rendered-page inspection"
+    },
+    {
+      "question": 38,
+      "field": "pictorialOptions",
+      "value": ["1", "2", "3", "4"],
+      "evidence": "Read from the rendered page 37. A reference row headed 'Class A' and 'Class B' shows three unlabelled panels of digits and letters each. Below the stem 'Which two of the following figures belong to Class A?' four such panels are labelled 1, 2, 3 and 4. Those four numerals are the answer choices; the printed key is '1 and 2'.",
+      "verifiedBy": "rendered-page inspection"
+    },
+    {
+      "question": 39,
+      "field": "pictorialOptions",
+      "value": ["1", "2", "3", "4"],
+      "evidence": "Read from the rendered page 37. A reference row headed 'Class A' and 'Class B' shows three unlabelled banded panels of arrows and dots each. Below the stem 'Which two of the following figures belong to Class A?' four such panels are labelled 1, 2, 3 and 4. Those four numerals are the answer choices; the printed key is '1 and 4'.",
+      "verifiedBy": "rendered-page inspection"
+    },
+    {
+      "question": 43,
+      "field": "pictorialOptions",
+      "value": ["1", "2", "3", "4", "5"],
+      "evidence": "Read from the rendered page 38. The figure is an analogy laid out as 'A IS TO B AS C IS TO ?', with A, B and C drawn as labelled reference panels. To the right of C a row of five panels is labelled 1, 2, 3, 4 and 5. Those five numerals are the answer choices; the printed key is (1).",
+      "verifiedBy": "rendered-page inspection"
+    },
+    {
+      "question": 44,
+      "field": "pictorialOptions",
+      "value": ["1", "2", "3", "4", "5"],
+      "evidence": "Read from the rendered page 38. The figure is an analogy laid out as 'A IS TO B AS C IS TO ?', with A, B and C drawn as labelled reference panels of mirrored glyphs. To the right of C a row of five panels is labelled 1, 2, 3, 4 and 5. Those five numerals are the answer choices; the printed key is (4).",
+      "verifiedBy": "rendered-page inspection"
+    },
+    {
+      "question": 48,
+      "field": "pictorialOptions",
+      "value": ["1", "2", "3", "4"],
+      "evidence": "Read from the rendered page 39. A reference row headed 'Class A' and 'Class B' shows three unlabelled panels of filled and hollow rectangles each. Below the stem 'Which two of the following figures belong to Class A?' four such panels are labelled 1, 2, 3 and 4. Those four numerals are the answer choices; the printed key is '2 and 4'.",
+      "verifiedBy": "rendered-page inspection"
+    }
+  ]
+}

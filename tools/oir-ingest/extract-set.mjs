@@ -72,7 +72,7 @@ const PROVENANCE = {
 };
 
 /** Sets that have been through verification and may be ingested. */
-const APPROVED_SETS = [1, 2];
+const APPROVED_SETS = [1, 2, 3];
 
 /**
  * Where each set's question ids begin in the ONE global sequence.
@@ -93,7 +93,7 @@ const APPROVED_SETS = [1, 2];
  * from. `setNumber` and `position` carry that, and they are the only mapping
  * back to the source that anything should rely on.
  */
-const SET_ID_START = { 1: 1, 2: 51 };
+const SET_ID_START = { 1: 1, 2: 51, 3: 101 };
 const EXPECTED_QUESTIONS = 50;
 const RENDER_DPI = 200;
 /** A pixel darker than this counts as ink. */
@@ -252,6 +252,26 @@ function classifyAnswer(raw, { number, optionCount, figureCount }) {
 
   // "D", "L" — a letter or short token written on the answer sheet.
   if (/^[A-Za-z0-9]{1,4}$/.test(value)) return { kind: "short-text", value };
+
+  // "4.7 and 5.5" — a series whose terms are decimals.
+  //
+  // The value is perfectly readable; what it cannot be is ANSWERED. A written
+  // answer is carried as a list of tokens matching /^[A-Za-z0-9]{1,16}$/ in
+  // `lib/oir/attempt.ts`, and a full stop is not a token character, so no input
+  // a candidate can produce would ever be accepted for this question. Storing
+  // the key anyway would ship a question that is marked wrong whatever is
+  // entered, which is worse than not shipping it.
+  //
+  // Recognised deliberately, and resolved to "unresolved" so the question is
+  // omitted WITH a reason rather than guessed at or silently dropped.
+  if (/^\d+\.\d+\s*(and|,)\s*\d+\.\d+$/i.test(value)) {
+    return {
+      kind: "unresolved",
+      reason:
+        "the answer is a pair of decimal values, and a written answer may only " +
+        "carry alphanumeric tokens, so no candidate input could express it",
+    };
+  }
 
   fail(
     `Q${number}: answer ${JSON.stringify(value)} matches no known form. ` +
